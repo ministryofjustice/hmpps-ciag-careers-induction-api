@@ -1,1 +1,1 @@
-rootProject.name = "hmpps-template-kotlin"
+rootProject.name = "hmpps-ciag-careers-induction-api"
