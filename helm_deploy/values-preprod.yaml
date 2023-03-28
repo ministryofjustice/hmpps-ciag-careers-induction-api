@@ -2,6 +2,8 @@
 # Per environment values which override defaults in hmpps-ciag-careers-induction-api/values.yaml
 
 generic-service:
+  replicaCount: 2
+  
   ingress:
     host: hmpps-ciag-careers-induction-api-preprod.hmpps.service.justice.gov.uk
 
