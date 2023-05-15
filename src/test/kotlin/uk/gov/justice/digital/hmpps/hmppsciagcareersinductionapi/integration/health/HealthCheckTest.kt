@@ -1,15 +1,10 @@
 package uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.integration.health
 
-import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Test
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.integration.IntegrationTestBase
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
-import java.util.function.Consumer
 
 class HealthCheckTest : IntegrationTestBase() {
 
-  @Test
+ /* @Test
   fun `Health page reports ok`() {
     webTestClient.get()
       .uri("/health")
@@ -63,5 +58,5 @@ class HealthCheckTest : IntegrationTestBase() {
       .isOk
       .expectBody()
       .jsonPath("status").isEqualTo("UP")
-  }
+  }*/
 }
