@@ -14,18 +14,20 @@ class InfoTest : IntegrationTestBase() {
 
   @Test
   fun `Info page is accessible`() {
-    val result = restTemplate.exchange("/info", HttpMethod.GET, HttpEntity<HttpHeaders>(setAuthorisation(roles = listOf("ROLE_WORK_READINESS_EDIT", "ROLE_WORK_READINESS_VIEW"))), String::class.java)
+    val result = restTemplate.exchange("/info", HttpMethod.GET, HttpEntity<HttpHeaders>(null, null), String::class.java)
+
     assert(result != null)
     assert(result.hasBody())
     assert(result.statusCode.is2xxSuccessful)
     var stringcompanion = JacksonUtil.toJsonNode(result.body.toString())
+    var version = stringcompanion.get("build").get("version")
     var name = stringcompanion.get("build").get("name")
     Assertions.assertThat(name.asText().toString()).isEqualTo("hmpps-ciag-careers-induction-api")
   }
 
   @Test
   fun `Info page reports version`() {
-    val result = restTemplate.exchange("/info", HttpMethod.GET, HttpEntity<HttpHeaders>(setAuthorisation(roles = listOf("ROLE_WORK_READINESS_EDIT", "ROLE_WORK_READINESS_VIEW"))), String::class.java)
+    val result = restTemplate.exchange("/info", HttpMethod.GET, HttpEntity<HttpHeaders>(null, null), String::class.java)
     assert(result != null)
     assert(result.hasBody())
     assert(result.statusCode.is2xxSuccessful)

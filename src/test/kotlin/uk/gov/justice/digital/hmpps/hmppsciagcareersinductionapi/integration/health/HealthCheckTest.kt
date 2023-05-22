@@ -14,15 +14,15 @@ class HealthCheckTest : IntegrationTestBase() {
 
   @Test
   fun `Health page reports ok`() {
-    val result = restTemplate.exchange("/health", HttpMethod.GET, HttpEntity<HttpHeaders>(setAuthorisation(roles = listOf("ROLE_WORK_READINESS_EDIT", "ROLE_WORK_READINESS_VIEW"))), String::class.java)
+    val result = restTemplate.exchange("/health", HttpMethod.GET, HttpEntity<HttpHeaders>(null, null), String::class.java)
     assert(result != null)
-//    assert(result.hasBody())
+    assert(result.hasBody())
     assert(result.statusCode.is2xxSuccessful)
   }
 
   @Test
   fun `Health info reports version`() {
-    val result = restTemplate.exchange("/health", HttpMethod.GET, HttpEntity<HttpHeaders>(setAuthorisation(roles = listOf("ROLE_WORK_READINESS_EDIT", "ROLE_WORK_READINESS_VIEW"))), String::class.java)
+    val result = restTemplate.exchange("/health", HttpMethod.GET, HttpEntity<HttpHeaders>(null, null), String::class.java)
     assert(result != null)
     assert(result.hasBody())
     assert(result.statusCode.is2xxSuccessful)
