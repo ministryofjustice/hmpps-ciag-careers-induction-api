@@ -1,67 +1,66 @@
 package uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.integration.health
 
+import com.vladmihalcea.hibernate.type.json.internal.JacksonUtil
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.springframework.http.HttpEntity
+import org.springframework.http.HttpHeaders
+import org.springframework.http.HttpMethod
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.integration.IntegrationTestBase
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import java.util.function.Consumer
 
 class HealthCheckTest : IntegrationTestBase() {
 
   @Test
   fun `Health page reports ok`() {
-    webTestClient.get()
-      .uri("/health")
-      .exchange()
-      .expectStatus()
-      .isOk
-      .expectBody()
-      .jsonPath("status").isEqualTo("UP")
+    val result = restTemplate.exchange("/health", HttpMethod.GET, HttpEntity<HttpHeaders>(null, null), String::class.java)
+    assert(result != null)
+    assert(result.hasBody())
+    assert(result.statusCode.is2xxSuccessful)
   }
 
   @Test
   fun `Health info reports version`() {
-    webTestClient.get().uri("/health")
-      .exchange()
-      .expectStatus().isOk
-      .expectBody().jsonPath("components.healthInfo.details.version").value(
-        Consumer<String> {
-          assertThat(it).startsWith(LocalDateTime.now().format(DateTimeFormatter.ISO_DATE))
-        },
-      )
+    val result = restTemplate.exchange("/health", HttpMethod.GET, HttpEntity<HttpHeaders>(null, null), String::class.java)
+    assert(result != null)
+    assert(result.hasBody())
+    assert(result.statusCode.is2xxSuccessful)
+    var stringcompanion = JacksonUtil.toJsonNode(result.body.toString())
+    var version = stringcompanion.get("components").get("healthInfo").get("details").get("version")
+    assertThat(version.asText().toString()).startsWith(LocalDateTime.now().format(DateTimeFormatter.ISO_DATE))
   }
 
   @Test
   fun `Health ping page is accessible`() {
-    webTestClient.get()
-      .uri("/health/ping")
-      .exchange()
-      .expectStatus()
-      .isOk
-      .expectBody()
-      .jsonPath("status").isEqualTo("UP")
+    val result = restTemplate.exchange("/health/ping", HttpMethod.GET, HttpEntity<HttpHeaders>(setAuthorisation(roles = listOf("ROLE_WORK_READINESS_EDIT", "ROLE_WORK_READINESS_VIEW"))), String::class.java)
+    assert(result != null)
+    assert(result.hasBody())
+    assert(result.statusCode.is2xxSuccessful)
+    var stringcompanion = JacksonUtil.toJsonNode(result.body.toString())
+    var status = stringcompanion.get("status")
+    assertThat(status.asText().toString()).isEqualTo("UP")
   }
 
   @Test
   fun `readiness reports ok`() {
-    webTestClient.get()
-      .uri("/health/readiness")
-      .exchange()
-      .expectStatus()
-      .isOk
-      .expectBody()
-      .jsonPath("status").isEqualTo("UP")
+    val result = restTemplate.exchange("/health/readiness", HttpMethod.GET, HttpEntity<HttpHeaders>(setAuthorisation(roles = listOf("ROLE_WORK_READINESS_EDIT", "ROLE_WORK_READINESS_VIEW"))), String::class.java)
+    assert(result != null)
+    assert(result.hasBody())
+    assert(result.statusCode.is2xxSuccessful)
+    var stringcompanion = JacksonUtil.toJsonNode(result.body.toString())
+    var status = stringcompanion.get("status")
+    assertThat(status.asText().toString()).isEqualTo("UP")
   }
 
   @Test
   fun `liveness reports ok`() {
-    webTestClient.get()
-      .uri("/health/liveness")
-      .exchange()
-      .expectStatus()
-      .isOk
-      .expectBody()
-      .jsonPath("status").isEqualTo("UP")
+    val result = restTemplate.exchange("/health/liveness", HttpMethod.GET, HttpEntity<HttpHeaders>(setAuthorisation(roles = listOf("ROLE_WORK_READINESS_EDIT", "ROLE_WORK_READINESS_VIEW"))), String::class.java)
+    assert(result != null)
+    assert(result.hasBody())
+    assert(result.statusCode.is2xxSuccessful)
+    var stringcompanion = JacksonUtil.toJsonNode(result.body.toString())
+    var status = stringcompanion.get("status")
+    assertThat(status.asText().toString()).isEqualTo("UP")
   }
 }

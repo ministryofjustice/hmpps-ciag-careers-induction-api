@@ -14,8 +14,12 @@ parameters:
 jobs:
   validate:
     executor:
-      name: hmpps/java
-      tag: "19.0"
+      name: hmpps/java_localstack_postgres
+      jdk_tag: "19.0"
+      localstack_tag: "0.14.0"
+      postgres_tag: "14"
+      postgres_username: "ciag-careers"
+      postgres_password: "ciag-careers"
     steps:
       - checkout
       - restore_cache:
@@ -121,7 +125,7 @@ workflows:
   security-weekly:
     triggers:
       - schedule:
-          cron: "32 7 * * 1"
+          cron: "38 4 * * 1"
           filters:
             branches:
               only:
