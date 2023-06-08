@@ -1,23 +1,24 @@
 package uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity
 
-import com.fasterxml.jackson.databind.JsonNode
 import com.vladmihalcea.hibernate.type.json.JsonType
-import org.hibernate.annotations.Type
 import org.hibernate.annotations.TypeDef
 import org.hibernate.annotations.TypeDefs
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.data.annotation.CreatedBy
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.LastModifiedBy
 import org.springframework.data.annotation.LastModifiedDate
+import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity.ciag.AchievedFunctionalLevel
+import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity.ciag.PreviousWorkDetail
 import java.time.LocalDateTime
+import javax.persistence.CollectionTable
 import javax.persistence.Column
+import javax.persistence.ElementCollection
 import javax.persistence.Entity
 import javax.persistence.Id
 import javax.persistence.Table
 
 @Entity
-@Table(name = "work_readiness")
+@Table(name = "ciag_profile")
 @TypeDefs(
   TypeDef(name = "json", typeClass = JsonType::class),
 )
@@ -36,19 +37,19 @@ data class CIAGProfile(
   @LastModifiedBy
   var modifiedBy: String,
 
+  @Column(name = "DESIRE_TO_WORK")
+  var desireToWork: Boolean,
+
   @LastModifiedDate
   var modifiedDateTime: LocalDateTime,
 
-  var schemaVersion: String,
-  @Type(type = "json")
-  @Column(columnDefinition = "jsonb")
-  var profileData: JsonNode,
+  @ElementCollection
+  @CollectionTable(name = "Functional")
+  @Column(name = "Previous_Work_Detail")
+  var previousWorkDetail: List<PreviousWorkDetail>,
 
-  @Type(type = "json")
-  @Column(columnDefinition = "jsonb")
-  var notesData: JsonNode,
-
-  @Transient
-  @Value("false")
-  val new: Boolean,
+  @ElementCollection
+  @CollectionTable(name = "Functional")
+  @Column(name = "Achieved_Functionals")
+  var achievedFunctionalLevel: List<AchievedFunctionalLevel>,
 )

@@ -1,0 +1,520 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ministryofjustice/ciag-api/schemas/ciag-carreers-schema-v1.json",
+  "title": "CIAG",
+  "description": "Data representing an offender training work experience and his education to enter the real world",
+  "definitions": {
+    "skillsEnumType": {
+      "type": "string",
+      "enum": [
+        "COMMUNICATION",
+        "POSITIVE_ATTITUDE",
+        "RESILIENCE",
+        "SELF_MANAGEMENT",
+        "TEAMWORK",
+        "THINKING_AND_PROBLEM_SOLVING",
+        "WILLINGNESS_TO_LEARN",
+        "OTHER"
+      ]
+    },
+    "timePeriodEnumType": {
+      "type": "string",
+      "enum": [
+        "ZERO_TO_THREE",
+        "THREE_TO_SIX",
+        "SIX_TO_TWELEVE"
+      ]
+    },
+    "abilityImpactEnumType": {
+      "type": "string",
+      "enum": [
+        "CARING_RESPONSIBILITIES",
+        "EDUCATION_ENROLLMENT",
+        "FAMILY_ISSUES",
+        "MENTAL_HEALTH_ISSUES",
+        "PHYSICAL_HEALTH_ISSUES",
+        "DEPENDENCY_ISSUES",
+        "NONE"
+      ]
+    },
+    "workPriorityEnumType": {
+      "type": "string",
+      "enum": [
+        "CARE",
+        "QUALIFICATION_OR_TRAINING",
+        "HEALTH_SUPPPORT",
+        "PAIDWORK_OR_VOLUNTEERING"
+      ]
+    },
+    "educationLevelsEnumType": {
+      "type": "string",
+      "enum": [
+        "PRIMARY_SCHOOL",
+        "SECONDARY_SCHOOL_LEFT_BEFORE_TAKING_EXAMS",
+        "SECONDARY_SCHOOL_TOOK_EXAMS",
+        "FURTHER_EDUCATION_COLLEGE",
+        "UNDERGRADUATE_DEGREE_AT_UNIVERSITY",
+        "POSTGRADUATE_DEGREE_AT_UNIVERSITY",
+        "NOT_SURE"
+      ]
+    },
+    "workTypeEnumType": {
+      "type": "string",
+      "enum": [
+        "ANIMAL_CARE_AND_FARMING",
+        "CONSTRUCTION_AND_TRADE",
+        "DRIVING_AND_TRANSPORT",
+        "HAIR_BEAUTY_AND_WELLBEING",
+        "HOSPITALITY_AND_CATERING",
+        "IT_AND_DIGITAL",
+        "MANUFACTURING_AND_TECHNICAL",
+        "OFFICE_OR_DESK_BASED",
+        "RETAIL_AND_SALES",
+        "SPORT_AND_FITNESS",
+        "TRAINING_AND_SUPPORT",
+        "WAREHOUSING_AND_STORAGE",
+        "WASTE_MANAGEMENT"
+      ]
+    },
+    "functionalAssessmentEnumType": {
+      "type": "string",
+      "enum": [
+        "ENGLISH",
+        "MATHS",
+        "DIGITAL_LITERACY"
+      ]
+    },
+    "functionalAssessmentLevelEnumType": {
+      "type": "string",
+      "enum": [
+        "ENTRY_LEVEL_2",
+        "ENTRY_LEVEL_3",
+        "LEVEL_1",
+        "LEVEL_2",
+        "LEVEL_3",
+        "LEVEL_4",
+        "LEVEL_5"
+      ]
+    },
+    "futureWorkIntrestsEnumType": {
+      "type": "string",
+      "enum": [
+        "COMMUNITY",
+        "CRAFTS",
+        "CREATIVE",
+        "DIGITAL",
+        "KNOWLEDGE_BASED",
+        "MUSICAL",
+        "OUTDOOR",
+        "NATURE_AND_ANIMALS",
+        "SOCIAL",
+        "SOLO_ACTIVITIES",
+        "SOLO_SPORTS",
+        "TEAM_SPORTS",
+        "WELLNESS"
+      ]
+    },
+    "prisonTrainingEnumType": {
+      "type": "string",
+      "enum": [
+        "BARBERING_AND_HAIRDRESSING",
+        "CATERING",
+        "COMMUNICATION_SKILLS",
+        "ENGLISH_LANGUAGE_SKILLS",
+        "FORKLIFT_DRIVING",
+        "INTERVIEW_SKILLS",
+        "MACHINERY_TICKETS",
+        "NUMERACY_SKILLS",
+        "RUNNING_A_BUSINESS",
+        "SOCIAL_AND_LIFE_SKILLS",
+        "WELDING_AND_METALWORK",
+        "WOODWORK_AND_JOINERY",
+        "OTHER"
+      ]
+    },
+    "prisonWorkEnumType": {
+      "type": "string",
+      "enum": [
+        "CLEANING_AND_HYGEINE",
+        "COMPUTERS_OR_DESK_BASED",
+        "GARDENING_AND_OUTDOORS",
+        "KITCHENS_AND_COOKING",
+        "MAINTENANCE",
+        "PRISON_LAUNDRY",
+        "PRISON_LIBRARY",
+        "TEXTILES_AND_SEWING",
+        "WELDING_AND_METALWORK",
+        "WOODWORK_AND_JOINERY"
+      ]
+    },
+    "qualificationLevelEnumType": {
+      "type": "string",
+      "enum": [
+        "ENTRY_LEVEL_2",
+        "ENTRY_LEVEL_3",
+        "LEVEL_1",
+        "LEVEL_2",
+        "LEVEL_3",
+        "LEVEL_4",
+        "LEVEL_5"
+      ]
+    },
+    "trainingEnumType": {
+      "type": "string",
+      "enum": [
+        "CSCS_CARD",
+        "FIRST_AID_CERTIFICATE",
+        "FOOD_HYGIENE_CERTIFICATE",
+        "FULL_UK_DRIVING_LICENCE",
+        "HEALTH_AND_SAFETY",
+        "HGV_LICENCE",
+        "MACHINERY_TICKETS",
+        "MANUAL_HANDLING",
+        "TRADE_COURSE",
+        "NONE"
+      ]
+    },
+    "workDesireEnumType": {
+      "type": "string",
+      "enum": [
+        "YES",
+        "NO"
+      ]
+    },
+    "dateTime": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "string32": {
+      "type": "string",
+      "maxLength": 32
+    },
+    "string200": {
+      "type": "string",
+      "maxLength": 200
+    },
+    "achievedFunctionalLevelType": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "functionalAssessment": {
+          "$ref": "#/definitions/functionalAssessmentEnumType"
+        },
+        "functionalAssessmentLevel": {
+          "$ref": "#/definitions/functionalAssessmentLevelEnumType"
+        },
+        "createdDateTime": {
+          "$ref": "#/definitions/dateTime"
+        }
+      }
+    },
+    "skillsType": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "skillsList": {
+          "description": "skillList",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/skillsEnumType"
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        },
+        "otherSkills": {
+          "$ref": "#/definitions/string32"
+        }
+      }
+    },
+    "achievedQualificationType": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "subject": {
+          "$ref": "#/definitions/string32"
+        },
+        "grade": {
+          "$ref": "#/definitions/string32"
+        },
+        "level": {
+          "$ref": "#/definitions/qualificationLevelEnumType"
+        }
+      }
+    },
+    "achievedTrainjngType": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "training": {
+          "description": "Why does the offender not want support?",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/trainingEnumType"
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        }
+      },
+      "customTraining": {
+        "$ref": "#/definitions/string200"
+      }
+    },
+    "futureIntrestsDetailType": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "definedIntrests": {
+          "description": "Why does the offender not want support?",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/futureWorkIntrestsEnumType"
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        }
+      },
+      "otherIntrests": {
+        "$ref": "#/definitions/string200"
+      }
+    },
+    "futureWorkType": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "workList": {
+          "description": "Why does the offender not want support?",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/workTypeEnumType"
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        }
+      },
+      "otherIntrests": {
+        "$ref": "#/definitions/string200"
+      }
+    },
+    "futureWorkDetailType": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "workTypeJob": {
+          "$ref": "#/definitions/workTypeEnumType"
+        },
+        "otherTypeJob": {
+          "$ref": "#/definitions/string200"
+        },
+        "otherIntrests": {
+          "$ref": "#/definitions/string200"
+        }
+      }
+    },
+    "goalsType": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "goal": {
+          "$ref": "#/definitions/string200"
+        },
+        "steps": {
+          "description": "Why does the offender not want support?",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/goalStepsType"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        }
+      }
+    },
+    "goalStepsType": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "step": {
+          "$ref": "#/definitions/string200"
+        },
+        "timePeriod": {
+          "$ref": "#/definitions/timePeriodEnumType"
+        }
+      }
+    },
+    "personalDetailsType": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "personalId": {
+          "$ref": "#/definitions/string200"
+        },
+        "personalName": {
+          "$ref": "#/definitions/string200"
+        }
+      }
+    },
+    "previousWorkType": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "workList": {
+          "description": "Why does the offender not want support?",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/workTypeEnumType"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "otherIntrests": {
+          "$ref": "#/definitions/string200"
+        }
+      }
+    },
+    "previousWorkDetailType": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "workTypeJob": {
+          "$ref": "#/definitions/workTypeEnumType"
+        },
+        "otherJob": {
+          "$ref": "#/definitions/string200"
+        },
+        "jobTitle": {
+          "$ref": "#/definitions/string200"
+        },
+        "tasksAndResponsibilities": {
+          "$ref": "#/definitions/string200"
+        }
+      }
+    }
+  },
+  "ciagProfile": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "modifiedBy": {
+        "$ref": "#/definitions/string32"
+      },
+      "modifiedDateTime": {
+        "$ref": "#/definitions/dateTime"
+      },
+      "personalDetails": {
+        "$ref": "#/definitions/personalDetailsType"
+      },
+      "desireToWork":"",
+      "functionalAssements": {
+        "description": "functional Assesments",
+        "type": "array",
+        "items": {
+          "$ref": "#/definitions/achievedFunctionalLevelType"
+        },
+        "minItems": 0,
+        "uniqueItems": true
+      },
+      "qualifications": {
+        "description": "functional Assesments",
+        "type": "array",
+        "items": {
+          "$ref": "#/definitions/achievedQualificationType"
+        },
+        "minItems": 0,
+        "uniqueItems": true
+      },
+      "trainings": {
+        "description": "Training",
+        "type": "array",
+        "items": {
+          "$ref": "#/definitions/trainingEnumType"
+        },
+        "minItems": 0,
+        "uniqueItems": true
+      },
+      "previuosWork": {
+        "$ref": "#/definitions/previousWorkType"
+      },
+      "previousWorkDetail": {
+        "description": "previousWork",
+        "type": "array",
+        "items": {
+          "$ref": "#/definitions/previousWorkDetailType"
+        },
+        "minItems": 0,
+        "uniqueItems": true
+      },
+      "intrestedWork": {
+        "description": "previousWork",
+        "type": "array",
+        "items": {
+          "$ref": "#/definitions/futureWorkType"
+        },
+        "minItems": 0,
+        "uniqueItems": true
+      },
+      "intrestedWorkDetail": {
+        "description": "previousWork",
+        "type": "array",
+        "items": {
+          "$ref": "#/definitions/futureWorkDetailType"
+        },
+        "minItems": 0,
+        "uniqueItems": true
+      },
+      "skills": {
+        "description": "previousWork",
+        "$ref": "#/definitions/skillsType"
+      },
+      "futureIntrests": {
+        "description": "previousWork",
+        "type": "array",
+        "items": {
+          "$ref": "#/definitions/futureWorkIntrestsEnumType"
+        },
+        "minItems": 0,
+        "uniqueItems": true
+      },
+      "futureIntrestsDetails": {
+        "description": "previousWork",
+        "type": "array",
+        "items": {
+          "$ref": "#/definitions/futureIntrestsDetailType"
+        },
+        "minItems": 0,
+        "uniqueItems": true
+      },
+      "abilityImpacted": {
+        "description": "previousWork",
+        "type": "array",
+        "items": {
+          "$ref": "#/definitions/abilityImpactEnumType"
+        },
+        "minItems": 0,
+        "uniqueItems": true
+      },
+      "futureIntrestsDetails": {
+        "description": "previousWork",
+        "type": "array",
+        "items": {
+          "$ref": "#/definitions/futureIntrestsDetailType"
+        },
+        "minItems": 0,
+        "uniqueItems": true
+      },
+      "goals": {
+        "description": "previousWork",
+        "type": "array",
+        "items": {
+          "$ref": "#/definitions/goalsType"
+        },
+        "minItems": 0,
+        "uniqueItems": true
+      }
+    },
+    "required": [
+      "modifiedBy",
+      "modifiedDateTime",
+      "personalDetails",
+      "circumstanceChangesRequiredToWork"
+    ]
+  }
+}

@@ -1,18 +1,14 @@
 package uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data
 
-import com.vladmihalcea.hibernate.type.json.internal.JacksonUtil
 import io.swagger.v3.oas.annotations.media.Schema
-import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.config.CapturedSpringMapperConfiguration
+import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.WorkDesire
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.jsonprofile.Profile
-import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity.CIAGProfile
+import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.jsonprofile.ciag.PersonalDetails
+import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.jsonprofile.ciag.PreviousWork
+import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.jsonprofile.ciag.PreviousWorkDetail
 import java.time.LocalDateTime
 
 data class CIAGProfileDTO(
-  @Schema(description = "Offender Id", example = "ABC12345")
-  val offenderId: String,
-
-  @Schema(description = "Booking Id", example = "1234567")
-  val bookingId: Long,
 
   @Schema(description = "Author of original profile", example = "whilesp")
   val createdBy: String,
@@ -29,17 +25,28 @@ data class CIAGProfileDTO(
   @Schema(description = "Version of the JSON schema", example = "1.1.1")
   val schemaVersion: String,
 
+  @Schema(
+    description = "personal id",
+    example = "{\n" +
+      "  \"personalId\":\"ABC12345\",\n" +
+      "  \"personalName\":\"Judas\",\n" +
+      "}",
+  )
+  val personalDetail: PersonalDetails,
+
+  @Schema(description = "Booking Id", example = "1234567")
+  val desireToWork: WorkDesire,
+
+  @Schema(description = "Previous works schema", example = "1.1.1")
+  val previousWork: PreviousWork,
+
+  @Schema(description = "Previous work details schema", example = "1.1.1")
+  var previousWorkDetail: List<PreviousWorkDetail>,
+
   @Schema(description = "Work readiness profile JSON data", example = "{...}")
   val profileData: Profile,
 ) {
-  constructor(profileEntity: CIAGProfile) : this(
-    offenderId = profileEntity.offenderId,
-    bookingId = profileEntity.bookingId,
-    createdBy = profileEntity.createdBy,
-    createdDateTime = profileEntity.createdDateTime,
-    modifiedBy = profileEntity.modifiedBy,
-    modifiedDateTime = profileEntity.modifiedDateTime,
-    schemaVersion = profileEntity.schemaVersion,
-    profileData = CapturedSpringMapperConfiguration.OBJECT_MAPPER.readValue(JacksonUtil.toString(profileEntity.profileData), Profile::class.java),
-  )
+  /*constructor(profileEntity: CIAGProfile) : this(
+    offenderId = profileEntity.offenderId
+      )*/
 }
