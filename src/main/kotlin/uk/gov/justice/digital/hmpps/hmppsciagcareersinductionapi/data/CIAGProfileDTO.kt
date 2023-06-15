@@ -1,9 +1,6 @@
 package uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data
 
-import com.vladmihalcea.hibernate.type.json.internal.JacksonUtil
 import io.swagger.v3.oas.annotations.media.Schema
-import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.config.CapturedSpringMapperConfiguration
-import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.jsonprofile.Profile
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity.CIAGProfile
 import java.time.LocalDateTime
 
@@ -29,8 +26,6 @@ data class CIAGProfileDTO(
   @Schema(description = "Version of the JSON schema", example = "1.1.1")
   val schemaVersion: String,
 
-  @Schema(description = "Work readiness profile JSON data", example = "{...}")
-  val profileData: Profile,
 ) {
   constructor(profileEntity: CIAGProfile) : this(
     offenderId = profileEntity.offenderId,
@@ -40,6 +35,5 @@ data class CIAGProfileDTO(
     modifiedBy = profileEntity.modifiedBy,
     modifiedDateTime = profileEntity.modifiedDateTime,
     schemaVersion = profileEntity.schemaVersion,
-    profileData = CapturedSpringMapperConfiguration.OBJECT_MAPPER.readValue(JacksonUtil.toString(profileEntity.profileData), Profile::class.java),
   )
 }

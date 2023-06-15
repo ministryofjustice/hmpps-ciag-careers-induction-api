@@ -26,6 +26,7 @@ spring:
 
   flyway:
     enabled: true
+    baselineOnMigrate: true
     url: ${spring.datasource.url}
     user: create_vary
     password: dummy
