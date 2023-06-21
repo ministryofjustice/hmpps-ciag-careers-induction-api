@@ -31,7 +31,7 @@ class RepositoriesTests @Autowired constructor(
 ) {
 
   @Test
-  fun `When findByIdOrNull then return CIAG`() {
+  fun `When create then return CIAG`() {
     var previousWorkDetail = PreviousWorkDetail(WorkType.ANIMAL_CARE_AND_FARMING, null, "jobtitle", "Respon")
     var previousWorkDetailSet = mutableSetOf(previousWorkDetail)
     var acchievedFuntionalLevel = AchievedFunctionalLevel(
@@ -46,23 +46,168 @@ class RepositoriesTests @Autowired constructor(
     var achievedTrainjngSet = mutableSetOf(achievedTraining)
     var previousWork = PreviousWork(WorkType.ANIMAL_CARE_AND_FARMING, null)
     var previousWorkSet = mutableSetOf(previousWork)
+    var goalStep = GoalSteps("step1", TimePeriod.SIX_TO_TWELEVE)
 
-    var goals = Goals(null, "goal1", null, null)
-    entityManager.persist(goals)
-    entityManager.flush()
-    var goalSet = mutableSetOf(goals)
-    var goalStep = GoalSteps(null, "step1", TimePeriod.SIX_TO_TWELEVE, goals)
-    entityManager.persist(goalStep)
-    entityManager.flush()
     var goalstepSet = mutableSetOf(goalStep)
+    var goals = Goals("goal1", goalstepSet, null, null)
+
+    var goalSet = mutableSetOf(goals)
+
     val ciag = CIAGProfile(
       "offen1", 123, "sacintha", LocalDateTime.now(),
       "sacintha", true, LocalDateTime.now(), previousWorkDetailSet, acchievedFuntionalLevelSet, acchievedQualificationSet, achievedTrainjngSet, previousWorkSet, goalSet, "1.1",
     )
-    ciagRepository.save(ciag)
+    entityManager.persist(ciag)
 
-// 		ciagRepository.flush()
+    entityManager.flush()
+    ciag.goals?.addAll(goalSet)
+    entityManager.merge(ciag)
+    entityManager.flush()
     val found = ciagRepository.findByOffenderId(ciag.offenderId!!)
     assertThat(found).isEqualTo(ciag)
+  }
+
+  @Test
+  fun `When update type 1 then return CIAG`() {
+    var previousWorkDetail = PreviousWorkDetail(WorkType.ANIMAL_CARE_AND_FARMING, null, "jobtitle", "Respon")
+    var previousWorkDetailSet = mutableSetOf(previousWorkDetail)
+    var acchievedFuntionalLevel = AchievedFunctionalLevel(
+      FunctionalAssessment.DIGITAL_LITERACY,
+      FunctionalAssessmentLevel.LEVEL_1,
+      LocalDateTime.now(),
+    )
+    var acchievedFuntionalLevelSet = mutableSetOf(acchievedFuntionalLevel)
+    var acchievedQualification = AchievedQualification("Subject", "grade 2", QualificationLevel.LEVEL_1, true)
+    var acchievedQualificationSet = mutableSetOf(acchievedQualification)
+    var achievedTraining = AchievedTrainjng(Training.CSCS_CARD, null)
+    var achievedTrainjngSet = mutableSetOf(achievedTraining)
+    var previousWork = PreviousWork(WorkType.ANIMAL_CARE_AND_FARMING, null)
+    var previousWorkSet = mutableSetOf(previousWork)
+    var goalStep = GoalSteps("step1", TimePeriod.SIX_TO_TWELEVE)
+
+    var goalstepSet = mutableSetOf(goalStep)
+    var goals = Goals("goal1", goalstepSet, null, null)
+
+    var goalSet = mutableSetOf(goals)
+
+    val ciag = CIAGProfile(
+      "offen1", 123, "sacintha", LocalDateTime.now(),
+      "sacintha", true, LocalDateTime.now(), previousWorkDetailSet, acchievedFuntionalLevelSet, acchievedQualificationSet, achievedTrainjngSet, previousWorkSet, goalSet, "1.1",
+    )
+    entityManager.persist(ciag)
+
+    entityManager.flush()
+    ciag.goals?.addAll(goalSet)
+    entityManager.merge(ciag)
+    entityManager.flush()
+    val found = ciagRepository.findByOffenderId(ciag.offenderId!!)
+    assertThat(found).isEqualTo(ciag)
+
+    goalStep = GoalSteps("step2", TimePeriod.THREE_TO_SIX)
+
+    goalstepSet = mutableSetOf(goalStep)
+    goals = Goals("goal2", goalstepSet, null, null)
+
+    goalSet = mutableSetOf(goals)
+    found?.goals?.addAll(goalSet)
+    entityManager.merge(found)
+    val foundUpdated = ciagRepository.findByOffenderId(ciag.offenderId!!)
+    assertThat(found).isEqualTo(foundUpdated)
+  }
+
+  @Test
+  fun `When update type 2 then return CIAG`() {
+    var previousWorkDetail = PreviousWorkDetail(WorkType.ANIMAL_CARE_AND_FARMING, null, "jobtitle", "Respon")
+    var previousWorkDetailSet = mutableSetOf(previousWorkDetail)
+    var acchievedFuntionalLevel = AchievedFunctionalLevel(
+      FunctionalAssessment.DIGITAL_LITERACY,
+      FunctionalAssessmentLevel.LEVEL_1,
+      LocalDateTime.now(),
+    )
+    var acchievedFuntionalLevelSet = mutableSetOf(acchievedFuntionalLevel)
+    var acchievedQualification = AchievedQualification("Subject", "grade 2", QualificationLevel.LEVEL_1, true)
+    var acchievedQualificationSet = mutableSetOf(acchievedQualification)
+    var achievedTraining = AchievedTrainjng(Training.CSCS_CARD, null)
+    var achievedTrainjngSet = mutableSetOf(achievedTraining)
+    var previousWork = PreviousWork(WorkType.ANIMAL_CARE_AND_FARMING, null)
+    var previousWorkSet = mutableSetOf(previousWork)
+    var goalStep = GoalSteps("step1", TimePeriod.SIX_TO_TWELEVE)
+
+    var goalstepSet = mutableSetOf(goalStep)
+    var goals = Goals("goal1", goalstepSet, null, null)
+
+    var goalSet = mutableSetOf(goals)
+
+    val ciag = CIAGProfile(
+      "offen1", 123, "sacintha", LocalDateTime.now(),
+      "sacintha", true, LocalDateTime.now(), previousWorkDetailSet, acchievedFuntionalLevelSet, acchievedQualificationSet, achievedTrainjngSet, previousWorkSet, goalSet, "1.1",
+    )
+    entityManager.persist(ciag)
+
+    entityManager.flush()
+    ciag.goals?.addAll(goalSet)
+    entityManager.merge(ciag)
+    entityManager.flush()
+    val found = ciagRepository.findByOffenderId(ciag.offenderId!!)
+    assertThat(found).isEqualTo(ciag)
+
+    goalStep = GoalSteps("step2", TimePeriod.THREE_TO_SIX)
+
+    goalstepSet = mutableSetOf(goalStep)
+    goals = Goals("goal2", goalstepSet, null, null)
+
+    goalSet = mutableSetOf(goals)
+    found?.goals?.clear()
+    entityManager.merge(found)
+    val foundUpdated = ciagRepository.findByOffenderId(ciag.offenderId!!)
+    assertThat(found).isEqualTo(foundUpdated)
+  }
+
+  @Test
+  fun `When delete then return null`() {
+    var previousWorkDetail = PreviousWorkDetail(WorkType.ANIMAL_CARE_AND_FARMING, null, "jobtitle", "Respon")
+    var previousWorkDetailSet = mutableSetOf(previousWorkDetail)
+    var acchievedFuntionalLevel = AchievedFunctionalLevel(
+      FunctionalAssessment.DIGITAL_LITERACY,
+      FunctionalAssessmentLevel.LEVEL_1,
+      LocalDateTime.now(),
+    )
+    var acchievedFuntionalLevelSet = mutableSetOf(acchievedFuntionalLevel)
+    var acchievedQualification = AchievedQualification("Subject", "grade 2", QualificationLevel.LEVEL_1, true)
+    var acchievedQualificationSet = mutableSetOf(acchievedQualification)
+    var achievedTraining = AchievedTrainjng(Training.CSCS_CARD, null)
+    var achievedTrainjngSet = mutableSetOf(achievedTraining)
+    var previousWork = PreviousWork(WorkType.ANIMAL_CARE_AND_FARMING, null)
+    var previousWorkSet = mutableSetOf(previousWork)
+    var goalStep = GoalSteps("step1", TimePeriod.SIX_TO_TWELEVE)
+
+    var goalstepSet = mutableSetOf(goalStep)
+    var goals = Goals("goal1", goalstepSet, null, null)
+
+    var goalSet = mutableSetOf(goals)
+
+    val ciag = CIAGProfile(
+      "offen1", 123, "sacintha", LocalDateTime.now(),
+      "sacintha", true, LocalDateTime.now(), previousWorkDetailSet, acchievedFuntionalLevelSet, acchievedQualificationSet, achievedTrainjngSet, previousWorkSet, goalSet, "1.1",
+    )
+    entityManager.persist(ciag)
+
+    entityManager.flush()
+    ciag.goals?.addAll(goalSet)
+    entityManager.merge(ciag)
+    entityManager.flush()
+    val found = ciagRepository.findByOffenderId(ciag.offenderId!!)
+    assertThat(found).isEqualTo(ciag)
+
+    goalStep = GoalSteps("step2", TimePeriod.THREE_TO_SIX)
+
+    goalstepSet = mutableSetOf(goalStep)
+    goals = Goals("goal2", goalstepSet, null, null)
+
+    goalSet = mutableSetOf(goals)
+    found?.goals?.clear()
+    entityManager.remove(found)
+    val foundUpdated = ciagRepository.findByOffenderId(ciag.offenderId!!)
+    assertThat(foundUpdated).isNull()
   }
 }

@@ -1,24 +1,17 @@
 package uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity
 
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.TimePeriod
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.FetchType
-import javax.persistence.GeneratedValue
-import javax.persistence.GenerationType
-import javax.persistence.Id
-import javax.persistence.ManyToOne
-import javax.persistence.Table
+import javax.persistence.*
 
-@Entity
-@Table(name = "goal_steps")
+@Embeddable
 data class GoalSteps(
-  @Id
+/*  @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE)
   @Column(name = "id", nullable = false)
-  var id: Long? = null,
+  var id: Long? = null,*/
   var step: String?,
   var timeperiod: TimePeriod?,
-  @ManyToOne(fetch = FetchType.LAZY)
-  var goals: Goals?,
+ /* @ManyToOne(fetch = FetchType.EAGER, cascade = [javax.persistence.CascadeType.ALL])
+  @JoinColumn(name = "goal_id")
+  var goals: Goals?,*/
 )
