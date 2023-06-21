@@ -22,7 +22,7 @@ class CiagResourceController(
   private val ciagProfileService: CIAGProfileService,
 ) {
 
-//  @PreAuthorize("hasAnyRole('WORK_READINESS_EDITINESS_VIEW','WORK_READINESS_EDIT')")
+  //  @PreAuthorize("hasAnyRole('CIAG_EDIT_VIEW','CIAG_EDIT')")
   @GetMapping("/{offenderId}")
   @Operation(
     summary = "Fetch the test message",
@@ -51,15 +51,15 @@ class CiagResourceController(
     ],
   )
   fun getCIAGProfileForOffenderId(
-    @Valid
-    @Pattern(regexp = "^[A-Z]\\d{4}[A-Z]{2}\$", message = "Invalid Offender Id")
-    @PathVariable
-    offenderId: String,
+    @Valid @Pattern(
+      regexp = "^[A-Z]\\d{4}[A-Z]{2}\$",
+      message = "Invalid Offender Id",
+    ) @PathVariable offenderId: String,
   ): CIAGProfileDTO? {
     return ciagProfileService.getCIAGProfileDTO(offenderId)
   }
 
-//  @PreAuthorize("hasRole('WORK_READINESS_EDIT')")
+  //  @PreAuthorize("hasRole('CIAG_EDIT')")
   @PostMapping("/{offenderId}")
   @Operation(
     summary = "Create the CIAG profile for an offender",
@@ -88,13 +88,11 @@ class CiagResourceController(
     ],
   )
   fun createOffenderProfile(
-    @Valid
-    @Pattern(regexp = "^[A-Z]\\d{4}[A-Z]{2}\$", message = "Invalid Offender Id")
-    @PathVariable
-    offenderId: String,
-    @Valid
-    @RequestBody
-    requestDTO: CIAGProfileRequestDTO,
+    @Valid @Pattern(
+      regexp = "^[A-Z]\\d{4}[A-Z]{2}\$",
+      message = "Invalid Offender Id",
+    ) @PathVariable offenderId: String,
+    @Valid @RequestBody requestDTO: CIAGProfileRequestDTO,
     @AuthenticationPrincipal oauth2User: String,
   ): CIAGProfileDTO? {
     requestDTO.modifiedBy = oauth2User
@@ -134,19 +132,16 @@ class CiagResourceController(
     ],
   )
   fun updateOffenderProfile(
-    @Valid
-    @Pattern(regexp = "^[A-Z]\\d{4}[A-Z]{2}\$", message = "Invalid Offender Id")
-    @PathVariable
-    offenderId: String,
-    @Valid
-    @RequestBody
-    requestDTO: CIAGProfileRequestDTO,
+    @Valid @Pattern(
+      regexp = "^[A-Z]\\d{4}[A-Z]{2}\$",
+      message = "Invalid Offender Id",
+    ) @PathVariable offenderId: String,
+    @Valid @RequestBody requestDTO: CIAGProfileRequestDTO,
     @AuthenticationPrincipal oauth2User: String,
   ): CIAGProfileDTO? {
     requestDTO.modifiedBy = oauth2User
     return ciagProfileService.createCIAGProfileForOffender(requestDTO)?.let {
       CIAGProfileDTO(
-
         it,
       )
     }
