@@ -14,7 +14,7 @@ import javax.persistence.ManyToOne
 import javax.persistence.Table
 @Entity
 @Table(name = "profile_goals")
-data class Goals @JvmOverloads constructor(
+data class Goals constructor(
 
   var goal: String?,
 

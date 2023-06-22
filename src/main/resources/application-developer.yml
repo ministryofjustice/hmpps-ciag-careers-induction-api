@@ -34,6 +34,6 @@ spring:
 
   flyway:
     enabled: true
-    url: jdbc:postgresql://localhost:5432/education-employment?sslmode=prefer
-    user: education-employment
-    password: education-employment
+    url: jdbc:postgresql://localhost:5432/ciag-careers?sslmode=prefer
+    user: ciag-careers
+    password: ciag-careers

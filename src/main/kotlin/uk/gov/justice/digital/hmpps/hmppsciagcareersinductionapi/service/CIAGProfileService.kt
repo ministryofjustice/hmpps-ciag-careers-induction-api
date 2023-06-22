@@ -5,13 +5,14 @@ import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.jsonprofil
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.jsonprofile.CIAGProfileRequestDTO
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity.CIAGProfile
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.exceptions.AlreadyExistsException
+import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.exceptions.NotFoundException
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.repository.CIAGProfileRepository
 
 @Service
 class CIAGProfileService(
   private val ciagProfileRepository: CIAGProfileRepository,
 ) {
-  fun createCIAGProfileForOffender(
+  fun createOrUpdateCIAGProfileForOffender(
     ciagProfileDTO: CIAGProfileRequestDTO,
 
   ): CIAGProfile? {
@@ -20,19 +21,6 @@ class CIAGProfileService(
     ciagProfileRepository.saveAndFlush(ciagProfile)
 
     return ciagProfile
-  }
-
-  fun updateCIAGProfileForOffender(
-    ciagProfileDTO: CIAGProfileRequestDTO,
-
-  ): CIAGProfileDTO? {
-    var ciagProfile = CIAGProfile(ciagProfileDTO)
-    if (ciagProfileRepository.existsById(ciagProfile.offenderId)) {
-      throw AlreadyExistsException(ciagProfile.offenderId)
-    }
-    ciagProfileRepository.saveAndFlush(ciagProfile)
-
-    return CIAGProfileDTO(ciagProfile)
   }
 
   fun deleteCIAGProfileForOffender(
@@ -47,19 +35,31 @@ class CIAGProfileService(
 
     return true
   }
+  fun deleteCIAGProfileForOffenderByOffenderId(
+    offenderId: String,
+
+  ): Boolean? {
+    if (!ciagProfileRepository.existsById(offenderId)) {
+      throw NotFoundException(offenderId)
+    }
+    ciagProfileRepository.deleteById(offenderId)
+
+    return true
+  }
 
   fun getCIAGProfileForOffender(
     offenderId: String,
 
   ): CIAGProfileDTO? {
     var ciagProfile = ciagProfileRepository.findByOffenderId(offenderId)
-
-    return ciagProfile?.let { CIAGProfileDTO(it) }
+    if (ciagProfile == null) {
+      throw NotFoundException(offenderId)
+    }
+    return ciagProfile.let { CIAGProfileDTO(it) }
   }
 
-  fun getCIAGProfileDTO(
+  fun deleteCIAGProfile(
     offenderId: String,
-
   ): CIAGProfileDTO? {
     var ciagProfile = ciagProfileRepository.findByOffenderId(offenderId)
 

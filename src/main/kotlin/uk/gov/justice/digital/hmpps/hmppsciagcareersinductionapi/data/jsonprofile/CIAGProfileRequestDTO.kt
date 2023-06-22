@@ -1,8 +1,12 @@
 package uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.jsonprofile
 
-import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity.*
+import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity.AchievedFunctionalLevel
+import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity.AchievedQualification
+import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity.AchievedTrainjng
+import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity.Goals
+import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity.PreviousWork
+import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity.PreviousWorkDetail
 import java.time.LocalDateTime
-import javax.persistence.*
 
 data class CIAGProfileRequestDTO(
   val offenderId: String,
