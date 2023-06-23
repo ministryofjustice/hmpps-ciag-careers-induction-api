@@ -13,37 +13,33 @@ import java.time.LocalDateTime
 data class CIAGProfileDTO(
   @Schema(description = "Offender Id", example = "ABC12345")
   val offenderId: String,
+  @Schema var createdBy: String,
 
-  var bookingId: Long,
+  @Schema var createdDateTime: LocalDateTime,
 
-  var createdBy: String,
+  @Schema var modifiedBy: String,
 
-  var createdDateTime: LocalDateTime,
+  @Schema var desireToWork: Boolean,
 
-  var modifiedBy: String,
+  @Schema var modifiedDateTime: LocalDateTime,
 
-  var desireToWork: Boolean,
+  @Schema var previousWorkDetail: MutableSet<PreviousWorkDetail>,
 
-  var modifiedDateTime: LocalDateTime,
+  @Schema var achievedFunctionalLevel: MutableSet<AchievedFunctionalLevel>,
 
-  var previousWorkDetail: MutableSet<PreviousWorkDetail>,
+  @Schema var achievedQualification: MutableSet<AchievedQualification>,
 
-  var achievedFunctionalLevel: MutableSet<AchievedFunctionalLevel>,
+  @Schema var achievedTrainjng: MutableSet<AchievedTrainjng>,
 
-  var achievedQualification: MutableSet<AchievedQualification>,
+  @Schema var previousWork: MutableSet<PreviousWork>,
 
-  var achievedTrainjng: MutableSet<AchievedTrainjng>,
+  @Schema var goals: MutableSet<Goals>,
 
-  var previousWork: MutableSet<PreviousWork>,
-
-  var goals: MutableSet<Goals>,
-
-  var schemaVersion: String,
+  @Schema var schemaVersion: String,
 
 ) {
   constructor(profileEntity: CIAGProfile) : this(
     offenderId = profileEntity.offenderId,
-    bookingId = profileEntity.bookingId,
     createdBy = profileEntity.createdBy,
     createdDateTime = profileEntity.createdDateTime,
     modifiedBy = profileEntity.modifiedBy,

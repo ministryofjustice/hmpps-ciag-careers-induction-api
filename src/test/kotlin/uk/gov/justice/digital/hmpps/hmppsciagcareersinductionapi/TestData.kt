@@ -47,7 +47,6 @@ class TestData {
 
     val ciagDTO = CIAGProfileRequestDTO(
       "offen1",
-      123,
       "sacintha",
       LocalDateTime.now(),
       "sacintha",
@@ -64,7 +63,6 @@ class TestData {
 
     val ciag = CIAGProfile(
       "offen1",
-      123,
       "sacintha",
       LocalDateTime.now(),
       "sacintha",

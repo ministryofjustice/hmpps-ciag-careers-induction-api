@@ -22,9 +22,6 @@ import javax.persistence.Table
 data class CIAGProfile(
   @Id
   val offenderId: String,
-
-  var bookingId: Long,
-
   @CreatedBy
   var createdBy: String,
 
@@ -80,7 +77,6 @@ data class CIAGProfile(
     ciagProfileRequestDTO: CIAGProfileRequestDTO,
   ) : this(
     offenderId = ciagProfileRequestDTO.offenderId,
-    bookingId = ciagProfileRequestDTO.bookingId,
     createdBy = ciagProfileRequestDTO.createdBy,
     createdDateTime = LocalDateTime.now(),
     modifiedBy = ciagProfileRequestDTO.modifiedBy,
@@ -102,7 +98,6 @@ data class CIAGProfile(
     other as CIAGProfile
 
     if (offenderId != other.offenderId) return false
-    if (bookingId != other.bookingId) return false
     if (createdBy != other.createdBy) return false
     if (createdDateTime != other.createdDateTime) return false
     if (modifiedBy != other.modifiedBy) return false
@@ -121,7 +116,6 @@ data class CIAGProfile(
 
   override fun hashCode(): Int {
     var result = offenderId.hashCode()
-    result = 31 * result + bookingId.hashCode()
     result = 31 * result + createdBy.hashCode()
     result = 31 * result + createdDateTime.hashCode()
     result = 31 * result + modifiedBy.hashCode()

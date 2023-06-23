@@ -54,7 +54,7 @@ class RepositoriesTests @Autowired constructor(
     var goalSet = mutableSetOf(goals)
 
     val ciag = CIAGProfile(
-      "offen1", 123, "sacintha", LocalDateTime.now(),
+      "offen1", "sacintha", LocalDateTime.now(),
       "sacintha", true, LocalDateTime.now(), previousWorkDetailSet, acchievedFuntionalLevelSet, acchievedQualificationSet, achievedTrainjngSet, previousWorkSet, goalSet, "1.1",
     )
     entityManager.persist(ciag)
@@ -91,7 +91,7 @@ class RepositoriesTests @Autowired constructor(
     var goalSet = mutableSetOf(goals)
 
     val ciag = CIAGProfile(
-      "offen1", 123, "sacintha", LocalDateTime.now(),
+      "offen1", "sacintha", LocalDateTime.now(),
       "sacintha", true, LocalDateTime.now(), previousWorkDetailSet, acchievedFuntionalLevelSet, acchievedQualificationSet, achievedTrainjngSet, previousWorkSet, goalSet, "1.1",
     )
     entityManager.persist(ciag)
@@ -139,7 +139,7 @@ class RepositoriesTests @Autowired constructor(
     var goalSet = mutableSetOf(goals)
 
     val ciag = CIAGProfile(
-      "offen1", 123, "sacintha", LocalDateTime.now(),
+      "offen1", "sacintha", LocalDateTime.now(),
       "sacintha", true, LocalDateTime.now(), previousWorkDetailSet, acchievedFuntionalLevelSet, acchievedQualificationSet, achievedTrainjngSet, previousWorkSet, goalSet, "1.1",
     )
     entityManager.persist(ciag)
@@ -187,7 +187,7 @@ class RepositoriesTests @Autowired constructor(
     var goalSet = mutableSetOf(goals)
 
     val ciag = CIAGProfile(
-      "offen1", 123, "sacintha", LocalDateTime.now(),
+      "offen1", "sacintha", LocalDateTime.now(),
       "sacintha", true, LocalDateTime.now(), previousWorkDetailSet, acchievedFuntionalLevelSet, acchievedQualificationSet, achievedTrainjngSet, previousWorkSet, goalSet, "1.1",
     )
     entityManager.persist(ciag)
