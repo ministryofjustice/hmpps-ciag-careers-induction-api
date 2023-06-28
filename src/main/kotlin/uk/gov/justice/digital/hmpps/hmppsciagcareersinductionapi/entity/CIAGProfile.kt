@@ -38,7 +38,7 @@ data class CIAGProfile(
   var modifiedDateTime: LocalDateTime,
 
   @ElementCollection
-  @CollectionTable(name = "Work_Detail")
+  @CollectionTable(name = "Work_Detail",joinColumns = [JoinColumn(name = "offender_Id")])
   @Column(name = "Previous_Work_Detail")
   var previousWorkDetail: MutableSet<PreviousWorkDetail>,
 

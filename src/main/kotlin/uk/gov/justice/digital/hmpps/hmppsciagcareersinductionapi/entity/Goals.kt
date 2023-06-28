@@ -28,7 +28,7 @@ data class Goals constructor(
   @Column(name = "id", nullable = false)
   val id: Long?,
   @ManyToOne(fetch = FetchType.EAGER, cascade = [CascadeType.ALL])
-  @JoinColumn(name = "profile_id")
+  @JoinColumn(name = "offender_id")
   val profile: CIAGProfile?,
 ) {
   override fun equals(other: Any?): Boolean {
