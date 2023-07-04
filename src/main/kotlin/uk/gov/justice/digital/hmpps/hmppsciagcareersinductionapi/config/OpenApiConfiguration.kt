@@ -15,9 +15,9 @@ class OpenApiConfiguration(buildProperties: BuildProperties) {
   fun customOpenAPI(): OpenAPI? = OpenAPI()
     .info(
       Info()
-        .title("Hmpps Education Employment Api")
+        .title("Hmpps CIAG Api")
         .version(version)
-        .description("API for employment education")
+        .description("API for CIAG")
         .contact(
           Contact()
             .name("HMPPS Digital Studio")

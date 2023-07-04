@@ -5,4 +5,7 @@ import org.springframework.stereotype.Repository
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity.CIAGProfile
 
 @Repository
-interface CIAGProfileRepository : JpaRepository<CIAGProfile, String>
+interface CIAGProfileRepository : JpaRepository<CIAGProfile, String> {
+  fun findAllByOrderByGoalsDesc(): Iterable<CIAGProfile>
+  fun findByOffenderId(offenderId: String): CIAGProfile?
+}
