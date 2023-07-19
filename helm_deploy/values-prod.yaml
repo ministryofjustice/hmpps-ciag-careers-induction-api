@@ -4,6 +4,9 @@
 generic-service:
   ingress:
     host: ciag-induction-api.hmpps.service.justice.gov.uk
+
+  env:
+    APPLICATIONINSIGHTS_CONFIGURATION_FILE: applicationinsights.dev.json
     API_BASE_URL_OAUTH: https://sign-in.hmpps.service.justice.gov.uk/auth
 
 # CloudPlatform AlertManager receiver to route prometheus alerts to slack
