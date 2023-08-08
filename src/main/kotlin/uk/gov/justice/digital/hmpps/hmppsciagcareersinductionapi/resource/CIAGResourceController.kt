@@ -32,16 +32,16 @@ class CIAGResourceController(
   @PreAuthorize("hasAnyRole('ROLE_WORK_READINESS_EDIT','ROLE_WORK_READINESS_VIEW')")
   @GetMapping("/{offenderId}")
   @Operation(
-    summary = "Fetch the test message",
+    summary = "Fetch the ciag profile for the offender",
     description = "Currently requires role <b>ROLE_VIEW_PRISONER_DATA</b>",
     responses = [
       ApiResponse(
         responseCode = "200",
-        description = "test Message",
+        description = "Ciage profile is returned",
         content = [
           Content(
             mediaType = "application/json",
-            schema = Schema(implementation = String::class),
+            schema = Schema(implementation = CIAGProfileDTO::class),
           ),
         ],
       ),
@@ -72,16 +72,16 @@ class CIAGResourceController(
   @PreAuthorize("hasAnyRole('ROLE_WORK_READINESS_EDIT','ROLE_WORK_READINESS_VIEW')")
   @DeleteMapping("/{offenderId}")
   @Operation(
-    summary = "Fetch the test message",
+    summary = "Delete CIAG Profile",
     description = "Currently requires role <b>ROLE_VIEW_PRISONER_DATA</b>",
     responses = [
       ApiResponse(
         responseCode = "200",
-        description = "test Message",
+        description = "Successfully deleted the CIAG profile",
         content = [
           Content(
             mediaType = "application/json",
-            schema = Schema(implementation = String::class),
+            schema = Schema(implementation = CIAGProfileDTO::class),
           ),
         ],
       ),
@@ -160,7 +160,7 @@ class CIAGResourceController(
   @PreAuthorize("hasAnyRole('ROLE_WORK_READINESS_EDIT','ROLE_WORK_READINESS_VIEW')")
   @PutMapping("/{offenderId}")
   @Operation(
-    summary = "Create the CIAG profile for an offender",
+    summary = "Update the CIAG profile for an offender",
     description = "Called once to initially create the profile. Currently requires role <b>ROLE_VIEW_PRISONER_DATA</b>",
     responses = [
       ApiResponse(

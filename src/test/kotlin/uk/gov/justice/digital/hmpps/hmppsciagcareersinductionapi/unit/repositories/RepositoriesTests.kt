@@ -14,10 +14,7 @@ import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.Tra
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.WorkType
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity.AchievedFunctionalLevel
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity.AchievedQualification
-import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity.AchievedTrainjng
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity.CIAGProfile
-import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity.GoalSteps
-import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity.Goals
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity.PreviousWork
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity.PreviousWorkDetail
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.repository.CIAGProfileRepository

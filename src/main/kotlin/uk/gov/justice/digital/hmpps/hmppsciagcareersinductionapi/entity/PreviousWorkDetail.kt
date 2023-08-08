@@ -4,8 +4,9 @@ import javax.persistence.Embeddable
 
 @Embeddable
 data class PreviousWorkDetail(
-  var workTypeJob: WorkType?,
-  var otherJob: String?,
-  var jobTitle: String?,
-  var tasksAndResponsibilities: String?,
+  var workType: WorkType?,
+  var otherWork: String?,
+
+  var role: String?,
+  var details: String?,
 )

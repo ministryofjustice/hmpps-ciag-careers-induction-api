@@ -9,4 +9,5 @@ enum class Skills {
   THINKING_AND_PROBLEM_SOLVING,
   WILLINGNESS_TO_LEARN,
   OTHER,
+  NONE,
 }

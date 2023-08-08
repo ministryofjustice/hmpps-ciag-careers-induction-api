@@ -1,21 +1,27 @@
 package uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi
 
-import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.FunctionalAssessment
-import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.FunctionalAssessmentLevel
+import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.AbilityToWorkImpactedBy
+import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.EducationLevels
+import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.HopingToGetWork
+import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.OtherQualification
+import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.PersonalInterests
+import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.PrisonTraining
+import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.PrisonWork
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.QualificationLevel
-import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.TimePeriod
-import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.Training
+import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.ReasonToNotGetWork
+import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.Skills
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.WorkType
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.jsonprofile.CIAGProfileRequestDTO
-import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity.AchievedFunctionalLevel
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity.AchievedQualification
-import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity.AchievedTrainjng
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity.CIAGProfile
-import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity.GoalSteps
-import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity.Goals
+import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity.EducationAndQualification
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity.PreviousWork
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity.PreviousWorkDetail
+import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity.PrisonWorkAndEducation
+import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity.SkillsAndInterests
+import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity.WorkInterests
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.service.CIAGProfileService
+import java.lang.Boolean.FALSE
 import java.time.LocalDateTime
 
 class TestData {
@@ -24,26 +30,46 @@ class TestData {
     val createdByString = "createdBy"
     val offenderIdString = "offenderId"
     val modifiedByString = "modifiedBy"
-    var previousWorkDetail = PreviousWorkDetail(WorkType.ANIMAL_CARE_AND_FARMING, null, "jobtitle", "Respon")
+    var hopingToGetWork = HopingToGetWork.NOT_SURE
+    var abilityToWorkImpactDetailList = mutableSetOf(AbilityToWorkImpactedBy.HEALTH_ISSUES)
+    var reasonToNotGetWork = mutableSetOf(ReasonToNotGetWork.FULL_TIME_CARER)
+    var previousWorkDetail = PreviousWorkDetail(WorkType.BEAUTY, null, "jobtitle", "Respon")
     var previousWorkDetailSet = mutableSetOf(previousWorkDetail)
-    var acchievedFuntionalLevel = AchievedFunctionalLevel(
-      FunctionalAssessment.DIGITAL_LITERACY,
-      FunctionalAssessmentLevel.LEVEL_1,
+    var previousWork = PreviousWork(FALSE, "Sacintha", LocalDateTime.now(), null, previousWorkDetailSet, null)
+    var workInterests = WorkInterests("Sacintha", LocalDateTime.now(), null, mutableSetOf(WorkType.BEAUTY), null, mutableSetOf(previousWorkDetail), null)
+    var skillsAndInterests = SkillsAndInterests(
+      "Sacintha",
       LocalDateTime.now(),
+      null,
+      mutableSetOf(Skills.COMMUNICATION),
+      null,
+      mutableSetOf(PersonalInterests.COMMUNITY),
+      null,
+      null,
     )
-    var acchievedFuntionalLevelSet = mutableSetOf(acchievedFuntionalLevel)
     var acchievedQualification = AchievedQualification("Subject", "grade 2", QualificationLevel.LEVEL_1, true)
+
     var acchievedQualificationSet = mutableSetOf(acchievedQualification)
-    var achievedTraining = AchievedTrainjng(Training.CSCS_CARD, null)
-    var achievedTrainjngSet = mutableSetOf(achievedTraining)
-    var previousWork = PreviousWork(WorkType.ANIMAL_CARE_AND_FARMING, null)
-    var previousWorkSet = mutableSetOf(previousWork)
-    var goalStep = GoalSteps("step1", TimePeriod.SIX_TO_TWELEVE)
-
-    var goalstepSet = mutableSetOf(goalStep)
-    var goals = Goals("goal1", goalstepSet, null, null)
-
-    var goalSet = mutableSetOf(goals)
+    var educationAndQualification = EducationAndQualification(
+      "Sacintha",
+      LocalDateTime.now(),
+      null,
+      EducationLevels.FURTHER_EDUCATION_COLLEGE,
+      acchievedQualificationSet,
+      mutableSetOf(OtherQualification.CSCS_CARD),
+      null,
+      null,
+    )
+    var prisonWorkAndEducation = PrisonWorkAndEducation(
+      "Sacintha",
+      LocalDateTime.now(),
+      null,
+      mutableSetOf(PrisonWork.PRISON_LAUNDRY),
+      null,
+      mutableSetOf(PrisonTraining.BARBERING_AND_HAIRDRESSING),
+      null,
+      null,
+    )
 
     val ciagDTO = CIAGProfileRequestDTO(
       "offen1",
@@ -51,14 +77,8 @@ class TestData {
       LocalDateTime.now(),
       "sacintha",
       true,
-      LocalDateTime.now(),
-      previousWorkDetailSet,
-      acchievedFuntionalLevelSet,
-      acchievedQualificationSet,
-      achievedTrainjngSet,
-      previousWorkSet,
-      goalSet,
-      "1.1",
+      LocalDateTime.now(), HopingToGetWork.NOT_SURE, null, null, abilityToWorkImpactDetailList, reasonToNotGetWork, previousWork, workInterests, skillsAndInterests, educationAndQualification, prisonWorkAndEducation, "1.1",
+
     )
 
     val ciag = CIAGProfile(
@@ -67,14 +87,8 @@ class TestData {
       LocalDateTime.now(),
       "sacintha",
       true,
-      LocalDateTime.now(),
-      previousWorkDetailSet,
-      acchievedFuntionalLevelSet,
-      acchievedQualificationSet,
-      achievedTrainjngSet,
-      previousWorkSet,
-      goalSet,
-      "1.1",
+      LocalDateTime.now(), HopingToGetWork.NOT_SURE, null, null, abilityToWorkImpactDetailList, reasonToNotGetWork, previousWork, workInterests, skillsAndInterests, educationAndQualification, prisonWorkAndEducation, "1.1",
+
     )
   }
 }

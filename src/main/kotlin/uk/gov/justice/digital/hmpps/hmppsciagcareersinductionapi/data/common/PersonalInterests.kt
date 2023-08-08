@@ -1,6 +1,6 @@
 package uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common
 
-enum class FutureIntrests {
+enum class PersonalInterests {
   COMMUNITY,
   CRAFTS,
   CREATIVE,
@@ -14,4 +14,6 @@ enum class FutureIntrests {
   SOLO_SPORTS,
   TEAM_SPORTS,
   WELLNESS,
+  OTHER,
+  NONE,
 }
