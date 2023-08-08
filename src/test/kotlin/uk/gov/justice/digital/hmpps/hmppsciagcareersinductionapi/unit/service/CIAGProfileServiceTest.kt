@@ -62,7 +62,7 @@ class CIAGProfileServiceTest {
   fun `makes a call to the repository to get the CIAG profile`() {
     whenever(ciagProfileRepository.findByOffenderId((any()))).thenReturn(TestData.ciag)
 
-    val rProfile = profileService.getCIAGProfileForOffender(TestData.ciagDTO.offenderId)
+    val rProfile = TestData.ciagDTO.offenderId?.let { profileService.getCIAGProfileForOffender(it) }
     assertThat(rProfile).extracting(TestData.createdByString, TestData.offenderIdString, TestData.modifiedByString)
       .contains(TestData.ciag.createdBy, TestData.ciag.offenderId, TestData.ciag.modifiedBy)
   }
@@ -71,7 +71,7 @@ class CIAGProfileServiceTest {
   fun `makes a call to the repository to get the CIAG profile but getting a null object`() {
     AssertionsForClassTypes.assertThatExceptionOfType(NotFoundException::class.java).isThrownBy {
       whenever(ciagProfileRepository.findByOffenderId((any()))).thenReturn(null)
-      profileService.getCIAGProfileForOffender(TestData.ciagDTO.offenderId)
+      TestData.ciagDTO.offenderId?.let { profileService.getCIAGProfileForOffender(it) }
     }.withMessageContaining("CIAG profile does not exist for offender")
   }
 
@@ -79,7 +79,7 @@ class CIAGProfileServiceTest {
   fun `makes a call to the repository to delete the CIAG profilefor a given Offender id`() {
     whenever(ciagProfileRepository.findByOffenderId((any()))).thenReturn(null)
 
-    val rProfile = profileService.deleteCIAGProfile(TestData.ciagDTO.offenderId)
+    val rProfile = TestData.ciagDTO.offenderId?.let { profileService.deleteCIAGProfile(it) }
     assertThat(rProfile).isNull()
   }
 }

@@ -47,5 +47,5 @@ data class EducationAndQualification(
 
   @OneToOne(fetch = FetchType.EAGER, cascade = [CascadeType.ALL])
   @JoinColumn(name = "offender_id")
-  val profile: CIAGProfile?,
+  var profile: CIAGProfile?,
 )

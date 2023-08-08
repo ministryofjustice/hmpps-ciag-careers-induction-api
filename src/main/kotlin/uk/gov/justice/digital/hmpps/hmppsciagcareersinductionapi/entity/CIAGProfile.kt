@@ -52,35 +52,35 @@ data class CIAGProfile(
   @ElementCollection
   @CollectionTable(name = "ABILITY_TO_WORK_IMPACT", joinColumns = [JoinColumn(name = "OFFENDER_ID")])
   @Column(name = "WORK_IMPACT_")
-  var abilityToWorkImpactDetail: MutableSet<AbilityToWorkImpactedBy>,
+  var abilityToWorkImpactDetail: MutableSet<AbilityToWorkImpactedBy>?,
 
   @ElementCollection
   @CollectionTable(name = "REASON_NOT_TO_GET_WORK", joinColumns = [JoinColumn(name = "OFFENDER_ID")])
   @Column(name = "REASON")
-  var reasonToNotGetWork: MutableSet<ReasonToNotGetWork>,
+  var reasonToNotGetWork: MutableSet<ReasonToNotGetWork>?,
 
   @OneToOne(mappedBy = "profile", cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.EAGER)
   @JoinColumn(name = "PREVIOUS_WORK_ID")
-  var previousWorkDetails: PreviousWork,
+  var previousWorkDetails: PreviousWork?,
 
   @OneToOne(mappedBy = "profile", cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.EAGER)
   @JoinColumn(name = "WORK_INTERESTS_ID")
-  var workInterests: WorkInterests,
+  var workInterests: WorkInterests?,
 
   @OneToOne(mappedBy = "profile", cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.EAGER)
   @JoinColumn(name = "SKILLS_AND_INTERESTS_ID")
-  var skillsAndInterests: SkillsAndInterests,
+  var skillsAndInterests: SkillsAndInterests?,
 
   @OneToOne(mappedBy = "profile", cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.EAGER)
   @JoinColumn(name = "EDUCATION_AND_QUALIFICATION_ID")
-  var educationAndQualification: EducationAndQualification,
+  var educationAndQualification: EducationAndQualification?,
 
   @OneToOne(mappedBy = "profile", cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.EAGER)
   @JoinColumn(name = "PRISON_WORK_AND_EDUCATION_ID")
-  var prisonWorkAndEducation: PrisonWorkAndEducation,
+  var prisonWorkAndEducation: PrisonWorkAndEducation?,
 
   @Column(name = "SCHEMA_VERSION")
-  var schemaVersion: String,
+  var schemaVersion: String?,
 
 ) {
   constructor(
@@ -93,28 +93,28 @@ data class CIAGProfile(
     desireToWork = ciagProfileRequestDTO.desireToWork!!,
     modifiedDateTime = ciagProfileRequestDTO.modifiedDateTime!!,
     hopingToGetWork = ciagProfileRequestDTO.hopingToGetWork!!,
-    otherReasonToNotGetWork = ciagProfileRequestDTO.otherReasonToNotGetWork!!,
-    otherAbilityTOWorkImpact = ciagProfileRequestDTO.otherAbilityTOWorkImpact!!,
-    abilityToWorkImpactDetail = ciagProfileRequestDTO.abilityToWorkImpactDetail!!,
-    reasonToNotGetWork = ciagProfileRequestDTO.reasonToNotGetWork!!,
-    previousWorkDetails = ciagProfileRequestDTO.previousWorkDetails!!,
-    workInterests = ciagProfileRequestDTO.workInterests!!,
-    skillsAndInterests = ciagProfileRequestDTO.skillsAndInterests!!,
-    educationAndQualification = ciagProfileRequestDTO.educationAndQualification!!,
-    prisonWorkAndEducation = ciagProfileRequestDTO.prisonWorkAndEducation!!,
+    otherReasonToNotGetWork = ciagProfileRequestDTO.otherReasonToNotGetWork,
+    otherAbilityTOWorkImpact = ciagProfileRequestDTO.otherAbilityTOWorkImpact,
+    abilityToWorkImpactDetail = ciagProfileRequestDTO.abilityToWorkImpactDetail,
+    reasonToNotGetWork = ciagProfileRequestDTO.reasonToNotGetWork,
+    previousWorkDetails = ciagProfileRequestDTO.previousWorkDetails,
+    workInterests = ciagProfileRequestDTO.workInterests,
+    skillsAndInterests = ciagProfileRequestDTO.skillsAndInterests,
+    educationAndQualification = ciagProfileRequestDTO.educationAndQualification,
+    prisonWorkAndEducation = ciagProfileRequestDTO.prisonWorkAndEducation,
 
-    schemaVersion = ciagProfileRequestDTO.schemaVersion!!,
+    schemaVersion = ciagProfileRequestDTO.schemaVersion,
   ) {
-    prisonWorkAndEducation.modifiedBy = modifiedBy
-    prisonWorkAndEducation.modifiedDateTime = modifiedDateTime
-    educationAndQualification.modifiedBy = modifiedBy
-    educationAndQualification.modifiedDateTime = modifiedDateTime
-    skillsAndInterests.modifiedBy = modifiedBy
-    skillsAndInterests.modifiedDateTime = modifiedDateTime
-    workInterests.modifiedBy = modifiedBy
-    workInterests.modifiedDateTime = modifiedDateTime
-    previousWorkDetails.modifiedBy = modifiedBy
-    previousWorkDetails.modifiedDateTime = modifiedDateTime
+    prisonWorkAndEducation?.modifiedBy = modifiedBy
+    prisonWorkAndEducation?.modifiedDateTime = modifiedDateTime
+    educationAndQualification?.modifiedBy = modifiedBy
+    educationAndQualification?.modifiedDateTime = modifiedDateTime
+    skillsAndInterests?.modifiedBy = modifiedBy
+    skillsAndInterests?.modifiedDateTime = modifiedDateTime
+    workInterests?.modifiedBy = modifiedBy
+    workInterests?.modifiedDateTime = modifiedDateTime
+    previousWorkDetails?.modifiedBy = modifiedBy
+    previousWorkDetails?.modifiedDateTime = modifiedDateTime
   }
 
   override fun equals(other: Any?): Boolean {

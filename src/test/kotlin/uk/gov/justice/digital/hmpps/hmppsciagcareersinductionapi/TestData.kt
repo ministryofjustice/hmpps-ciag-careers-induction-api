@@ -90,5 +90,35 @@ class TestData {
       LocalDateTime.now(), HopingToGetWork.NOT_SURE, null, null, abilityToWorkImpactDetailList, reasonToNotGetWork, previousWork, workInterests, skillsAndInterests, educationAndQualification, prisonWorkAndEducation, "1.1",
 
     )
+
+    val ciagEducation = CIAGProfile(
+      "offen1",
+      "sacintha",
+      LocalDateTime.now(),
+      "sacintha",
+      true,
+      LocalDateTime.now(), HopingToGetWork.NOT_SURE, null, null, abilityToWorkImpactDetailList, reasonToNotGetWork, null, null, null, educationAndQualification, null, "1.1",
+
+    )
+
+    val ciagPreviousWork = CIAGProfile(
+      "offen1",
+      "sacintha",
+      LocalDateTime.now(),
+      "sacintha",
+      true,
+      LocalDateTime.now(), HopingToGetWork.NOT_SURE, null, null, abilityToWorkImpactDetailList, reasonToNotGetWork, previousWork, null, null, null, null, "1.1",
+
+    )
+
+    val ciagPrisonWork = CIAGProfile(
+      "offen1",
+      "sacintha",
+      LocalDateTime.now(),
+      "sacintha",
+      true,
+      LocalDateTime.now(), HopingToGetWork.NOT_SURE, null, null, abilityToWorkImpactDetailList, reasonToNotGetWork, null, null, null, null, prisonWorkAndEducation, "1.1",
+
+    )
   }
 }
