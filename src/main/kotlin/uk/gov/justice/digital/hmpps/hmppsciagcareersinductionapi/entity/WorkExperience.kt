@@ -3,8 +3,8 @@ import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.Wor
 import javax.persistence.Embeddable
 
 @Embeddable
-data class PreviousWorkDetail(
-  var workType: WorkType?,
+data class WorkExperience(
+  var typeOfWorkExperience: WorkType?,
   var otherWork: String?,
 
   var role: String?,

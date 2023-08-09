@@ -1,4 +1,5 @@
 package uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity
+import com.fasterxml.jackson.annotation.JsonIgnore
 import org.springframework.data.annotation.LastModifiedBy
 import org.springframework.data.annotation.LastModifiedDate
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.PersonalInterests
@@ -18,7 +19,7 @@ import javax.persistence.OneToOne
 import javax.persistence.Table
 
 @Entity
-@Table(name = "WORK_INTERESTS")
+@Table(name = "SKILLS_AND_INTERESTS")
 data class SkillsAndInterests(
   @LastModifiedBy
   var modifiedBy: String,
@@ -34,16 +35,17 @@ data class SkillsAndInterests(
   @Column(name = "SKILLS")
   var skills: MutableSet<Skills>?,
   @Column(name = "OTHER_SKILL")
-  var otherSkill: String?,
+  var skillOTHER: String?,
 
   @ElementCollection
   @CollectionTable(name = "PERSONAL_WORK_INTERESTS", joinColumns = [JoinColumn(name = "WORK_INTERESTS_ID")])
   @Column(name = "PERSONAL_WORK_INTEREST")
-  var personalInterestsList: MutableSet<PersonalInterests>?,
+  var personalInterests: MutableSet<PersonalInterests>?,
 
   @Column(name = "OTHER_PERSONAL_INTRESTS")
-  var otherPersonalIntrests: String?,
+  var personalInterestsOther: String?,
   @OneToOne(fetch = FetchType.EAGER, cascade = [CascadeType.ALL])
   @JoinColumn(name = "OFFENDER_ID")
+  @JsonIgnore
   val profile: CIAGProfile?,
 )

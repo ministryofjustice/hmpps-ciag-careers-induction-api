@@ -1,4 +1,5 @@
 package uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity
+import com.fasterxml.jackson.annotation.JsonIgnore
 import org.springframework.data.annotation.LastModifiedBy
 import org.springframework.data.annotation.LastModifiedDate
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.PrisonTraining
@@ -32,17 +33,18 @@ data class PrisonWorkAndEducation(
   @ElementCollection
   @CollectionTable(name = "PRISON_WORK", joinColumns = [JoinColumn(name = "PRISON_WORK_EDUCATION_ID")])
   @Column(name = "WORK")
-  var prisonWork: MutableSet<PrisonWork>?,
+  var inPrisonWork: MutableSet<PrisonWork>?,
   @Column(name = "OTHER_PRISON_WORK")
-  var otherPrisonWork: String?,
+  var inPrisonWorkOther: String?,
 
   @ElementCollection
   @CollectionTable(name = "PRISON_EDUCATION", joinColumns = [JoinColumn(name = "PRISON_WORK_EDUCATION_ID")])
   @Column(name = "EDUCATION")
-  var prisonEducation: MutableSet<PrisonTraining>?,
+  var inPrisonEducation: MutableSet<PrisonTraining>?,
   @Column(name = "OTHER_PRISON_EDUCATION")
-  var otherPrisonEducation: String?,
+  var inPrisonEducationOther: String?,
   @OneToOne(fetch = FetchType.EAGER, cascade = [CascadeType.ALL])
   @JoinColumn(name = "OFFENDER_ID")
+  @JsonIgnore
   val profile: CIAGProfile?,
 )

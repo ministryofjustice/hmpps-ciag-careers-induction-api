@@ -1,4 +1,5 @@
 package uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity
+import com.fasterxml.jackson.annotation.JsonIgnore
 import org.springframework.data.annotation.LastModifiedBy
 import org.springframework.data.annotation.LastModifiedDate
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.EducationLevels
@@ -35,17 +36,18 @@ data class EducationAndQualification(
   @ElementCollection
   @CollectionTable(name = "ACHIEVED_QUALIFICATION", joinColumns = [JoinColumn(name = "work_interests_id")])
   @Column(name = "QUALIFICATION")
-  var achievedQualification: MutableSet<AchievedQualification>?,
+  var qualifications: MutableSet<AchievedQualification>?,
 
   @ElementCollection
   @CollectionTable(name = "EXTRA_QUALIFICATION", joinColumns = [JoinColumn(name = "work_interests_id")])
   @Column(name = "QUALIFICATION")
-  var extraQualification: MutableSet<OtherQualification>?,
+  var additionalTraining: MutableSet<OtherQualification>?,
 
   @Column(name = "OTHER_QUALIFICATION")
-  var otherQualification: String?,
+  var additionalTrainingOther: String?,
 
   @OneToOne(fetch = FetchType.EAGER, cascade = [CascadeType.ALL])
   @JoinColumn(name = "offender_id")
+  @JsonIgnore
   var profile: CIAGProfile?,
 )

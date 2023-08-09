@@ -1,6 +1,8 @@
 package uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity
+import com.fasterxml.jackson.annotation.JsonIgnore
 import org.springframework.data.annotation.LastModifiedBy
 import org.springframework.data.annotation.LastModifiedDate
+import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.WorkType
 import java.time.LocalDateTime
 import javax.persistence.CascadeType
 import javax.persistence.CollectionTable
@@ -30,11 +32,24 @@ data class PreviousWork(
   @Column(name = "id", nullable = false)
   val id: Long?,
   @ElementCollection
-  @CollectionTable(name = "PREVIOUS_WORK_DETAIL", joinColumns = [JoinColumn(name = "WORK_ID")])
-  @Column(name = "WORK_DETAILS")
-  var workList: MutableSet<PreviousWorkDetail>?,
+  @CollectionTable(name = "WORK_EXPERIENCE", joinColumns = [JoinColumn(name = "PREVIOUS_WORK_ID")])
+  @Column(name = "WORK_EXPERIENCE")
+  var typeOfWorkExperience: MutableSet<WorkType>?,
+
+  @Column(name = "WORK_EXPERIENCE_OTHER")
+  var typeOfWorkExperienceOther: String?,
+
+  @ElementCollection
+  @CollectionTable(name = "WORK_EXPERIENCE_DETAIL", joinColumns = [JoinColumn(name = "PREVIOUS_WORK_ID")])
+  @Column(name = "WORK_EXPERIENCE_DETAIL")
+  var workExperience: MutableSet<WorkExperience>?,
+
+  @OneToOne(mappedBy = "previousWork", cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.EAGER)
+  @JoinColumn(name = "WORK_INTERESTS_ID")
+  var workInterests: WorkInterests?,
 
   @OneToOne(fetch = FetchType.EAGER, cascade = [CascadeType.ALL])
   @JoinColumn(name = "OFFENDER_ID")
+  @JsonIgnore
   val profile: CIAGProfile?,
 )
