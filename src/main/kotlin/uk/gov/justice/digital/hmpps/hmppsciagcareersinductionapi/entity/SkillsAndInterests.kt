@@ -1,6 +1,8 @@
 package uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity
 import org.springframework.data.annotation.LastModifiedBy
 import org.springframework.data.annotation.LastModifiedDate
+import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.PersonalInterests
+import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.Skills
 import java.time.LocalDateTime
 import javax.persistence.CascadeType
 import javax.persistence.CollectionTable
@@ -16,10 +18,8 @@ import javax.persistence.OneToOne
 import javax.persistence.Table
 
 @Entity
-@Table(name = "PREVIOUS_WORK")
-data class PreviousWork(
-  @Column(name = "HAS_WORKED_BEFORE", nullable = false)
-  var hasWorkedBefore: Boolean,
+@Table(name = "WORK_INTERESTS")
+data class SkillsAndInterests(
   @LastModifiedBy
   var modifiedBy: String,
 
@@ -30,10 +30,19 @@ data class PreviousWork(
   @Column(name = "id", nullable = false)
   val id: Long?,
   @ElementCollection
-  @CollectionTable(name = "PREVIOUS_WORK_DETAIL", joinColumns = [JoinColumn(name = "WORK_ID")])
-  @Column(name = "WORK_DETAILS")
-  var workList: MutableSet<PreviousWorkDetail>?,
+  @CollectionTable(name = "SKILLS_WORK_INTERESTS", joinColumns = [JoinColumn(name = "WORK_INTERESTS_ID")])
+  @Column(name = "SKILLS")
+  var skills: MutableSet<Skills>?,
+  @Column(name = "OTHER_SKILL")
+  var otherSkill: String?,
 
+  @ElementCollection
+  @CollectionTable(name = "PERSONAL_WORK_INTERESTS", joinColumns = [JoinColumn(name = "WORK_INTERESTS_ID")])
+  @Column(name = "PERSONAL_WORK_INTEREST")
+  var personalInterestsList: MutableSet<PersonalInterests>?,
+
+  @Column(name = "OTHER_PERSONAL_INTRESTS")
+  var otherPersonalIntrests: String?,
   @OneToOne(fetch = FetchType.EAGER, cascade = [CascadeType.ALL])
   @JoinColumn(name = "OFFENDER_ID")
   val profile: CIAGProfile?,

@@ -1,6 +1,6 @@
 package uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common
 
-enum class Training {
+enum class OtherQualification {
   CSCS_CARD,
   FIRST_AID_CERTIFICATE,
   FOOD_HYGIENE_CERTIFICATE,

@@ -46,3 +46,4 @@ It then performs a search and replace and directory renames so the project is re
 
 TODO
 have to upgrade
+`docker-compose up --scale   hmpps-ciag-careers-induction-api=0`

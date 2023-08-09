@@ -1,6 +1,8 @@
 package uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity
 import org.springframework.data.annotation.LastModifiedBy
 import org.springframework.data.annotation.LastModifiedDate
+import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.EducationLevels
+import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.OtherQualification
 import java.time.LocalDateTime
 import javax.persistence.CascadeType
 import javax.persistence.CollectionTable
@@ -16,10 +18,8 @@ import javax.persistence.OneToOne
 import javax.persistence.Table
 
 @Entity
-@Table(name = "PREVIOUS_WORK")
-data class PreviousWork(
-  @Column(name = "HAS_WORKED_BEFORE", nullable = false)
-  var hasWorkedBefore: Boolean,
+@Table(name = "EDUCATION_QUALIFICATION")
+data class EducationAndQualification(
   @LastModifiedBy
   var modifiedBy: String,
 
@@ -29,12 +29,23 @@ data class PreviousWork(
   @GeneratedValue(strategy = GenerationType.SEQUENCE)
   @Column(name = "id", nullable = false)
   val id: Long?,
+  @Column(name = "EDUCATION_LEVEL")
+  var educationLevel: EducationLevels?,
+
   @ElementCollection
-  @CollectionTable(name = "PREVIOUS_WORK_DETAIL", joinColumns = [JoinColumn(name = "WORK_ID")])
-  @Column(name = "WORK_DETAILS")
-  var workList: MutableSet<PreviousWorkDetail>?,
+  @CollectionTable(name = "ACHIEVED_QUALIFICATION", joinColumns = [JoinColumn(name = "work_interests_id")])
+  @Column(name = "QUALIFICATION")
+  var achievedQualification: MutableSet<AchievedQualification>?,
+
+  @ElementCollection
+  @CollectionTable(name = "EXTRA_QUALIFICATION", joinColumns = [JoinColumn(name = "work_interests_id")])
+  @Column(name = "QUALIFICATION")
+  var extraQualification: MutableSet<OtherQualification>?,
+
+  @Column(name = "OTHER_QUALIFICATION")
+  var otherQualification: String?,
 
   @OneToOne(fetch = FetchType.EAGER, cascade = [CascadeType.ALL])
-  @JoinColumn(name = "OFFENDER_ID")
-  val profile: CIAGProfile?,
+  @JoinColumn(name = "offender_id")
+  var profile: CIAGProfile?,
 )
