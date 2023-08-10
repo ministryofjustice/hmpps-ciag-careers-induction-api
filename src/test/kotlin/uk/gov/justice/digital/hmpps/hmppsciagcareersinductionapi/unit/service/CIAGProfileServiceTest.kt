@@ -72,7 +72,7 @@ class CIAGProfileServiceTest {
     AssertionsForClassTypes.assertThatExceptionOfType(NotFoundException::class.java).isThrownBy {
       whenever(ciagProfileRepository.findByOffenderId((any()))).thenReturn(null)
       TestData.ciagDTO.offenderId?.let { profileService.getCIAGProfileForOffender(it) }
-    }.withMessageContaining("CIAG profile does not exist for offender")
+    }.withMessageContaining("CIAG previousWork does not exist for offender")
   }
 
   @Test

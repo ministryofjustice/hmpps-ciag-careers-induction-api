@@ -16,9 +16,10 @@ import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity.Achieved
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity.CIAGProfile
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity.EducationAndQualification
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity.PreviousWork
-import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity.PreviousWorkDetail
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity.PrisonWorkAndEducation
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity.SkillsAndInterests
+import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity.WorkExperience
+import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity.WorkInterestDetail
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity.WorkInterests
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.service.CIAGProfileService
 import java.lang.Boolean.FALSE
@@ -32,11 +33,22 @@ class TestData {
     val modifiedByString = "modifiedBy"
     var hopingToGetWork = HopingToGetWork.NOT_SURE
     var abilityToWorkImpactDetailList = mutableSetOf(AbilityToWorkImpactedBy.HEALTH_ISSUES)
-    var reasonToNotGetWork = mutableSetOf(ReasonToNotGetWork.FULL_TIME_CARER)
-    var previousWorkDetail = PreviousWorkDetail(WorkType.BEAUTY, null, "jobtitle", "Respon")
+    var reasonToNotGetWork = ReasonToNotGetWork.FULL_TIME_CARER
+    var previousWorkDetail = WorkExperience(WorkType.BEAUTY, null, "jobtitle", "Respon")
     var previousWorkDetailSet = mutableSetOf(previousWorkDetail)
-    var previousWork = PreviousWork(FALSE, "Sacintha", LocalDateTime.now(), null, previousWorkDetailSet, null)
-    var workInterests = WorkInterests("Sacintha", LocalDateTime.now(), null, mutableSetOf(WorkType.BEAUTY), null, mutableSetOf(previousWorkDetail), null)
+    var workInterests = WorkInterests(
+      "Sacintha",
+      LocalDateTime.now(),
+      null,
+      mutableSetOf(WorkType.BEAUTY),
+      null,
+      mutableSetOf(
+        WorkInterestDetail(WorkType.BEAUTY, "tired"),
+      ),
+      null,
+    )
+
+    var previousWork = PreviousWork(FALSE, "Sacintha", LocalDateTime.now(), null, mutableSetOf(WorkType.BEAUTY), null, previousWorkDetailSet, workInterests, null)
     var skillsAndInterests = SkillsAndInterests(
       "Sacintha",
       LocalDateTime.now(),
@@ -47,7 +59,7 @@ class TestData {
       null,
       null,
     )
-    var acchievedQualification = AchievedQualification("Subject", "grade 2", QualificationLevel.LEVEL_1, true)
+    var acchievedQualification = AchievedQualification("Subject", "grade 2", QualificationLevel.LEVEL_1)
 
     var acchievedQualificationSet = mutableSetOf(acchievedQualification)
     var educationAndQualification = EducationAndQualification(
@@ -77,7 +89,7 @@ class TestData {
       LocalDateTime.now(),
       "sacintha",
       true,
-      LocalDateTime.now(), HopingToGetWork.NOT_SURE, null, null, abilityToWorkImpactDetailList, reasonToNotGetWork, previousWork, workInterests, skillsAndInterests, educationAndQualification, prisonWorkAndEducation, "1.1",
+      LocalDateTime.now(), HopingToGetWork.NOT_SURE, null, null, abilityToWorkImpactDetailList, reasonToNotGetWork, previousWork, skillsAndInterests, educationAndQualification, prisonWorkAndEducation, "1.1",
 
     )
 
@@ -87,7 +99,7 @@ class TestData {
       LocalDateTime.now(),
       "sacintha",
       true,
-      LocalDateTime.now(), HopingToGetWork.NOT_SURE, null, null, abilityToWorkImpactDetailList, reasonToNotGetWork, previousWork, workInterests, skillsAndInterests, educationAndQualification, prisonWorkAndEducation, "1.1",
+      LocalDateTime.now(), HopingToGetWork.NOT_SURE, null, null, abilityToWorkImpactDetailList, reasonToNotGetWork, previousWork, skillsAndInterests, educationAndQualification, prisonWorkAndEducation, "1.1",
 
     )
 
@@ -97,7 +109,7 @@ class TestData {
       LocalDateTime.now(),
       "sacintha",
       true,
-      LocalDateTime.now(), HopingToGetWork.NOT_SURE, null, null, abilityToWorkImpactDetailList, reasonToNotGetWork, null, null, null, educationAndQualification, null, "1.1",
+      LocalDateTime.now(), HopingToGetWork.NOT_SURE, null, null, abilityToWorkImpactDetailList, reasonToNotGetWork, null, null, educationAndQualification, null, "1.1",
 
     )
 
@@ -107,7 +119,7 @@ class TestData {
       LocalDateTime.now(),
       "sacintha",
       true,
-      LocalDateTime.now(), HopingToGetWork.NOT_SURE, null, null, abilityToWorkImpactDetailList, reasonToNotGetWork, previousWork, null, null, null, null, "1.1",
+      LocalDateTime.now(), HopingToGetWork.NOT_SURE, null, null, abilityToWorkImpactDetailList, reasonToNotGetWork, previousWork, null, null, null, "1.1",
 
     )
 
@@ -117,7 +129,7 @@ class TestData {
       LocalDateTime.now(),
       "sacintha",
       true,
-      LocalDateTime.now(), HopingToGetWork.NOT_SURE, null, null, abilityToWorkImpactDetailList, reasonToNotGetWork, null, null, null, null, prisonWorkAndEducation, "1.1",
+      LocalDateTime.now(), HopingToGetWork.NOT_SURE, null, null, abilityToWorkImpactDetailList, reasonToNotGetWork, null, null, null, prisonWorkAndEducation, "1.1",
 
     )
   }

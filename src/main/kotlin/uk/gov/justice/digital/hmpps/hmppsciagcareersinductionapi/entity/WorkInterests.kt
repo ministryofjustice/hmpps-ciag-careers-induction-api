@@ -1,4 +1,5 @@
 package uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity
+import com.fasterxml.jackson.annotation.JsonIgnore
 import org.springframework.data.annotation.LastModifiedBy
 import org.springframework.data.annotation.LastModifiedDate
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.WorkType
@@ -17,7 +18,7 @@ import javax.persistence.OneToOne
 import javax.persistence.Table
 
 @Entity
-@Table(name = "WORK_INTERESTS")
+@Table(name = "CURRENT_WORK_INTERESTS")
 data class WorkInterests(
   @LastModifiedBy
   var modifiedBy: String,
@@ -26,21 +27,22 @@ data class WorkInterests(
   var modifiedDateTime: LocalDateTime,
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE)
-  @Column(name = "id", nullable = false)
+  @Column(name = "ID", nullable = false)
   val id: Long?,
   @ElementCollection
-  @CollectionTable(name = "WORK_INTERESTS", joinColumns = [JoinColumn(name = "WORK_ID")])
+  @CollectionTable(name = "WORK_INTERESTS", joinColumns = [JoinColumn(name = "WORK_INTERESTS_ID")])
   @Column(name = "WORK_INTERESTS")
   var workInterests: MutableSet<WorkType>?,
   @Column(name = "OTHER_WORK_INTEREST")
-  var otherWorkInterests: String?,
+  var workInterestsOther: String?,
 
   @ElementCollection
-  @CollectionTable(name = "PARTICULAR_WORK_INTERESTS", joinColumns = [JoinColumn(name = "WORK_ID")])
+  @CollectionTable(name = "PARTICULAR_WORK_INTERESTS", joinColumns = [JoinColumn(name = "WORK_INTERESTS_ID")])
   @Column(name = "PARTICULAR_WORK_INTEREST")
-  var particularWorkList: MutableSet<PreviousWorkDetail>?,
+  var particularJobInterests: MutableSet<WorkInterestDetail>?,
 
   @OneToOne(fetch = FetchType.EAGER, cascade = [CascadeType.ALL])
-  @JoinColumn(name = "OFFENDER_ID")
-  val profile: CIAGProfile?,
+  @JoinColumn(name = "PREVIOUS_WORK_ID")
+  @JsonIgnore
+  val previousWork: PreviousWork?,
 )

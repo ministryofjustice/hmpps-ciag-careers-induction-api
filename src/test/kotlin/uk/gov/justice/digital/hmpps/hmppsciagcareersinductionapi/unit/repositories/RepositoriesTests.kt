@@ -28,35 +28,36 @@ class RepositoriesTests @Autowired constructor(
 
   @Test
   fun `When CIAG Profile is created with education and qualification`() {
-    assertThat(TestData.ciagEducation.educationAndQualification?.id).isNull()
+    assertThat(TestData.ciagEducation.qualificationsAndTraining?.id).isNull()
     val savedCIAGProfile = ciagRepository.saveAndFlush(TestData.ciagEducation)
 
     val found = ciagRepository.findByOffenderId(TestData.ciag.offenderId!!)
     assertThat(found?.offenderId).isEqualTo(TestData.ciagEducation.offenderId)
 
-    assertThat(found?.educationAndQualification?.id).isNotNull()
+    assertThat(found?.qualificationsAndTraining?.id).isNotNull()
   }
 
   @Test
   fun `When CIAG Profile is created with previous work`() {
-    assertThat(TestData.ciagPreviousWork.previousWorkDetails?.id).isNull()
+    assertThat(TestData.ciagPreviousWork.workExperience?.id).isNull()
+//    workInterestsRepository.saveAndFlush(TestData.ciagPreviousWork.workExperience?.workInterests)
     val savedCIAGProfile = ciagRepository.saveAndFlush(TestData.ciagPreviousWork)
 
     val found = ciagRepository.findByOffenderId(TestData.ciag.offenderId!!)
     assertThat(found?.offenderId).isEqualTo(TestData.ciagPreviousWork.offenderId)
 
-    assertThat(found?.previousWorkDetails?.id).isNotNull()
+    assertThat(found?.workExperience?.id).isNotNull()
   }
 
   @Test
   fun `When CIAG Profile is created with prison work and education`() {
-    assertThat(TestData.ciagPrisonWork.prisonWorkAndEducation?.id).isNull()
+    assertThat(TestData.ciagPrisonWork.inPrisonInterests?.id).isNull()
     val savedCIAGProfile = ciagRepository.saveAndFlush(TestData.ciagPrisonWork)
 
     val found = ciagRepository.findByOffenderId(TestData.ciagPrisonWork.offenderId!!)
     assertThat(found?.offenderId).isEqualTo(TestData.ciagPrisonWork.offenderId)
 
-    assertThat(found?.prisonWorkAndEducation?.id).isNotNull()
+    assertThat(found?.inPrisonInterests?.id).isNotNull()
   }
 /*
   @Test

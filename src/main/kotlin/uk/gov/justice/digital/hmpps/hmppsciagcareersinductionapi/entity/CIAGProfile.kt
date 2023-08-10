@@ -44,28 +44,22 @@ data class CIAGProfile(
   var hopingToGetWork: HopingToGetWork,
 
   @Column(name = "REASON_TO_NOT_GET_WORK")
-  var otherReasonToNotGetWork: String?,
+  var reasonToNotGetWorkOther: String?,
 
   @Column(name = "OTHER_ABILITY_TO_WORK_IMPACT")
-  var otherAbilityTOWorkImpact: String?,
+  var abilityToWorkOther: String?,
 
   @ElementCollection
   @CollectionTable(name = "ABILITY_TO_WORK_IMPACT", joinColumns = [JoinColumn(name = "OFFENDER_ID")])
   @Column(name = "WORK_IMPACT_")
-  var abilityToWorkImpactDetail: MutableSet<AbilityToWorkImpactedBy>?,
+  var abilityToWork: MutableSet<AbilityToWorkImpactedBy>?,
 
-  @ElementCollection
-  @CollectionTable(name = "REASON_NOT_TO_GET_WORK", joinColumns = [JoinColumn(name = "OFFENDER_ID")])
-  @Column(name = "REASON")
-  var reasonToNotGetWork: MutableSet<ReasonToNotGetWork>?,
+  @Column(name = "REASON_NOT_TO_GET_WORK")
+  var reasonToNotGetWork: ReasonToNotGetWork?,
 
   @OneToOne(mappedBy = "profile", cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.EAGER)
   @JoinColumn(name = "PREVIOUS_WORK_ID")
-  var previousWorkDetails: PreviousWork?,
-
-  @OneToOne(mappedBy = "profile", cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.EAGER)
-  @JoinColumn(name = "WORK_INTERESTS_ID")
-  var workInterests: WorkInterests?,
+  var workExperience: PreviousWork?,
 
   @OneToOne(mappedBy = "profile", cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.EAGER)
   @JoinColumn(name = "SKILLS_AND_INTERESTS_ID")
@@ -73,11 +67,11 @@ data class CIAGProfile(
 
   @OneToOne(mappedBy = "profile", cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.EAGER)
   @JoinColumn(name = "EDUCATION_AND_QUALIFICATION_ID")
-  var educationAndQualification: EducationAndQualification?,
+  var qualificationsAndTraining: EducationAndQualification?,
 
   @OneToOne(mappedBy = "profile", cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.EAGER)
   @JoinColumn(name = "PRISON_WORK_AND_EDUCATION_ID")
-  var prisonWorkAndEducation: PrisonWorkAndEducation?,
+  var inPrisonInterests: PrisonWorkAndEducation?,
 
   @Column(name = "SCHEMA_VERSION")
   var schemaVersion: String?,
@@ -93,28 +87,25 @@ data class CIAGProfile(
     desireToWork = ciagProfileRequestDTO.desireToWork!!,
     modifiedDateTime = ciagProfileRequestDTO.modifiedDateTime!!,
     hopingToGetWork = ciagProfileRequestDTO.hopingToGetWork!!,
-    otherReasonToNotGetWork = ciagProfileRequestDTO.otherReasonToNotGetWork,
-    otherAbilityTOWorkImpact = ciagProfileRequestDTO.otherAbilityTOWorkImpact,
-    abilityToWorkImpactDetail = ciagProfileRequestDTO.abilityToWorkImpactDetail,
+    reasonToNotGetWorkOther = ciagProfileRequestDTO.reasonToNotGetWorkOther,
+    abilityToWorkOther = ciagProfileRequestDTO.abilityToWorkOther,
+    abilityToWork = ciagProfileRequestDTO.abilityToWork,
     reasonToNotGetWork = ciagProfileRequestDTO.reasonToNotGetWork,
-    previousWorkDetails = ciagProfileRequestDTO.previousWorkDetails,
-    workInterests = ciagProfileRequestDTO.workInterests,
+    workExperience = ciagProfileRequestDTO.workExperience,
     skillsAndInterests = ciagProfileRequestDTO.skillsAndInterests,
-    educationAndQualification = ciagProfileRequestDTO.educationAndQualification,
-    prisonWorkAndEducation = ciagProfileRequestDTO.prisonWorkAndEducation,
+    qualificationsAndTraining = ciagProfileRequestDTO.qualificationsAndTraining,
+    inPrisonInterests = ciagProfileRequestDTO.inPrisonInterests,
 
     schemaVersion = ciagProfileRequestDTO.schemaVersion,
   ) {
-    prisonWorkAndEducation?.modifiedBy = modifiedBy
-    prisonWorkAndEducation?.modifiedDateTime = modifiedDateTime
-    educationAndQualification?.modifiedBy = modifiedBy
-    educationAndQualification?.modifiedDateTime = modifiedDateTime
+    inPrisonInterests?.modifiedBy = modifiedBy
+    inPrisonInterests?.modifiedDateTime = modifiedDateTime
+    qualificationsAndTraining?.modifiedBy = modifiedBy
+    qualificationsAndTraining?.modifiedDateTime = modifiedDateTime
     skillsAndInterests?.modifiedBy = modifiedBy
     skillsAndInterests?.modifiedDateTime = modifiedDateTime
-    workInterests?.modifiedBy = modifiedBy
-    workInterests?.modifiedDateTime = modifiedDateTime
-    previousWorkDetails?.modifiedBy = modifiedBy
-    previousWorkDetails?.modifiedDateTime = modifiedDateTime
+    workExperience?.modifiedBy = modifiedBy
+    workExperience?.modifiedDateTime = modifiedDateTime
   }
 
   override fun equals(other: Any?): Boolean {
@@ -130,15 +121,14 @@ data class CIAGProfile(
     if (desireToWork != other.desireToWork) return false
     if (modifiedDateTime != other.modifiedDateTime) return false
     if (hopingToGetWork != other.hopingToGetWork) return false
-    if (otherReasonToNotGetWork != other.otherReasonToNotGetWork) return false
-    if (otherAbilityTOWorkImpact != other.otherAbilityTOWorkImpact) return false
-    if (abilityToWorkImpactDetail != other.abilityToWorkImpactDetail) return false
+    if (reasonToNotGetWorkOther != other.reasonToNotGetWorkOther) return false
+    if (abilityToWorkOther != other.abilityToWorkOther) return false
+    if (abilityToWork != other.abilityToWork) return false
     if (reasonToNotGetWork != other.reasonToNotGetWork) return false
-    if (previousWorkDetails != other.previousWorkDetails) return false
-    if (workInterests != other.workInterests) return false
+    if (workExperience != other.workExperience) return false
     if (skillsAndInterests != other.skillsAndInterests) return false
-    if (educationAndQualification != other.educationAndQualification) return false
-    if (prisonWorkAndEducation != other.prisonWorkAndEducation) return false
+    if (qualificationsAndTraining != other.qualificationsAndTraining) return false
+    if (inPrisonInterests != other.inPrisonInterests) return false
     if (schemaVersion != other.schemaVersion) return false
 
     return true
@@ -152,20 +142,19 @@ data class CIAGProfile(
     result = 31 * result + desireToWork.hashCode()
     result = 31 * result + modifiedDateTime.hashCode()
     result = 31 * result + hopingToGetWork.hashCode()
-    result = 31 * result + (otherReasonToNotGetWork?.hashCode() ?: 0)
-    result = 31 * result + (otherAbilityTOWorkImpact?.hashCode() ?: 0)
-    result = 31 * result + abilityToWorkImpactDetail.hashCode()
+    result = 31 * result + (reasonToNotGetWorkOther?.hashCode() ?: 0)
+    result = 31 * result + (abilityToWorkOther?.hashCode() ?: 0)
+    result = 31 * result + abilityToWork.hashCode()
     result = 31 * result + reasonToNotGetWork.hashCode()
-    result = 31 * result + previousWorkDetails.hashCode()
-    result = 31 * result + workInterests.hashCode()
+    result = 31 * result + workExperience.hashCode()
     result = 31 * result + skillsAndInterests.hashCode()
-    result = 31 * result + educationAndQualification.hashCode()
-    result = 31 * result + prisonWorkAndEducation.hashCode()
+    result = 31 * result + qualificationsAndTraining.hashCode()
+    result = 31 * result + inPrisonInterests.hashCode()
     result = 31 * result + schemaVersion.hashCode()
     return result
   }
 
   override fun toString(): String {
-    return "CIAGProfile(offenderId='$offenderId', createdBy='$createdBy', createdDateTime=$createdDateTime, modifiedBy='$modifiedBy', desireToWork=$desireToWork, modifiedDateTime=$modifiedDateTime, hopingToGetWork=$hopingToGetWork, otherReasonToNotGetWork=$otherReasonToNotGetWork, otherAbilityTOWorkImpact=$otherAbilityTOWorkImpact, abilityToWorkImpactDetail=$abilityToWorkImpactDetail, reasonToNotGetWork=$reasonToNotGetWork, previousWorkDetails=$previousWorkDetails, workInterests=$workInterests, skillsAndInterests=$skillsAndInterests, educationAndQualification=$educationAndQualification, prisonWorkAndEducation=$prisonWorkAndEducation, schemaVersion='$schemaVersion')"
+    return "CIAGProfile(offenderId='$offenderId', createdBy='$createdBy', createdDateTime=$createdDateTime, modifiedBy='$modifiedBy', desireToWork=$desireToWork, modifiedDateTime=$modifiedDateTime, hopingToGetWork=$hopingToGetWork, reasonToNotGetWorkOther=$reasonToNotGetWorkOther, abilityToWorkOther=$abilityToWorkOther, abilityToWork=$abilityToWork, reasonToNotGetWork=$reasonToNotGetWork, workExperience=$workExperience,  skillsAndInterests=$skillsAndInterests, qualificationsAndTraining=$qualificationsAndTraining, inPrisonInterests=$inPrisonInterests, schemaVersion='$schemaVersion')"
   }
 }

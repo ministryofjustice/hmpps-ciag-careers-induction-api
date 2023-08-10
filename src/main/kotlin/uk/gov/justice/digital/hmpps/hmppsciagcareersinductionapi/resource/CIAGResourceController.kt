@@ -32,12 +32,12 @@ class CIAGResourceController(
   @PreAuthorize("hasAnyRole('ROLE_WORK_READINESS_EDIT','ROLE_WORK_READINESS_VIEW')")
   @GetMapping("/{offenderId}")
   @Operation(
-    summary = "Fetch the ciag profile for the offender",
+    summary = "Fetch the ciag previousWork for the offender",
     description = "Currently requires role <b>ROLE_VIEW_PRISONER_DATA</b>",
     responses = [
       ApiResponse(
         responseCode = "200",
-        description = "Ciage profile is returned",
+        description = "Ciage previousWork is returned",
         content = [
           Content(
             mediaType = "application/json",
@@ -77,7 +77,7 @@ class CIAGResourceController(
     responses = [
       ApiResponse(
         responseCode = "200",
-        description = "Successfully deleted the CIAG profile",
+        description = "Successfully deleted the CIAG previousWork",
         content = [
           Content(
             mediaType = "application/json",
@@ -112,12 +112,12 @@ class CIAGResourceController(
   @PreAuthorize("hasAnyRole('ROLE_WORK_READINESS_EDIT','ROLE_WORK_READINESS_VIEW')")
   @PostMapping("/{offenderId}")
   @Operation(
-    summary = "Create the CIAG profile for an offender",
-    description = "Called once to initially create the profile. Currently requires role <b>ROLE_VIEW_PRISONER_DATA</b>",
+    summary = "Create the CIAG previousWork for an offender",
+    description = "Called once to initially create the previousWork. Currently requires role <b>ROLE_VIEW_PRISONER_DATA</b>",
     responses = [
       ApiResponse(
         responseCode = "200",
-        description = "CIAG profile created",
+        description = "CIAG previousWork created",
         content = [
           Content(
             mediaType = "application/json",
@@ -160,12 +160,12 @@ class CIAGResourceController(
   @PreAuthorize("hasAnyRole('ROLE_WORK_READINESS_EDIT','ROLE_WORK_READINESS_VIEW')")
   @PutMapping("/{offenderId}")
   @Operation(
-    summary = "Update the CIAG profile for an offender",
-    description = "Called once to initially create the profile. Currently requires role <b>ROLE_VIEW_PRISONER_DATA</b>",
+    summary = "Update the CIAG previousWork for an offender",
+    description = "Called once to initially create the previousWork. Currently requires role <b>ROLE_VIEW_PRISONER_DATA</b>",
     responses = [
       ApiResponse(
         responseCode = "200",
-        description = "CIAG profile created",
+        description = "CIAG previousWork created",
         content = [
           Content(
             mediaType = "application/json",

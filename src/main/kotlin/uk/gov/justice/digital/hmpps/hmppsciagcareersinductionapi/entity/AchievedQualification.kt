@@ -8,5 +8,4 @@ data class AchievedQualification(
   var subject: String?,
   var grade: String?,
   var level: QualificationLevel?,
-  var highestGrade: Boolean,
 )

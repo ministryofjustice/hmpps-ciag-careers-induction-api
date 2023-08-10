@@ -9,42 +9,39 @@ import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity.Educatio
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity.PreviousWork
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity.PrisonWorkAndEducation
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity.SkillsAndInterests
-import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity.WorkInterests
 import java.time.LocalDateTime
 
 data class CIAGProfileDTO(
+  @Schema val offenderId: String,
 
-  @Schema var offenderId: String?,
+  @Schema var createdBy: String,
 
-  @Schema var createdBy: String?,
+  @Schema var createdDateTime: LocalDateTime,
 
-  @Schema var createdDateTime: LocalDateTime?,
+  @Schema var modifiedBy: String,
 
-  @Schema var modifiedBy: String?,
+  @Schema var desireToWork: Boolean,
 
-  @Schema var desireToWork: Boolean?,
+  @Schema var modifiedDateTime: LocalDateTime,
 
-  @Schema var modifiedDateTime: LocalDateTime?,
+  @Schema var hopingToGetWork: HopingToGetWork,
 
-  @Schema var hopingToGetWork: HopingToGetWork?,
+  @Schema var reasonToNotGetWorkOther: String?,
 
-  @Schema var otherReasonToNotGetWork: String?,
+  @Schema var abilityToWorkOther: String?,
 
-  @Schema var otherAbilityTOWorkImpact: String?,
+  @Schema var abilityToWork: MutableSet<AbilityToWorkImpactedBy>?,
 
-  @Schema var abilityToWorkImpactDetail: MutableSet<AbilityToWorkImpactedBy>?,
+  @Schema var reasonToNotGetWork: ReasonToNotGetWork?,
 
-  @Schema var reasonToNotGetWork: MutableSet<ReasonToNotGetWork>?,
-
-  @Schema var previousWorkDetails: PreviousWork?,
-
-  @Schema var workInterests: WorkInterests?,
+  @Schema var workExperience: PreviousWork?,
 
   @Schema var skillsAndInterests: SkillsAndInterests?,
 
-  @Schema var educationAndQualification: EducationAndQualification?,
+  @Schema var qualificationsAndTraining: EducationAndQualification?,
 
-  @Schema var prisonWorkAndEducation: PrisonWorkAndEducation?,
+  @Schema var inPrisonInterests: PrisonWorkAndEducation?,
+
   @Schema var schemaVersion: String?,
 
 ) {
@@ -56,15 +53,14 @@ data class CIAGProfileDTO(
     desireToWork = profileEntity.desireToWork,
     modifiedDateTime = profileEntity.modifiedDateTime,
     hopingToGetWork = profileEntity.hopingToGetWork,
-    otherReasonToNotGetWork = profileEntity.otherReasonToNotGetWork,
-    otherAbilityTOWorkImpact = profileEntity.otherAbilityTOWorkImpact,
-    abilityToWorkImpactDetail = profileEntity.abilityToWorkImpactDetail,
+    reasonToNotGetWorkOther = profileEntity.reasonToNotGetWorkOther,
+    abilityToWorkOther = profileEntity.abilityToWorkOther,
+    abilityToWork = profileEntity.abilityToWork,
     reasonToNotGetWork = profileEntity.reasonToNotGetWork,
-    previousWorkDetails = profileEntity.previousWorkDetails,
-    workInterests = profileEntity.workInterests,
+    workExperience = profileEntity.workExperience,
     skillsAndInterests = profileEntity.skillsAndInterests,
-    educationAndQualification = profileEntity.educationAndQualification,
-    prisonWorkAndEducation = profileEntity.prisonWorkAndEducation,
+    qualificationsAndTraining = profileEntity.qualificationsAndTraining,
+    inPrisonInterests = profileEntity.inPrisonInterests,
     schemaVersion = profileEntity.schemaVersion,
   )
 }

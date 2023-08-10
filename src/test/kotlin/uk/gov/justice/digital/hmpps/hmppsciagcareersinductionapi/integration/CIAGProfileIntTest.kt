@@ -29,7 +29,7 @@ class CIAGProfileIntTest : IntegrationTestBase() {
     assertThat(result).isNotNull
     val erroResponse = result.body
     assert(erroResponse.status.equals(HttpStatus.BAD_REQUEST.value()))
-    assert(erroResponse.userMessage.equals("CIAG profile does not exist for offender A1234AB"))
+    assert(erroResponse.userMessage.equals("CIAG previousWork does not exist for offender A1234AB"))
   }
 
   @Test
