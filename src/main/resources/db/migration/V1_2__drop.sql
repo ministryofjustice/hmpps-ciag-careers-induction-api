@@ -1,0 +1,17 @@
+drop table ability_to_work_impact;
+drop table achieved_qualification;
+drop table extra_qualification ;
+drop table particular_work_interests;
+drop table personal_work_interests;
+drop table prison_education;
+drop table prison_work ;
+drop table prison_work_education;
+drop table skills_work_interests ;
+drop table work_experience;
+drop table work_experience_detail ;
+drop table work_interests;
+drop table skills_and_interests;
+drop table ciag_profile CASCADE;
+drop table previous_work CASCADE;
+drop table education_qualification ;
+drop table current_work_interests;

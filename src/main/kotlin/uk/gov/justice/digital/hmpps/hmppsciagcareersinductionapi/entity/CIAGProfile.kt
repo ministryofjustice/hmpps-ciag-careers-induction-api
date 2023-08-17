@@ -57,19 +57,19 @@ data class CIAGProfile(
   @Column(name = "REASON_NOT_TO_GET_WORK")
   var reasonToNotGetWork: ReasonToNotGetWork?,
 
-  @OneToOne(mappedBy = "profile", cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.EAGER)
+  @OneToOne( cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.EAGER)
   @JoinColumn(name = "PREVIOUS_WORK_ID")
   var workExperience: PreviousWork?,
 
-  @OneToOne(mappedBy = "profile", cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.EAGER)
+  @OneToOne( cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.EAGER)
   @JoinColumn(name = "SKILLS_AND_INTERESTS_ID")
   var skillsAndInterests: SkillsAndInterests?,
 
-  @OneToOne(mappedBy = "profile", cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.EAGER)
+  @OneToOne(cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.EAGER)
   @JoinColumn(name = "EDUCATION_AND_QUALIFICATION_ID")
   var qualificationsAndTraining: EducationAndQualification?,
 
-  @OneToOne(mappedBy = "profile", cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.EAGER)
+  @OneToOne( cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.EAGER)
   @JoinColumn(name = "PRISON_WORK_AND_EDUCATION_ID")
   var inPrisonInterests: PrisonWorkAndEducation?,
 

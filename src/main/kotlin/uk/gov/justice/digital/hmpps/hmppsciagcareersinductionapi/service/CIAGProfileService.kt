@@ -17,8 +17,15 @@ class CIAGProfileService(
 
   ): CIAGProfile? {
     var ciagProfile = CIAGProfile(ciagProfileDTO)
+ /*   var ciagProfileSaved = ciagProfileRepository.findById(ciagProfileDTO.offenderId)
+    if (ciagProfileSaved != null && ciagProfileSaved.isPresent()) {
+      ciagProfileSaved.
 
-    ciagProfileRepository.saveAndFlush(ciagProfile)
+      ciagProfileRepository.flush()
+    } else {*/
+      ciagProfileRepository.saveAndFlush(ciagProfile)
+//    }/**/
+
 
     return ciagProfile
   }

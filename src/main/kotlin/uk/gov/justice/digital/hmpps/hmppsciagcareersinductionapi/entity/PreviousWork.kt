@@ -44,12 +44,11 @@ data class PreviousWork(
   @Column(name = "WORK_EXPERIENCE_DETAIL")
   var workExperience: MutableSet<WorkExperience>?,
 
-  @OneToOne(mappedBy = "previousWork", cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.EAGER)
+  @OneToOne(cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.EAGER)
   @JoinColumn(name = "WORK_INTERESTS_ID")
   var workInterests: WorkInterests?,
 
-  @OneToOne(fetch = FetchType.EAGER, cascade = [CascadeType.ALL])
-  @JoinColumn(name = "OFFENDER_ID")
+  @OneToOne(mappedBy = "workExperience",fetch = FetchType.EAGER, cascade = [CascadeType.ALL])
   @JsonIgnore
-  val profile: CIAGProfile?,
+  var profile: CIAGProfile?,
 )

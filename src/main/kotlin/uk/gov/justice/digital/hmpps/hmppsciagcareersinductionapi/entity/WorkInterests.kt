@@ -41,8 +41,7 @@ data class WorkInterests(
   @Column(name = "PARTICULAR_WORK_INTEREST")
   var particularJobInterests: MutableSet<WorkInterestDetail>?,
 
-  @OneToOne(fetch = FetchType.EAGER, cascade = [CascadeType.ALL])
-  @JoinColumn(name = "PREVIOUS_WORK_ID")
+  @OneToOne(mappedBy = "workInterests", fetch = FetchType.EAGER, cascade = [CascadeType.ALL])
   @JsonIgnore
-  val previousWork: PreviousWork?,
+  var previousWork: PreviousWork?,
 )

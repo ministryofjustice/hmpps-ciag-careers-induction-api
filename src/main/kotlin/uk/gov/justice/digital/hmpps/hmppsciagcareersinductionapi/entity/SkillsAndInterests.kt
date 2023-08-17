@@ -44,8 +44,7 @@ data class SkillsAndInterests(
 
   @Column(name = "OTHER_PERSONAL_INTRESTS")
   var personalInterestsOther: String?,
-  @OneToOne(fetch = FetchType.EAGER, cascade = [CascadeType.ALL])
-  @JoinColumn(name = "OFFENDER_ID")
+  @OneToOne(mappedBy = "skillsAndInterests",fetch = FetchType.EAGER, cascade = [CascadeType.ALL])
   @JsonIgnore
-  val profile: CIAGProfile?,
+  var profile: CIAGProfile?,
 )
