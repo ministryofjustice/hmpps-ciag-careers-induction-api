@@ -46,7 +46,7 @@ data class EducationAndQualification(
   @Column(name = "OTHER_QUALIFICATION")
   var additionalTrainingOther: String?,
 
-  @OneToOne(mappedBy = "qualificationsAndTraining",fetch = FetchType.EAGER, cascade = [CascadeType.ALL])
+  @OneToOne(mappedBy = "qualificationsAndTraining")
   @JsonIgnore
   var profile: CIAGProfile?,
 )

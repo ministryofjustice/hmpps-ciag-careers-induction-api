@@ -48,7 +48,7 @@ data class PreviousWork(
   @JoinColumn(name = "WORK_INTERESTS_ID")
   var workInterests: WorkInterests?,
 
-  @OneToOne(mappedBy = "workExperience",fetch = FetchType.EAGER, cascade = [CascadeType.ALL])
+  @OneToOne(mappedBy = "workExperience")
   @JsonIgnore
   var profile: CIAGProfile?,
 )

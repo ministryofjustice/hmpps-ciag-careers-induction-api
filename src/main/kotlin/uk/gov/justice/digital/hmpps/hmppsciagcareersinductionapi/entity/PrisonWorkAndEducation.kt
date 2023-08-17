@@ -43,7 +43,7 @@ data class PrisonWorkAndEducation(
   var inPrisonEducation: MutableSet<PrisonTraining>?,
   @Column(name = "OTHER_PRISON_EDUCATION")
   var inPrisonEducationOther: String?,
-  @OneToOne(mappedBy="inPrisonInterests", fetch = FetchType.EAGER, cascade = [CascadeType.ALL])
+  @OneToOne(mappedBy="inPrisonInterests")
   @JsonIgnore
   var profile: CIAGProfile?,
 )
