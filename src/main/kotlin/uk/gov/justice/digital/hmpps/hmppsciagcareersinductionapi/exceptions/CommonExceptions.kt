@@ -19,7 +19,7 @@ class NotFoundException(var offenderId: String) : Exception("CIAG profile does n
   }
 }
 
-class InvalidStateException(var offenderId: String) : Exception(",CIAG profile is in an invalid state for  $offenderId"), Supplier<Throwable> {
+class InvalidStateException(var offenderId: String) : Exception("CIAG profile is in an invalid state for  $offenderId"), Supplier<Throwable> {
   override fun get(): Throwable {
     throw InvalidStateException(offenderId)
   }

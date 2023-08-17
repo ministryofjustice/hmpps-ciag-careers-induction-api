@@ -32,7 +32,7 @@ class CIAGResourceController(
   @PreAuthorize("hasAnyRole('ROLE_WORK_READINESS_EDIT','ROLE_WORK_READINESS_VIEW')")
   @GetMapping("/{offenderId}")
   @Operation(
-    summary = "Fetch the ,CIAG profile for the offender",
+    summary = "Fetch the CIAG profile for the offender",
     description = "Currently requires role <b>ROLE_VIEW_PRISONER_DATA</b>",
     responses = [
       ApiResponse(
@@ -112,12 +112,12 @@ class CIAGResourceController(
   @PreAuthorize("hasAnyRole('ROLE_WORK_READINESS_EDIT','ROLE_WORK_READINESS_VIEW')")
   @PostMapping("/{offenderId}")
   @Operation(
-    summary = "Create the ,CIAG profile for an offender",
+    summary = "Create the CIAG profile for an offender",
     description = "Called once to initially create the previousWork. Currently requires role <b>ROLE_VIEW_PRISONER_DATA</b>",
     responses = [
       ApiResponse(
         responseCode = "200",
-        description = ",CIAG profile created",
+        description = "CIAG profile created",
         content = [
           Content(
             mediaType = "application/json",
@@ -160,12 +160,12 @@ class CIAGResourceController(
   @PreAuthorize("hasAnyRole('ROLE_WORK_READINESS_EDIT','ROLE_WORK_READINESS_VIEW')")
   @PutMapping("/{offenderId}")
   @Operation(
-    summary = "Update the ,CIAG profile for an offender",
+    summary = "Update the CIAG profile for an offender",
     description = "Called once to initially create the previousWork. Currently requires role <b>ROLE_VIEW_PRISONER_DATA</b>",
     responses = [
       ApiResponse(
         responseCode = "200",
-        description = ",CIAG profile created",
+        description = "CIAG profile created",
         content = [
           Content(
             mediaType = "application/json",
