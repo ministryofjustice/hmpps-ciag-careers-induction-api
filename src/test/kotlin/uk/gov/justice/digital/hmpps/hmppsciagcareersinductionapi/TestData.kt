@@ -84,7 +84,7 @@ class TestData {
     )
 
     val ciagDTO = CIAGProfileRequestDTO(
-      "offen1",
+      "A1234AB",
       "sacintha",
       LocalDateTime.now(),
       "sacintha",
@@ -94,7 +94,7 @@ class TestData {
     )
 
     val ciag = CIAGProfile(
-      "offen1",
+      "A1234AB",
       "sacintha",
       LocalDateTime.now(),
       "sacintha",
@@ -104,7 +104,7 @@ class TestData {
     )
 
     val ciagEducation = CIAGProfile(
-      "offen1",
+      "A1234AB",
       "sacintha",
       LocalDateTime.now(),
       "sacintha",
@@ -114,7 +114,7 @@ class TestData {
     )
 
     val ciagPreviousWork = CIAGProfile(
-      "offen1",
+      "A1234AB",
       "sacintha",
       LocalDateTime.now(),
       "sacintha",
@@ -124,7 +124,7 @@ class TestData {
     )
 
     val ciagPrisonWork = CIAGProfile(
-      "offen1",
+      "A1234AB",
       "sacintha",
       LocalDateTime.now(),
       "sacintha",

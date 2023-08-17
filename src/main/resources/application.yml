@@ -64,6 +64,7 @@ spring:
 
   flyway:
     initOnMigrate: true
+    baselineOnMigrate: true
     enabled: true
     url: ${spring.datasource.url}
     user: ${DATABASE_USERNAME}

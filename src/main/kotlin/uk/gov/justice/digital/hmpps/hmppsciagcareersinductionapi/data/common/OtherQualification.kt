@@ -10,5 +10,6 @@ enum class OtherQualification {
   MACHINERY_TICKETS,
   MANUAL_HANDLING,
   TRADE_COURSE,
+  OTHER,
   NONE,
 }

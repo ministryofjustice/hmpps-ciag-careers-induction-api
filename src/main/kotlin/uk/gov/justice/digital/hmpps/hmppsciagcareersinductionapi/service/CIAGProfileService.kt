@@ -51,18 +51,21 @@ class CIAGProfileService(
     offenderId: String,
 
   ): CIAGProfileDTO? {
-    var ciagProfile = ciagProfileRepository.findByOffenderId(offenderId)
-    if (ciagProfile == null) {
+    var ciagProfile = ciagProfileRepository.findById(offenderId)
+    if (ciagProfile == null || ciagProfile.isEmpty()) {
       throw NotFoundException(offenderId)
     }
-    return ciagProfile.let { CIAGProfileDTO(it) }
+    return ciagProfile.let { CIAGProfileDTO(it.get()) }
   }
 
   fun deleteCIAGProfile(
     offenderId: String,
-  ): CIAGProfileDTO? {
-    var ciagProfile = ciagProfileRepository.findByOffenderId(offenderId)
-
-    return ciagProfile?.let { CIAGProfileDTO(it) }
+  ) {
+    var ciagProfile = ciagProfileRepository.findById(offenderId)
+    if (ciagProfile == null || ciagProfile.isEmpty()) {
+      throw NotFoundException(offenderId)
+    } else {
+    }
+    return ciagProfileRepository.deleteById(offenderId)
   }
 }

@@ -33,6 +33,8 @@ spring:
       validationTimeout: 500
 
   flyway:
+    initOnMigrate: true
+    baselineOnMigrate: true
     enabled: true
     url: jdbc:postgresql://localhost:5432/ciag-careers?sslmode=prefer
     user: ciag-careers

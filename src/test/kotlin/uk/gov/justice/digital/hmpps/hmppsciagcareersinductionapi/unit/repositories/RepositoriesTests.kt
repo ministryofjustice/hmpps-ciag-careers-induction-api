@@ -31,10 +31,10 @@ class RepositoriesTests @Autowired constructor(
     assertThat(TestData.ciagEducation.qualificationsAndTraining?.id).isNull()
     val savedCIAGProfile = ciagRepository.saveAndFlush(TestData.ciagEducation)
 
-    val found = ciagRepository.findByOffenderId(TestData.ciag.offenderId!!)
-    assertThat(found?.offenderId).isEqualTo(TestData.ciagEducation.offenderId)
+    val found = ciagRepository.findById(TestData.ciag.offenderId!!)
+    assertThat(found?.get()?.offenderId).isEqualTo(TestData.ciagEducation.offenderId)
 
-    assertThat(found?.qualificationsAndTraining?.id).isNotNull()
+    assertThat(found?.get()?.qualificationsAndTraining?.id).isNotNull()
   }
 
   @Test
@@ -43,10 +43,10 @@ class RepositoriesTests @Autowired constructor(
 //    workInterestsRepository.saveAndFlush(TestData.ciagPreviousWork.workExperience?.workInterests)
     val savedCIAGProfile = ciagRepository.saveAndFlush(TestData.ciagPreviousWork)
 
-    val found = ciagRepository.findByOffenderId(TestData.ciag.offenderId!!)
-    assertThat(found?.offenderId).isEqualTo(TestData.ciagPreviousWork.offenderId)
+    val found = ciagRepository.findById(TestData.ciag.offenderId!!)
+    assertThat(found?.get()?.offenderId).isEqualTo(TestData.ciagPreviousWork.offenderId)
 
-    assertThat(found?.workExperience?.id).isNotNull()
+    assertThat(found?.get()?.workExperience?.id).isNotNull()
   }
 
   @Test
@@ -54,10 +54,10 @@ class RepositoriesTests @Autowired constructor(
     assertThat(TestData.ciagPrisonWork.inPrisonInterests?.id).isNull()
     val savedCIAGProfile = ciagRepository.saveAndFlush(TestData.ciagPrisonWork)
 
-    val found = ciagRepository.findByOffenderId(TestData.ciagPrisonWork.offenderId!!)
-    assertThat(found?.offenderId).isEqualTo(TestData.ciagPrisonWork.offenderId)
+    val found = ciagRepository.findById(TestData.ciagPrisonWork.offenderId!!)
+    assertThat(found?.get()?.offenderId).isEqualTo(TestData.ciagPrisonWork.offenderId)
 
-    assertThat(found?.inPrisonInterests?.id).isNotNull()
+    assertThat(found?.get()?.inPrisonInterests?.id).isNotNull()
   }
 /*
   @Test
@@ -66,7 +66,7 @@ class RepositoriesTests @Autowired constructor(
 
     entityManager.flush()
 
-    val found = ciagRepository.findByOffenderId(TestData.ciag.offenderId!!)
+    val found = ciagRepository.findById(TestData.ciag.offenderId!!)
     assertThat(found).isEqualTo(TestData.ciag)
   }
 
@@ -74,11 +74,11 @@ class RepositoriesTests @Autowired constructor(
   fun `When update type 1 then return CIAG`() {
     ciagRepository.saveAndFlush(TestData.ciag)
 
-    val found = ciagRepository.findByOffenderId(TestData.ciag.offenderId!!)
+    val found = ciagRepository.findById(TestData.ciag.offenderId!!)
     assertThat(found).isEqualTo(TestData.ciag)
 
     ciagRepository.saveAndFlush(found)
-    val foundUpdated = ciagRepository.findByOffenderId(TestData.ciag.offenderId!!)
+    val foundUpdated = ciagRepository.findById(TestData.ciag.offenderId!!)
     assertThat(found).isEqualTo(foundUpdated)
   }
 
@@ -86,10 +86,10 @@ class RepositoriesTests @Autowired constructor(
   fun `When update type 2 then return CIAG`() {
     ciagRepository.saveAndFlush(TestData.ciag)
 
-    val found = ciagRepository.findByOffenderId(TestData.ciag.offenderId!!)
+    val found = ciagRepository.findById(TestData.ciag.offenderId!!)
     assertThat(found).isEqualTo(TestData.ciag)
 
-    val foundUpdated = ciagRepository.findByOffenderId(TestData.ciag.offenderId!!)
+    val foundUpdated = ciagRepository.findById(TestData.ciag.offenderId!!)
     assertThat(found).isEqualTo(foundUpdated)
   }
 
@@ -97,11 +97,11 @@ class RepositoriesTests @Autowired constructor(
   fun `When delete then return null`() {
     ciagRepository.saveAndFlush(TestData.ciag)
 
-    val found = ciagRepository.findByOffenderId(TestData.ciag.offenderId!!)
+    val found = ciagRepository.findById(TestData.ciag.offenderId!!)
     assertThat(found).isEqualTo(TestData.ciag)
 
     ciagRepository.delete(found)
-    val foundUpdated = ciagRepository.findByOffenderId(TestData.ciag.offenderId!!)
+    val foundUpdated = ciagRepository.findById(TestData.ciag.offenderId!!)
     assertThat(foundUpdated).isNull()
   }*/
 }
