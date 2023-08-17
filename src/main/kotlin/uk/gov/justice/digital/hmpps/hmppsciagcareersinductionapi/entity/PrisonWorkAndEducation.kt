@@ -30,14 +30,14 @@ data class PrisonWorkAndEducation(
   @GeneratedValue(strategy = GenerationType.SEQUENCE)
   @Column(name = "id", nullable = false)
   val id: Long?,
-  @ElementCollection
+  @ElementCollection(fetch = FetchType.EAGER)
   @CollectionTable(name = "PRISON_WORK", joinColumns = [JoinColumn(name = "PRISON_WORK_EDUCATION_ID")])
   @Column(name = "WORK")
   var inPrisonWork: MutableSet<PrisonWork>?,
   @Column(name = "OTHER_PRISON_WORK")
   var inPrisonWorkOther: String?,
 
-  @ElementCollection
+  @ElementCollection(fetch = FetchType.EAGER)
   @CollectionTable(name = "PRISON_EDUCATION", joinColumns = [JoinColumn(name = "PRISON_WORK_EDUCATION_ID")])
   @Column(name = "EDUCATION")
   var inPrisonEducation: MutableSet<PrisonTraining>?,

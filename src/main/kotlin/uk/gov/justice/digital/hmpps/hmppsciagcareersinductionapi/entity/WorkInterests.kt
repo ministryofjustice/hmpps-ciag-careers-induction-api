@@ -29,14 +29,14 @@ data class WorkInterests(
   @GeneratedValue(strategy = GenerationType.SEQUENCE)
   @Column(name = "ID", nullable = false)
   val id: Long?,
-  @ElementCollection
+  @ElementCollection(fetch = FetchType.EAGER)
   @CollectionTable(name = "WORK_INTERESTS", joinColumns = [JoinColumn(name = "WORK_INTERESTS_ID")])
   @Column(name = "WORK_INTERESTS")
   var workInterests: MutableSet<WorkType>?,
   @Column(name = "OTHER_WORK_INTEREST")
   var workInterestsOther: String?,
 
-  @ElementCollection
+  @ElementCollection(fetch = FetchType.EAGER)
   @CollectionTable(name = "PARTICULAR_WORK_INTERESTS", joinColumns = [JoinColumn(name = "WORK_INTERESTS_ID")])
   @Column(name = "PARTICULAR_WORK_INTEREST")
   var particularJobInterests: MutableSet<WorkInterestDetail>?,

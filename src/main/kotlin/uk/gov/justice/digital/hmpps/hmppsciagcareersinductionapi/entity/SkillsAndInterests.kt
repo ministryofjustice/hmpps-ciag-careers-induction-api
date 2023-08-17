@@ -30,14 +30,14 @@ data class SkillsAndInterests(
   @GeneratedValue(strategy = GenerationType.SEQUENCE)
   @Column(name = "id", nullable = false)
   val id: Long?,
-  @ElementCollection
+  @ElementCollection(fetch = FetchType.EAGER)
   @CollectionTable(name = "SKILLS_WORK_INTERESTS", joinColumns = [JoinColumn(name = "WORK_INTERESTS_ID")])
   @Column(name = "SKILLS")
   var skills: MutableSet<Skills>?,
   @Column(name = "OTHER_SKILL")
   var skillOTHER: String?,
 
-  @ElementCollection
+  @ElementCollection(fetch = FetchType.EAGER)
   @CollectionTable(name = "PERSONAL_WORK_INTERESTS", joinColumns = [JoinColumn(name = "WORK_INTERESTS_ID")])
   @Column(name = "PERSONAL_WORK_INTEREST")
   var personalInterests: MutableSet<PersonalInterests>?,
