@@ -7,6 +7,7 @@ import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity.CIAGProf
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.exceptions.AlreadyExistsException
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.exceptions.NotFoundException
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.repository.CIAGProfileRepository
+import java.time.LocalDateTime
 
 @Service
 class CIAGProfileService(
@@ -17,14 +18,34 @@ class CIAGProfileService(
 
   ): CIAGProfile? {
     var ciagProfile = CIAGProfile(ciagProfileDTO)
- /*   var ciagProfileSaved = ciagProfileRepository.findById(ciagProfileDTO.offenderId)
-    if (ciagProfileSaved != null && ciagProfileSaved.isPresent()) {
-      ciagProfileSaved.
+    var ciagProfileSavedOptional = ciagProfileRepository.findById(ciagProfileDTO.offenderId)
+    if (ciagProfileSavedOptional != null && ciagProfileSavedOptional.isPresent()) {
+      if(!ciagProfileSavedOptional.get().equals(ciagProfile)) {
+        var ciagProfileSaved = ciagProfileSavedOptional.get()
+        ciagProfile.modifiedDateTime = LocalDateTime.now()
+        ciagProfile.modifiedBy = ciagProfileDTO.modifiedBy
 
-      ciagProfileRepository.flush()
-    } else {*/
-      ciagProfileRepository.saveAndFlush(ciagProfile)
-//    }/**/
+        if(!ciagProfileSaved.inPrisonInterests?.equals(ciagProfile.inPrisonInterests)!!) {
+          ciagProfile.inPrisonInterests?.modifiedBy = ciagProfileSaved.modifiedBy
+          ciagProfile.inPrisonInterests?.modifiedDateTime = LocalDateTime.now()
+        }
+
+        if(!ciagProfileSaved.workExperience?.equals(ciagProfile.workExperience)!!) {
+          ciagProfile.workExperience?.modifiedBy = ciagProfileSaved.modifiedBy
+          ciagProfile.workExperience?.modifiedDateTime = LocalDateTime.now()
+        }
+
+        if(!ciagProfileSaved.qualificationsAndTraining?.equals(ciagProfile.qualificationsAndTraining)!!) {
+          ciagProfile.qualificationsAndTraining?.modifiedBy = ciagProfileSaved.modifiedBy
+          ciagProfile.qualificationsAndTraining?.modifiedDateTime = LocalDateTime.now()
+        }
+        if(!ciagProfileSaved.skillsAndInterests?.equals(ciagProfile.skillsAndInterests)!!) {
+          ciagProfile.skillsAndInterests?.modifiedBy = ciagProfileSaved.modifiedBy
+          ciagProfile.skillsAndInterests?.modifiedDateTime = LocalDateTime.now()
+        }
+      }
+    }
+    ciagProfileRepository.saveAndFlush(ciagProfile)
 
 
     return ciagProfile

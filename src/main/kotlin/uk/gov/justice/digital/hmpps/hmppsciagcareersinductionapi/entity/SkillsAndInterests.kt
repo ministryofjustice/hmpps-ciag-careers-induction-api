@@ -47,4 +47,32 @@ data class SkillsAndInterests(
   @OneToOne(mappedBy = "skillsAndInterests")
   @JsonIgnore
   var profile: CIAGProfile?,
-)
+) {
+  override fun equals(other: Any?): Boolean {
+    if (this === other) return true
+    if (javaClass != other?.javaClass) return false
+
+    other as SkillsAndInterests
+
+    if (id != other.id) return false
+    if (skills != other.skills) return false
+    if (skillOTHER != other.skillOTHER) return false
+    if (personalInterests != other.personalInterests) return false
+    if (personalInterestsOther != other.personalInterestsOther) return false
+
+    return true
+  }
+
+  override fun hashCode(): Int {
+    var result = id?.hashCode() ?: 0
+    result = 31 * result + (skills?.hashCode() ?: 0)
+    result = 31 * result + (skillOTHER?.hashCode() ?: 0)
+    result = 31 * result + (personalInterests?.hashCode() ?: 0)
+    result = 31 * result + (personalInterestsOther?.hashCode() ?: 0)
+    return result
+  }
+
+  override fun toString(): String {
+    return "SkillsAndInterests(modifiedBy='$modifiedBy', modifiedDateTime=$modifiedDateTime, id=$id, skills=$skills, skillOTHER=$skillOTHER, personalInterests=$personalInterests, personalInterestsOther=$personalInterestsOther, profile=$profile)"
+  }
+}
