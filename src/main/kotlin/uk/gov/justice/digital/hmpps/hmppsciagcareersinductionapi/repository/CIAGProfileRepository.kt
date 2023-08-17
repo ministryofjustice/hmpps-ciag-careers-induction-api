@@ -7,5 +7,5 @@ import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity.CIAGProf
 @Repository
 interface CIAGProfileRepository : JpaRepository<CIAGProfile, String> {
 
-  fun findByOffenderId(offenderId: String): CIAGProfile?
+//  fun findById(offenderId: String): CIAGProfile?
 }

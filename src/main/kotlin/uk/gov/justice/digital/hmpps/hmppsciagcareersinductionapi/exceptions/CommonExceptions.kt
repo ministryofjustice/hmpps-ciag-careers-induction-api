@@ -11,15 +11,15 @@ class ExceptionHandler {
 }
 
 class AlreadyExistsException(offenderId: String) :
-  Exception("CIAG previousWork already exists for offender $offenderId")
+  Exception("CIAG profile already exists for offender $offenderId")
 
-class NotFoundException(var offenderId: String) : Exception("CIAG previousWork does not exist for offender $offenderId"), Supplier<Throwable> {
+class NotFoundException(var offenderId: String) : Exception("CIAG profile does not exist for offender $offenderId"), Supplier<Throwable> {
   override fun get(): Throwable {
     throw NotFoundException(offenderId)
   }
 }
 
-class InvalidStateException(var offenderId: String) : Exception("CIAG previousWork is in an invalid state for  $offenderId"), Supplier<Throwable> {
+class InvalidStateException(var offenderId: String) : Exception("CIAG profile is in an invalid state for  $offenderId"), Supplier<Throwable> {
   override fun get(): Throwable {
     throw InvalidStateException(offenderId)
   }

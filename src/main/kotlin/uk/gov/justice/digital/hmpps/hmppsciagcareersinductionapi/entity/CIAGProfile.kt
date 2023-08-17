@@ -21,7 +21,7 @@ import javax.persistence.OneToOne
 import javax.persistence.Table
 
 @Entity
-@Table(name = "ciag_profile")
+@Table(name = "CIAG_PROFILE")
 data class CIAGProfile(
   @Id
   val offenderId: String,

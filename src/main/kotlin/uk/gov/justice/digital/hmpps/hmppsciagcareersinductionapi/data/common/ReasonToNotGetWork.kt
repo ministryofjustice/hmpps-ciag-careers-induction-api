@@ -8,5 +8,5 @@ enum class ReasonToNotGetWork {
   RETIRED,
   NO_RIGHT_TO_WORK,
   OTHER,
-  NONE,
+  NO_REASON,
 }

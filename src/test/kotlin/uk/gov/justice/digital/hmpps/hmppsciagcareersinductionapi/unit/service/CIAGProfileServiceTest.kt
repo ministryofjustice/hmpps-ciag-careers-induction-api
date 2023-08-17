@@ -15,6 +15,7 @@ import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity.CIAGProf
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.exceptions.NotFoundException
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.repository.CIAGProfileRepository
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.service.CIAGProfileService
+import java.util.*
 
 class CIAGProfileServiceTest {
   private val ciagProfileRepository: CIAGProfileRepository = mock()
@@ -60,7 +61,7 @@ class CIAGProfileServiceTest {
 
   @Test
   fun `makes a call to the repository to get the CIAG profile`() {
-    whenever(ciagProfileRepository.findByOffenderId((any()))).thenReturn(TestData.ciag)
+    whenever(ciagProfileRepository.findById((any()))).thenReturn(Optional.of(TestData.ciag))
 
     val rProfile = TestData.ciagDTO.offenderId?.let { profileService.getCIAGProfileForOffender(it) }
     assertThat(rProfile).extracting(TestData.createdByString, TestData.offenderIdString, TestData.modifiedByString)
@@ -70,16 +71,23 @@ class CIAGProfileServiceTest {
   @Test
   fun `makes a call to the repository to get the CIAG profile but getting a null object`() {
     AssertionsForClassTypes.assertThatExceptionOfType(NotFoundException::class.java).isThrownBy {
-      whenever(ciagProfileRepository.findByOffenderId((any()))).thenReturn(null)
+      whenever(ciagProfileRepository.findById((any()))).thenReturn(null)
       TestData.ciagDTO.offenderId?.let { profileService.getCIAGProfileForOffender(it) }
-    }.withMessageContaining("CIAG previousWork does not exist for offender")
+    }.withMessageContaining("CIAG profile does not exist for offender")
   }
 
   @Test
   fun `makes a call to the repository to delete the CIAG profilefor a given Offender id`() {
-    whenever(ciagProfileRepository.findByOffenderId((any()))).thenReturn(null)
+    whenever(ciagProfileRepository.findById((TestData.ciagDTO.offenderId))).thenReturn(Optional.of(TestData.ciag))
+    TestData.ciagDTO.offenderId?.let { profileService.deleteCIAGProfile(it) }
+    assert(true)
+  }
 
-    val rProfile = TestData.ciagDTO.offenderId?.let { profileService.deleteCIAGProfile(it) }
-    assertThat(rProfile).isNull()
+  @Test
+  fun `makes a call to the repository to delete the CIAG profile for a ofender id that does not have a profile but getting a null object`() {
+    AssertionsForClassTypes.assertThatExceptionOfType(NotFoundException::class.java).isThrownBy {
+      whenever(ciagProfileRepository.findById((any()))).thenReturn(null)
+      TestData.ciagDTO.offenderId?.let { profileService.deleteCIAGProfile(it) }
+    }.withMessageContaining("CIAG profile does not exist for offender")
   }
 }
