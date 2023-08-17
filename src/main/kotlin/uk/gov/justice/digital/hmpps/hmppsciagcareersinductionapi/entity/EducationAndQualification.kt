@@ -33,12 +33,12 @@ data class EducationAndQualification(
   @Column(name = "EDUCATION_LEVEL")
   var educationLevel: EducationLevels?,
 
-  @ElementCollection
+  @ElementCollection(fetch = FetchType.EAGER)
   @CollectionTable(name = "ACHIEVED_QUALIFICATION", joinColumns = [JoinColumn(name = "work_interests_id")])
   @Column(name = "QUALIFICATION")
   var qualifications: MutableSet<AchievedQualification>?,
 
-  @ElementCollection
+  @ElementCollection(fetch = FetchType.EAGER)
   @CollectionTable(name = "EXTRA_QUALIFICATION", joinColumns = [JoinColumn(name = "work_interests_id")])
   @Column(name = "QUALIFICATION")
   var additionalTraining: MutableSet<OtherQualification>?,

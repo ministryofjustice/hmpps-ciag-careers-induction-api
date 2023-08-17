@@ -49,7 +49,7 @@ data class CIAGProfile(
   @Column(name = "OTHER_ABILITY_TO_WORK_IMPACT")
   var abilityToWorkOther: String?,
 
-  @ElementCollection
+  @ElementCollection(fetch = FetchType.EAGER)
   @CollectionTable(name = "ABILITY_TO_WORK_IMPACT", joinColumns = [JoinColumn(name = "OFFENDER_ID")])
   @Column(name = "WORK_IMPACT_")
   var abilityToWork: MutableSet<AbilityToWorkImpactedBy>?,

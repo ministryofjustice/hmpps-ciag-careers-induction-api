@@ -31,7 +31,7 @@ data class PreviousWork(
   @GeneratedValue(strategy = GenerationType.SEQUENCE)
   @Column(name = "id", nullable = false)
   val id: Long?,
-  @ElementCollection
+  @ElementCollection(fetch = FetchType.EAGER)
   @CollectionTable(name = "WORK_EXPERIENCE", joinColumns = [JoinColumn(name = "PREVIOUS_WORK_ID")])
   @Column(name = "WORK_EXPERIENCE")
   var typeOfWorkExperience: MutableSet<WorkType>?,
@@ -39,7 +39,7 @@ data class PreviousWork(
   @Column(name = "WORK_EXPERIENCE_OTHER")
   var typeOfWorkExperienceOther: String?,
 
-  @ElementCollection
+  @ElementCollection(fetch = FetchType.EAGER)
   @CollectionTable(name = "WORK_EXPERIENCE_DETAIL", joinColumns = [JoinColumn(name = "PREVIOUS_WORK_ID")])
   @Column(name = "WORK_EXPERIENCE_DETAIL")
   var workExperience: MutableSet<WorkExperience>?,
