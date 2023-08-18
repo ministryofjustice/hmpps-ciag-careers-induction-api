@@ -44,7 +44,7 @@ dependencies {
   implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
   implementation("org.springframework.boot:spring-boot-starter-data-jpa")
   implementation("org.springframework.boot:spring-boot-starter-actuator")
-  implementation ("org.apache.commons:commons-collections4:4.0")
+  implementation("org.apache.commons:commons-collections4:4.0")
 
   // GOVUK Notify:
   implementation("uk.gov.service.notify:notifications-java-client:3.17.3-RELEASE")
