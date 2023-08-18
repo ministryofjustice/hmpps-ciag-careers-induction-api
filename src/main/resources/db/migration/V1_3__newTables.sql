@@ -1,4 +1,4 @@
-create table ability_to_work_impact (offender_id varchar(255) not null, work_impact_ integer);
+create table ability_to_work_impact (offender_id varchar(255) not null, work_impact integer);
 create table achieved_qualification (work_interests_id bigint not null, grade varchar(255), level integer, subject varchar(255));
 create table ciag_profile (offender_id varchar(255) not null, other_ability_to_work_impact varchar(255), created_by varchar(255), created_date_time timestamp, desire_to_work boolean, hoping_to_get_work integer, modified_by varchar(255), modified_date_time timestamp, reason_not_to_get_work integer, reason_to_not_get_work varchar(255), schema_version varchar(255), prison_work_and_education_id bigint, education_and_qualification_id bigint, skills_and_interests_id bigint, previous_work_id bigint, primary key (offender_id));
 create table current_work_interests (id bigint not null, modified_by varchar(255), modified_date_time timestamp, other_work_interest varchar(255), primary key (id));

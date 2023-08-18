@@ -5,7 +5,6 @@ import org.springframework.data.annotation.LastModifiedDate
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.PrisonTraining
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.PrisonWork
 import java.time.LocalDateTime
-import javax.persistence.CascadeType
 import javax.persistence.CollectionTable
 import javax.persistence.Column
 import javax.persistence.ElementCollection
@@ -43,7 +42,7 @@ data class PrisonWorkAndEducation(
   var inPrisonEducation: MutableSet<PrisonTraining>?,
   @Column(name = "OTHER_PRISON_EDUCATION")
   var inPrisonEducationOther: String?,
-  @OneToOne(mappedBy="inPrisonInterests")
+  @OneToOne(mappedBy = "inPrisonInterests")
   @JsonIgnore
   var profile: CIAGProfile?,
 ) {
@@ -70,5 +69,4 @@ data class PrisonWorkAndEducation(
     result = 31 * result + (inPrisonEducationOther?.hashCode() ?: 0)
     return result
   }
-
 }

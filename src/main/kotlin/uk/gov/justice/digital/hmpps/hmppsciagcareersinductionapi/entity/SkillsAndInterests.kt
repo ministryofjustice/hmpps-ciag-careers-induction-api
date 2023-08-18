@@ -5,7 +5,6 @@ import org.springframework.data.annotation.LastModifiedDate
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.PersonalInterests
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.Skills
 import java.time.LocalDateTime
-import javax.persistence.CascadeType
 import javax.persistence.CollectionTable
 import javax.persistence.Column
 import javax.persistence.ElementCollection

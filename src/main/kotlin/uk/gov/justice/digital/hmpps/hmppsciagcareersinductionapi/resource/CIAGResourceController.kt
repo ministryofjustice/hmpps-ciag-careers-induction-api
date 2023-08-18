@@ -20,7 +20,6 @@ import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.config.ErrorRes
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.jsonprofile.CIAGProfileDTO
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.jsonprofile.CIAGProfileRequestDTO
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.service.CIAGProfileService
-import java.time.LocalDateTime
 import javax.validation.Valid
 import javax.validation.constraints.Pattern
 
@@ -150,10 +149,7 @@ class CIAGResourceController(
     requestDTO: CIAGProfileRequestDTO,
     @AuthenticationPrincipal oauth2User: String,
   ): CIAGProfileDTO? {
-    requestDTO.createdBy = oauth2User
     requestDTO.modifiedBy = oauth2User
-    requestDTO.createdDateTime =  LocalDateTime.now()
-    requestDTO.modifiedDateTime = LocalDateTime.now()
     return ciagProfileService.createOrUpdateCIAGProfileForOffender(requestDTO)?.let {
       CIAGProfileDTO(
         it,
