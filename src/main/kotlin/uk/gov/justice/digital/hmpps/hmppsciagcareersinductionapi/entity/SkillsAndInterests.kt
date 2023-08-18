@@ -5,7 +5,6 @@ import org.springframework.data.annotation.LastModifiedDate
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.PersonalInterests
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.Skills
 import java.time.LocalDateTime
-import javax.persistence.CascadeType
 import javax.persistence.CollectionTable
 import javax.persistence.Column
 import javax.persistence.ElementCollection
@@ -44,8 +43,35 @@ data class SkillsAndInterests(
 
   @Column(name = "OTHER_PERSONAL_INTRESTS")
   var personalInterestsOther: String?,
-  @OneToOne(fetch = FetchType.EAGER, cascade = [CascadeType.ALL])
-  @JoinColumn(name = "OFFENDER_ID")
+  @OneToOne(mappedBy = "skillsAndInterests")
   @JsonIgnore
-  val profile: CIAGProfile?,
-)
+  var profile: CIAGProfile?,
+) {
+  override fun equals(other: Any?): Boolean {
+    if (this === other) return true
+    if (javaClass != other?.javaClass) return false
+
+    other as SkillsAndInterests
+
+    if (id != other.id) return false
+    if (skills != other.skills) return false
+    if (skillOTHER != other.skillOTHER) return false
+    if (personalInterests != other.personalInterests) return false
+    if (personalInterestsOther != other.personalInterestsOther) return false
+
+    return true
+  }
+
+  override fun hashCode(): Int {
+    var result = id?.hashCode() ?: 0
+    result = 31 * result + (skills?.hashCode() ?: 0)
+    result = 31 * result + (skillOTHER?.hashCode() ?: 0)
+    result = 31 * result + (personalInterests?.hashCode() ?: 0)
+    result = 31 * result + (personalInterestsOther?.hashCode() ?: 0)
+    return result
+  }
+
+  override fun toString(): String {
+    return "SkillsAndInterests(modifiedBy='$modifiedBy', modifiedDateTime=$modifiedDateTime, id=$id, skills=$skills, skillOTHER=$skillOTHER, personalInterests=$personalInterests, personalInterestsOther=$personalInterestsOther, profile=$profile)"
+  }
+}

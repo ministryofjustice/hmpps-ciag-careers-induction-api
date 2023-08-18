@@ -51,25 +51,25 @@ data class CIAGProfile(
 
   @ElementCollection(fetch = FetchType.EAGER)
   @CollectionTable(name = "ABILITY_TO_WORK_IMPACT", joinColumns = [JoinColumn(name = "OFFENDER_ID")])
-  @Column(name = "WORK_IMPACT_")
+  @Column(name = "WORK_IMPACT")
   var abilityToWork: MutableSet<AbilityToWorkImpactedBy>?,
 
   @Column(name = "REASON_NOT_TO_GET_WORK")
   var reasonToNotGetWork: ReasonToNotGetWork?,
 
-  @OneToOne(mappedBy = "profile", cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.EAGER)
+  @OneToOne(cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.EAGER)
   @JoinColumn(name = "PREVIOUS_WORK_ID")
   var workExperience: PreviousWork?,
 
-  @OneToOne(mappedBy = "profile", cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.EAGER)
+  @OneToOne(cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.EAGER)
   @JoinColumn(name = "SKILLS_AND_INTERESTS_ID")
   var skillsAndInterests: SkillsAndInterests?,
 
-  @OneToOne(mappedBy = "profile", cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.EAGER)
+  @OneToOne(cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.EAGER)
   @JoinColumn(name = "EDUCATION_AND_QUALIFICATION_ID")
   var qualificationsAndTraining: EducationAndQualification?,
 
-  @OneToOne(mappedBy = "profile", cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.EAGER)
+  @OneToOne(cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.EAGER)
   @JoinColumn(name = "PRISON_WORK_AND_EDUCATION_ID")
   var inPrisonInterests: PrisonWorkAndEducation?,
 
@@ -97,16 +97,7 @@ data class CIAGProfile(
     inPrisonInterests = ciagProfileRequestDTO.inPrisonInterests,
 
     schemaVersion = ciagProfileRequestDTO.schemaVersion,
-  ) {
-    inPrisonInterests?.modifiedBy = modifiedBy
-    inPrisonInterests?.modifiedDateTime = modifiedDateTime
-    qualificationsAndTraining?.modifiedBy = modifiedBy
-    qualificationsAndTraining?.modifiedDateTime = modifiedDateTime
-    skillsAndInterests?.modifiedBy = modifiedBy
-    skillsAndInterests?.modifiedDateTime = modifiedDateTime
-    workExperience?.modifiedBy = modifiedBy
-    workExperience?.modifiedDateTime = modifiedDateTime
-  }
+  )
 
   override fun equals(other: Any?): Boolean {
     if (this === other) return true
@@ -115,11 +106,7 @@ data class CIAGProfile(
     other as CIAGProfile
 
     if (offenderId != other.offenderId) return false
-    if (createdBy != other.createdBy) return false
-    if (createdDateTime != other.createdDateTime) return false
-    if (modifiedBy != other.modifiedBy) return false
     if (desireToWork != other.desireToWork) return false
-    if (modifiedDateTime != other.modifiedDateTime) return false
     if (hopingToGetWork != other.hopingToGetWork) return false
     if (reasonToNotGetWorkOther != other.reasonToNotGetWorkOther) return false
     if (abilityToWorkOther != other.abilityToWorkOther) return false
@@ -136,11 +123,7 @@ data class CIAGProfile(
 
   override fun hashCode(): Int {
     var result = offenderId.hashCode()
-    result = 31 * result + createdBy.hashCode()
-    result = 31 * result + createdDateTime.hashCode()
-    result = 31 * result + modifiedBy.hashCode()
     result = 31 * result + desireToWork.hashCode()
-    result = 31 * result + modifiedDateTime.hashCode()
     result = 31 * result + hopingToGetWork.hashCode()
     result = 31 * result + (reasonToNotGetWorkOther?.hashCode() ?: 0)
     result = 31 * result + (abilityToWorkOther?.hashCode() ?: 0)

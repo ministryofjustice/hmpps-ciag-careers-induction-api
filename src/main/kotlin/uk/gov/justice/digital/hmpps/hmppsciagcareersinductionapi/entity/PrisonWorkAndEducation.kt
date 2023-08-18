@@ -5,7 +5,6 @@ import org.springframework.data.annotation.LastModifiedDate
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.PrisonTraining
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.PrisonWork
 import java.time.LocalDateTime
-import javax.persistence.CascadeType
 import javax.persistence.CollectionTable
 import javax.persistence.Column
 import javax.persistence.ElementCollection
@@ -43,8 +42,31 @@ data class PrisonWorkAndEducation(
   var inPrisonEducation: MutableSet<PrisonTraining>?,
   @Column(name = "OTHER_PRISON_EDUCATION")
   var inPrisonEducationOther: String?,
-  @OneToOne(fetch = FetchType.EAGER, cascade = [CascadeType.ALL])
-  @JoinColumn(name = "OFFENDER_ID")
+  @OneToOne(mappedBy = "inPrisonInterests")
   @JsonIgnore
-  val profile: CIAGProfile?,
-)
+  var profile: CIAGProfile?,
+) {
+  override fun equals(other: Any?): Boolean {
+    if (this === other) return true
+    if (javaClass != other?.javaClass) return false
+
+    other as PrisonWorkAndEducation
+
+    if (id != other.id) return false
+    if (inPrisonWork != other.inPrisonWork) return false
+    if (inPrisonWorkOther != other.inPrisonWorkOther) return false
+    if (inPrisonEducation != other.inPrisonEducation) return false
+    if (inPrisonEducationOther != other.inPrisonEducationOther) return false
+
+    return true
+  }
+
+  override fun hashCode(): Int {
+    var result = id?.hashCode() ?: 0
+    result = 31 * result + (inPrisonWork?.hashCode() ?: 0)
+    result = 31 * result + (inPrisonWorkOther?.hashCode() ?: 0)
+    result = 31 * result + (inPrisonEducation?.hashCode() ?: 0)
+    result = 31 * result + (inPrisonEducationOther?.hashCode() ?: 0)
+    return result
+  }
+}

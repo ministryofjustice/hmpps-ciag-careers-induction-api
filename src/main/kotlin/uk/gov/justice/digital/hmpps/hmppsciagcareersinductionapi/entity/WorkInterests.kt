@@ -4,7 +4,6 @@ import org.springframework.data.annotation.LastModifiedBy
 import org.springframework.data.annotation.LastModifiedDate
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.WorkType
 import java.time.LocalDateTime
-import javax.persistence.CascadeType
 import javax.persistence.CollectionTable
 import javax.persistence.Column
 import javax.persistence.ElementCollection
@@ -41,8 +40,33 @@ data class WorkInterests(
   @Column(name = "PARTICULAR_WORK_INTEREST")
   var particularJobInterests: MutableSet<WorkInterestDetail>?,
 
-  @OneToOne(fetch = FetchType.EAGER, cascade = [CascadeType.ALL])
-  @JoinColumn(name = "PREVIOUS_WORK_ID")
+  @OneToOne(mappedBy = "workInterests")
   @JsonIgnore
-  val previousWork: PreviousWork?,
-)
+  var previousWork: PreviousWork?,
+) {
+  override fun equals(other: Any?): Boolean {
+    if (this === other) return true
+    if (javaClass != other?.javaClass) return false
+
+    other as WorkInterests
+
+    if (id != other.id) return false
+    if (workInterests != other.workInterests) return false
+    if (workInterestsOther != other.workInterestsOther) return false
+    if (particularJobInterests != other.particularJobInterests) return false
+
+    return true
+  }
+
+  override fun hashCode(): Int {
+    var result = id?.hashCode() ?: 0
+    result = 31 * result + (workInterests?.hashCode() ?: 0)
+    result = 31 * result + (workInterestsOther?.hashCode() ?: 0)
+    result = 31 * result + (particularJobInterests?.hashCode() ?: 0)
+    return result
+  }
+
+  override fun toString(): String {
+    return "WorkInterests(modifiedBy='$modifiedBy', modifiedDateTime=$modifiedDateTime, id=$id, workInterests=$workInterests, workInterestsOther=$workInterestsOther, particularJobInterests=$particularJobInterests, previousWork=$previousWork)"
+  }
+}

@@ -44,12 +44,42 @@ data class PreviousWork(
   @Column(name = "WORK_EXPERIENCE_DETAIL")
   var workExperience: MutableSet<WorkExperience>?,
 
-  @OneToOne(mappedBy = "previousWork", cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.EAGER)
+  @OneToOne(cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.EAGER)
   @JoinColumn(name = "WORK_INTERESTS_ID")
   var workInterests: WorkInterests?,
 
-  @OneToOne(fetch = FetchType.EAGER, cascade = [CascadeType.ALL])
-  @JoinColumn(name = "OFFENDER_ID")
+  @OneToOne(mappedBy = "workExperience")
   @JsonIgnore
-  val profile: CIAGProfile?,
-)
+  var profile: CIAGProfile?,
+) {
+
+  override fun toString(): String {
+    return "PreviousWork(hasWorkedBefore=$hasWorkedBefore, modifiedBy='$modifiedBy', modifiedDateTime=$modifiedDateTime, id=$id, typeOfWorkExperience=$typeOfWorkExperience, typeOfWorkExperienceOther=$typeOfWorkExperienceOther, workExperience=$workExperience, workInterests=$workInterests, profile=$profile)"
+  }
+
+  override fun equals(other: Any?): Boolean {
+    if (this === other) return true
+    if (javaClass != other?.javaClass) return false
+
+    other as PreviousWork
+
+    if (hasWorkedBefore != other.hasWorkedBefore) return false
+    if (id != other.id) return false
+    if (typeOfWorkExperience != other.typeOfWorkExperience) return false
+    if (typeOfWorkExperienceOther != other.typeOfWorkExperienceOther) return false
+    if (workExperience != other.workExperience) return false
+    if (workInterests != other.workInterests) return false
+
+    return true
+  }
+
+  override fun hashCode(): Int {
+    var result = hasWorkedBefore.hashCode()
+    result = 31 * result + (id?.hashCode() ?: 0)
+    result = 31 * result + (typeOfWorkExperience?.hashCode() ?: 0)
+    result = 31 * result + (typeOfWorkExperienceOther?.hashCode() ?: 0)
+    result = 31 * result + (workExperience?.hashCode() ?: 0)
+    result = 31 * result + (workInterests?.hashCode() ?: 0)
+    return result
+  }
+}

@@ -3,6 +3,7 @@ plugins {
   kotlin("plugin.spring") version "1.8.10"
   kotlin("plugin.jpa") version "1.8.10"
   id("jacoco")
+  id("org.flywaydb.flyway") version "9.21.1"
 }
 
 configurations {
@@ -94,6 +95,11 @@ java {
   toolchain.languageVersion.set(JavaLanguageVersion.of(18))
 }
 
+flyway {
+  url = "jdbc:h2:mem:ciag-careers;MODE=PostgreSQL"
+  user = "create_vary"
+  password = "dummy"
+}
 dependencyCheck {
   suppressionFiles.add("$rootDir/dependencyCheck/suppression.xml")
 }

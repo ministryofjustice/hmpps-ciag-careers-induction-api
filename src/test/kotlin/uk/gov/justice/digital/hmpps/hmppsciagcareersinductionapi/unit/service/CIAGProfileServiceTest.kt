@@ -33,8 +33,8 @@ class CIAGProfileServiceTest {
     val rProfile = profileService.createOrUpdateCIAGProfileForOffender(TestData.ciagDTO)
     val argumentCaptor = ArgumentCaptor.forClass(CIAGProfile::class.java)
     verify(ciagProfileRepository).saveAndFlush(argumentCaptor.capture())
-    assertThat(rProfile).extracting(TestData.createdByString, TestData.offenderIdString)
-      .contains(TestData.ciag.createdBy, TestData.ciag.offenderId)
+    assertThat(rProfile).extracting(TestData.offenderIdString, "hopingToGetWork")
+      .contains(TestData.ciag.offenderId, TestData.ciag.hopingToGetWork)
   }
 
   @Test
@@ -53,10 +53,9 @@ class CIAGProfileServiceTest {
     val modifiedArgumentCaptor = ArgumentCaptor.forClass(CIAGProfile::class.java)
     verify(ciagProfileRepository, times(2)).saveAndFlush(modifiedArgumentCaptor.capture())
     assertThat(modifiedProfile).extracting(
-      TestData.createdByString,
       TestData.offenderIdString,
       TestData.modifiedByString,
-    ).contains(TestData.ciag.createdBy, TestData.ciag.offenderId, TestData.ciag.modifiedBy)
+    ).contains(TestData.ciag.offenderId, TestData.ciagDTO.modifiedBy)
   }
 
   @Test
