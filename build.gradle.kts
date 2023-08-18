@@ -3,7 +3,6 @@ plugins {
   kotlin("plugin.spring") version "1.8.10"
   kotlin("plugin.jpa") version "1.8.10"
   id("jacoco")
-  id("org.flywaydb.flyway") version "9.21.1"
 }
 
 configurations {
@@ -45,6 +44,7 @@ dependencies {
   implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
   implementation("org.springframework.boot:spring-boot-starter-data-jpa")
   implementation("org.springframework.boot:spring-boot-starter-actuator")
+  implementation("org.apache.commons:commons-collections4:4.0")
 
   // GOVUK Notify:
   implementation("uk.gov.service.notify:notifications-java-client:3.17.3-RELEASE")
@@ -95,11 +95,6 @@ java {
   toolchain.languageVersion.set(JavaLanguageVersion.of(18))
 }
 
-flyway {
-  url = "jdbc:h2:mem:ciag-careers;MODE=PostgreSQL"
-  user = "create_vary"
-  password = "dummy"
-}
 dependencyCheck {
   suppressionFiles.add("$rootDir/dependencyCheck/suppression.xml")
 }
