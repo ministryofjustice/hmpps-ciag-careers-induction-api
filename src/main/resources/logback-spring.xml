@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configuration DEBUG="true">
+<configuration DEBUG="false">
     <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
     <property name="LOG_PATTERN"
               value="%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m | %mdc %n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}"/>
@@ -26,37 +26,36 @@
     </springProfile>
 
     <logger name="uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.HmppsEducationEmploymentApiKt" additivity="false"
-            level="DEBUG">
+            level="INFO">
         <appender-ref ref="logAppender"/>
         <appender-ref ref="consoleAppender"/>
     </logger>
 
-    <logger name="uk.gov.justice.digital.hmpps" additivity="false" level="DEBUG">
+    <logger name="uk.gov.justice.digital.hmpps" additivity="false" level="INFO">
         <appender-ref ref="logAppender"/>
     </logger>
 
-    <logger name="org.springframework" additivity="false" level="DEBUG">
+    <logger name="org.springframework" additivity="false" level="INFO">
         <appender-ref ref="logAppender"/>
         <appender-ref ref="consoleAppender"/>
     </logger>
 
-    <logger name="com.microsoft.applicationinsights" additivity="false" level="DEBUG">
+    <logger name="com.microsoft.applicationinsights" additivity="false" level="INFO">
         <appender-ref ref="logAppender"/>
     </logger>
 
-    <logger name="org.apache.catalina" additivity="false" level="DEBUG">
+    <logger name="org.apache.catalina" additivity="false" level="INFO">
         <appender-ref ref="logAppender"/>
         <appender-ref ref="consoleAppender"/>
     </logger>
 
-    <logger name="org.springframework.boot" additivity="false" level="DEBUG">
+    <logger name="org.springframework.boot" additivity="false" level="INFO">
         <appender-ref ref="logAppender"/>
         <appender-ref ref="consoleAppender"/>
     </logger>
 
-    <root level="DEBUG">
+    <root level="INFO">
         <appender-ref ref="logAppender"/>
-        <appender-ref ref="consoleAppender"/>
     </root>
 
 </configuration>
