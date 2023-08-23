@@ -34,7 +34,7 @@ data class SkillsAndInterests(
   @Column(name = "SKILLS")
   var skills: MutableSet<Skills>?,
   @Column(name = "OTHER_SKILL")
-  var skillOTHER: String?,
+  var skillsOther: String?,
 
   @ElementCollection(fetch = FetchType.EAGER)
   @CollectionTable(name = "PERSONAL_WORK_INTERESTS", joinColumns = [JoinColumn(name = "WORK_INTERESTS_ID")])
@@ -55,7 +55,7 @@ data class SkillsAndInterests(
 
     if (id != other.id) return false
     if (skills != other.skills) return false
-    if (skillOTHER != other.skillOTHER) return false
+    if (skillsOther != other.skillsOther) return false
     if (personalInterests != other.personalInterests) return false
     if (personalInterestsOther != other.personalInterestsOther) return false
 
@@ -65,13 +65,13 @@ data class SkillsAndInterests(
   override fun hashCode(): Int {
     var result = id?.hashCode() ?: 0
     result = 31 * result + (skills?.hashCode() ?: 0)
-    result = 31 * result + (skillOTHER?.hashCode() ?: 0)
+    result = 31 * result + (skillsOther?.hashCode() ?: 0)
     result = 31 * result + (personalInterests?.hashCode() ?: 0)
     result = 31 * result + (personalInterestsOther?.hashCode() ?: 0)
     return result
   }
 
   override fun toString(): String {
-    return "SkillsAndInterests(modifiedBy='$modifiedBy', modifiedDateTime=$modifiedDateTime, id=$id, skills=$skills, skillOTHER=$skillOTHER, personalInterests=$personalInterests, personalInterestsOther=$personalInterestsOther, profile=$profile)"
+    return "SkillsAndInterests(modifiedBy='$modifiedBy', modifiedDateTime=$modifiedDateTime, id=$id, skills=$skills, skillsOther=$skillsOther, personalInterests=$personalInterests, personalInterestsOther=$personalInterestsOther, profile=$profile)"
   }
 }

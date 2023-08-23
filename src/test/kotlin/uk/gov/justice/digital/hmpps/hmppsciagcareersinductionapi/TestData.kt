@@ -33,7 +33,7 @@ class TestData {
     val modifiedByString = "modifiedBy"
     var hopingToGetWork = HopingToGetWork.NOT_SURE
     var abilityToWorkImpactDetailList = mutableSetOf(AbilityToWorkImpactedBy.HEALTH_ISSUES)
-    var reasonToNotGetWork = ReasonToNotGetWork.FULL_TIME_CARER
+    var reasonToNotGetWork = mutableSetOf(ReasonToNotGetWork.FULL_TIME_CARER)
     var previousWorkDetail = WorkExperience(WorkType.BEAUTY, null, "jobtitle", "Respon")
     var previousWorkDetailSet = mutableSetOf(previousWorkDetail)
     var workInterests = WorkInterests(

@@ -30,7 +30,7 @@ class CIAGProfileServiceTest {
   fun `makes a call to the repository to save the CIAG profile`() {
     whenever(ciagProfileRepository.saveAndFlush(any())).thenReturn(TestData.ciag)
 
-    val rProfile = profileService.createOrUpdateCIAGProfileForOffender(TestData.ciagDTO)
+    val rProfile = profileService.createOrUpdateCIAGInductionForOffender(TestData.ciagDTO)
     val argumentCaptor = ArgumentCaptor.forClass(CIAGProfile::class.java)
     verify(ciagProfileRepository).saveAndFlush(argumentCaptor.capture())
     assertThat(rProfile).extracting(TestData.offenderIdString, "hopingToGetWork")
@@ -41,7 +41,7 @@ class CIAGProfileServiceTest {
   fun `makes a call to the repository to update the CIAG profile`() {
     whenever(ciagProfileRepository.saveAndFlush(TestData.ciag)).thenReturn(TestData.ciag)
 
-    val rProfile = profileService.createOrUpdateCIAGProfileForOffender(TestData.ciagDTO)
+    val rProfile = profileService.createOrUpdateCIAGInductionForOffender(TestData.ciagDTO)
     val argumentCaptor = ArgumentCaptor.forClass(CIAGProfile::class.java)
     verify(ciagProfileRepository).saveAndFlush(argumentCaptor.capture())
     assertThat(rProfile).extracting(TestData.createdByString, TestData.offenderIdString, TestData.modifiedByString)
@@ -49,7 +49,7 @@ class CIAGProfileServiceTest {
     TestData.ciag.modifiedBy = "Paul"
     TestData.ciagDTO.modifiedBy = "Paul"
     whenever(ciagProfileRepository.saveAndFlush(TestData.ciag)).thenReturn(TestData.ciag)
-    var modifiedProfile = profileService.createOrUpdateCIAGProfileForOffender(TestData.ciagDTO)
+    var modifiedProfile = profileService.createOrUpdateCIAGInductionForOffender(TestData.ciagDTO)
     val modifiedArgumentCaptor = ArgumentCaptor.forClass(CIAGProfile::class.java)
     verify(ciagProfileRepository, times(2)).saveAndFlush(modifiedArgumentCaptor.capture())
     assertThat(modifiedProfile).extracting(

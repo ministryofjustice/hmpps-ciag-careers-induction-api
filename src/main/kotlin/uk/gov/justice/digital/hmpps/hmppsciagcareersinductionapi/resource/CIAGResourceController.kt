@@ -25,7 +25,7 @@ import javax.validation.constraints.Pattern
 
 @Validated
 @RestController
-@RequestMapping("/ciag", produces = [MediaType.APPLICATION_JSON_VALUE])
+@RequestMapping("/ciag/induction", produces = [MediaType.APPLICATION_JSON_VALUE])
 class CIAGResourceController(
   private val ciagProfileService: CIAGProfileService,
 ) {
@@ -54,6 +54,16 @@ class CIAGResourceController(
         responseCode = "403",
         description = "Incorrect permissions to access this endpoint",
         content = [Content(mediaType = "application/json", schema = Schema(implementation = String::class))],
+      ),
+      ApiResponse(
+        responseCode = "400",
+        description = "Invalid Parameters have been passed",
+        content = [Content(mediaType = "application/json", schema = Schema(implementation = ErrorResponse::class))],
+      ),
+      ApiResponse(
+        responseCode = "404",
+        description = "Resource not found",
+        content = [Content(mediaType = "application/json", schema = Schema(implementation = ErrorResponse::class))],
       ),
     ],
   )
@@ -95,6 +105,16 @@ class CIAGResourceController(
         description = "Incorrect permissions to access this endpoint",
         content = [Content(mediaType = "application/json", schema = Schema(implementation = String::class))],
       ),
+      ApiResponse(
+        responseCode = "400",
+        description = "Invalid Parameters have been passed",
+        content = [Content(mediaType = "application/json", schema = Schema(implementation = ErrorResponse::class))],
+      ),
+      ApiResponse(
+        responseCode = "404",
+        description = "Resource not found",
+        content = [Content(mediaType = "application/json", schema = Schema(implementation = ErrorResponse::class))],
+      ),
     ],
   )
   fun deleteCIAGProfileForOffenderId(
@@ -135,6 +155,16 @@ class CIAGResourceController(
         description = "Incorrect permissions to access this endpoint",
         content = [Content(mediaType = "application/json", schema = Schema(implementation = ErrorResponse::class))],
       ),
+      ApiResponse(
+        responseCode = "400",
+        description = "Invalid Parameters have been passed",
+        content = [Content(mediaType = "application/json", schema = Schema(implementation = ErrorResponse::class))],
+      ),
+      ApiResponse(
+        responseCode = "404",
+        description = "Resource not found",
+        content = [Content(mediaType = "application/json", schema = Schema(implementation = ErrorResponse::class))],
+      ),
     ],
   )
   fun createOffenderProfile(
@@ -150,7 +180,7 @@ class CIAGResourceController(
     @AuthenticationPrincipal oauth2User: String,
   ): CIAGProfileDTO? {
     requestDTO.modifiedBy = oauth2User
-    return ciagProfileService.createOrUpdateCIAGProfileForOffender(requestDTO)?.let {
+    return ciagProfileService.createOrUpdateCIAGInductionForOffender(requestDTO)?.let {
       CIAGProfileDTO(
         it,
       )
@@ -165,7 +195,7 @@ class CIAGResourceController(
     responses = [
       ApiResponse(
         responseCode = "200",
-        description = "CIAG profile created",
+        description = "CIAG profile update",
         content = [
           Content(
             mediaType = "application/json",
@@ -183,6 +213,16 @@ class CIAGResourceController(
         description = "Incorrect permissions to access this endpoint",
         content = [Content(mediaType = "application/json", schema = Schema(implementation = ErrorResponse::class))],
       ),
+      ApiResponse(
+        responseCode = "400",
+        description = "Invalid Parameters have been passed",
+        content = [Content(mediaType = "application/json", schema = Schema(implementation = ErrorResponse::class))],
+      ),
+      ApiResponse(
+        responseCode = "404",
+        description = "Resource not found",
+        content = [Content(mediaType = "application/json", schema = Schema(implementation = ErrorResponse::class))],
+      ),
     ],
   )
   fun updateOffenderProfile(
@@ -198,7 +238,7 @@ class CIAGResourceController(
     @AuthenticationPrincipal oauth2User: String,
   ): CIAGProfileDTO? {
     requestDTO.modifiedBy = oauth2User
-    return ciagProfileService.createOrUpdateCIAGProfileForOffender(requestDTO)?.let {
+    return ciagProfileService.updateCIAGInductionForOffender(requestDTO)?.let {
       CIAGProfileDTO(
         it,
       )
