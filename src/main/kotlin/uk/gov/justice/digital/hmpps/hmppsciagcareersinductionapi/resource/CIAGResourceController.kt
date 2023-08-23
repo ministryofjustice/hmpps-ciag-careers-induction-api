@@ -29,7 +29,7 @@ import javax.validation.constraints.Pattern
 class CIAGResourceController(
   private val ciagProfileService: CIAGProfileService,
 ) {
-  @PreAuthorize("hasAnyRole('ROLE_WORK_READINESS_EDIT','ROLE_WORK_READINESS_VIEW')")
+  @PreAuthorize("hasAnyRole('ROLE_EDUCATION_WORK_PLAN_EDITOR','ROLE_EDUCATION_WORK_PLAN_VIEWER')")
   @GetMapping("/{offenderId}")
   @Operation(
     summary = "Fetch the CIAG profile for the offender",
@@ -79,7 +79,7 @@ class CIAGResourceController(
     return ciagProfileService.getCIAGProfileForOffender(offenderId)
   }
 
-  @PreAuthorize("hasAnyRole('ROLE_WORK_READINESS_EDIT','ROLE_WORK_READINESS_VIEW')")
+  @PreAuthorize("hasAnyRole('ROLE_EDUCATION_WORK_PLAN_EDITOR','ROLE_EDUCATION_WORK_PLAN_VIEWER')")
   @DeleteMapping("/{offenderId}")
   @Operation(
     summary = "Delete CIAG Profile",
@@ -129,7 +129,7 @@ class CIAGResourceController(
     return ciagProfileService.deleteCIAGProfile(offenderId)
   }
 
-  @PreAuthorize("hasAnyRole('ROLE_WORK_READINESS_EDIT','ROLE_WORK_READINESS_VIEW')")
+  @PreAuthorize("hasAnyRole('ROLE_EDUCATION_WORK_PLAN_EDITOR','ROLE_EDUCATION_WORK_PLAN_VIEWER')")
   @PostMapping("/{offenderId}")
   @Operation(
     summary = "Create the CIAG profile for an offender",
@@ -187,7 +187,7 @@ class CIAGResourceController(
     }
   }
 
-  @PreAuthorize("hasAnyRole('ROLE_WORK_READINESS_EDIT','ROLE_WORK_READINESS_VIEW')")
+  @PreAuthorize("hasAnyRole('ROLE_EDUCATION_WORK_PLAN_EDITOR','ROLE_EDUCATION_WORK_PLAN_VIEWER')")
   @PutMapping("/{offenderId}")
   @Operation(
     summary = "Update the CIAG profile for an offender",
