@@ -32,7 +32,7 @@ data class CIAGProfileDTO(
 
   @Schema var abilityToWork: MutableSet<AbilityToWorkImpactedBy>?,
 
-  @Schema var reasonToNotGetWork: ReasonToNotGetWork?,
+  @Schema var reasonToNotGetWork: MutableSet<ReasonToNotGetWork>?,
 
   @Schema var workExperience: PreviousWork?,
 

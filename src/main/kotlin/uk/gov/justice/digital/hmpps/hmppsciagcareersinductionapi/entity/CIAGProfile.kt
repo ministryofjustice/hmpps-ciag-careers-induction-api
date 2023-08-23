@@ -54,8 +54,10 @@ data class CIAGProfile(
   @Column(name = "WORK_IMPACT")
   var abilityToWork: MutableSet<AbilityToWorkImpactedBy>?,
 
-  @Column(name = "REASON_NOT_TO_GET_WORK")
-  var reasonToNotGetWork: ReasonToNotGetWork?,
+  @ElementCollection(fetch = FetchType.EAGER)
+  @CollectionTable(name = "REASON_TO_NOT_WORK", joinColumns = [JoinColumn(name = "OFFENDER_ID")])
+  @Column(name = "REASON")
+  var reasonToNotGetWork: MutableSet<ReasonToNotGetWork>?,
 
   @OneToOne(cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.EAGER)
   @JoinColumn(name = "PREVIOUS_WORK_ID")

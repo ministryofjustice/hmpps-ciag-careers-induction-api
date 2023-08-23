@@ -25,11 +25,11 @@ import javax.validation.constraints.Pattern
 
 @Validated
 @RestController
-@RequestMapping("/ciag", produces = [MediaType.APPLICATION_JSON_VALUE])
+@RequestMapping("/ciag/induction", produces = [MediaType.APPLICATION_JSON_VALUE])
 class CIAGResourceController(
   private val ciagProfileService: CIAGProfileService,
 ) {
-  @PreAuthorize("hasAnyRole('ROLE_WORK_READINESS_EDIT','ROLE_WORK_READINESS_VIEW')")
+  @PreAuthorize("hasAnyRole('ROLE_EDUCATION_WORK_PLAN_EDITOR','ROLE_EDUCATION_WORK_PLAN_VIEWER')")
   @GetMapping("/{offenderId}")
   @Operation(
     summary = "Fetch the CIAG profile for the offender",
@@ -55,6 +55,16 @@ class CIAGResourceController(
         description = "Incorrect permissions to access this endpoint",
         content = [Content(mediaType = "application/json", schema = Schema(implementation = String::class))],
       ),
+      ApiResponse(
+        responseCode = "400",
+        description = "Invalid Parameters have been passed",
+        content = [Content(mediaType = "application/json", schema = Schema(implementation = ErrorResponse::class))],
+      ),
+      ApiResponse(
+        responseCode = "404",
+        description = "Resource not found",
+        content = [Content(mediaType = "application/json", schema = Schema(implementation = ErrorResponse::class))],
+      ),
     ],
   )
   fun getCIAGProfileForOffenderId(
@@ -69,7 +79,7 @@ class CIAGResourceController(
     return ciagProfileService.getCIAGProfileForOffender(offenderId)
   }
 
-  @PreAuthorize("hasAnyRole('ROLE_WORK_READINESS_EDIT','ROLE_WORK_READINESS_VIEW')")
+  @PreAuthorize("hasAnyRole('ROLE_EDUCATION_WORK_PLAN_EDITOR','ROLE_EDUCATION_WORK_PLAN_VIEWER')")
   @DeleteMapping("/{offenderId}")
   @Operation(
     summary = "Delete CIAG Profile",
@@ -95,6 +105,16 @@ class CIAGResourceController(
         description = "Incorrect permissions to access this endpoint",
         content = [Content(mediaType = "application/json", schema = Schema(implementation = String::class))],
       ),
+      ApiResponse(
+        responseCode = "400",
+        description = "Invalid Parameters have been passed",
+        content = [Content(mediaType = "application/json", schema = Schema(implementation = ErrorResponse::class))],
+      ),
+      ApiResponse(
+        responseCode = "404",
+        description = "Resource not found",
+        content = [Content(mediaType = "application/json", schema = Schema(implementation = ErrorResponse::class))],
+      ),
     ],
   )
   fun deleteCIAGProfileForOffenderId(
@@ -109,7 +129,7 @@ class CIAGResourceController(
     return ciagProfileService.deleteCIAGProfile(offenderId)
   }
 
-  @PreAuthorize("hasAnyRole('ROLE_WORK_READINESS_EDIT','ROLE_WORK_READINESS_VIEW')")
+  @PreAuthorize("hasAnyRole('ROLE_EDUCATION_WORK_PLAN_EDITOR','ROLE_EDUCATION_WORK_PLAN_VIEWER')")
   @PostMapping("/{offenderId}")
   @Operation(
     summary = "Create the CIAG profile for an offender",
@@ -135,6 +155,16 @@ class CIAGResourceController(
         description = "Incorrect permissions to access this endpoint",
         content = [Content(mediaType = "application/json", schema = Schema(implementation = ErrorResponse::class))],
       ),
+      ApiResponse(
+        responseCode = "400",
+        description = "Invalid Parameters have been passed",
+        content = [Content(mediaType = "application/json", schema = Schema(implementation = ErrorResponse::class))],
+      ),
+      ApiResponse(
+        responseCode = "404",
+        description = "Resource not found",
+        content = [Content(mediaType = "application/json", schema = Schema(implementation = ErrorResponse::class))],
+      ),
     ],
   )
   fun createOffenderProfile(
@@ -150,14 +180,14 @@ class CIAGResourceController(
     @AuthenticationPrincipal oauth2User: String,
   ): CIAGProfileDTO? {
     requestDTO.modifiedBy = oauth2User
-    return ciagProfileService.createOrUpdateCIAGProfileForOffender(requestDTO)?.let {
+    return ciagProfileService.createOrUpdateCIAGInductionForOffender(requestDTO)?.let {
       CIAGProfileDTO(
         it,
       )
     }
   }
 
-  @PreAuthorize("hasAnyRole('ROLE_WORK_READINESS_EDIT','ROLE_WORK_READINESS_VIEW')")
+  @PreAuthorize("hasAnyRole('ROLE_EDUCATION_WORK_PLAN_EDITOR','ROLE_EDUCATION_WORK_PLAN_VIEWER')")
   @PutMapping("/{offenderId}")
   @Operation(
     summary = "Update the CIAG profile for an offender",
@@ -165,7 +195,7 @@ class CIAGResourceController(
     responses = [
       ApiResponse(
         responseCode = "200",
-        description = "CIAG profile created",
+        description = "CIAG profile update",
         content = [
           Content(
             mediaType = "application/json",
@@ -183,6 +213,16 @@ class CIAGResourceController(
         description = "Incorrect permissions to access this endpoint",
         content = [Content(mediaType = "application/json", schema = Schema(implementation = ErrorResponse::class))],
       ),
+      ApiResponse(
+        responseCode = "400",
+        description = "Invalid Parameters have been passed",
+        content = [Content(mediaType = "application/json", schema = Schema(implementation = ErrorResponse::class))],
+      ),
+      ApiResponse(
+        responseCode = "404",
+        description = "Resource not found",
+        content = [Content(mediaType = "application/json", schema = Schema(implementation = ErrorResponse::class))],
+      ),
     ],
   )
   fun updateOffenderProfile(
@@ -198,7 +238,7 @@ class CIAGResourceController(
     @AuthenticationPrincipal oauth2User: String,
   ): CIAGProfileDTO? {
     requestDTO.modifiedBy = oauth2User
-    return ciagProfileService.createOrUpdateCIAGProfileForOffender(requestDTO)?.let {
+    return ciagProfileService.updateCIAGInductionForOffender(requestDTO)?.let {
       CIAGProfileDTO(
         it,
       )

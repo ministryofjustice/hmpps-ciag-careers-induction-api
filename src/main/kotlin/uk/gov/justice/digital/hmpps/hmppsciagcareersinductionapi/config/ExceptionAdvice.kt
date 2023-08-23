@@ -157,10 +157,10 @@ class ControllerAdvice {
   fun handleNotFoundException(e: NotFoundException): ResponseEntity<ErrorResponse> {
     log.info("NotFoundException: ${e.message}", e)
     return ResponseEntity
-      .status(HttpStatus.BAD_REQUEST)
+      .status(HttpStatus.NOT_FOUND)
       .body(
         ErrorResponse(
-          status = HttpStatus.BAD_REQUEST.value(),
+          status = HttpStatus.NOT_FOUND.value(),
           userMessage = "${e.message}",
           developerMessage = e.message,
         ),
