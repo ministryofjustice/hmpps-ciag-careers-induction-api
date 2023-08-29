@@ -45,21 +45,21 @@ class CIAGProfileService(
         ciagProfile.createdDateTime = ciagProfileSaved.modifiedDateTime
         ciagProfile.createdBy = ciagProfileSaved.createdBy
 
-        if (!ciagProfileSaved.inPrisonInterests?.equals(ciagProfile.inPrisonInterests)!!) {
+        if (ciagProfileSaved.inPrisonInterests?.equals(ciagProfile.inPrisonInterests) == false) {
           ciagProfile.inPrisonInterests?.modifiedBy = ciagProfileSaved.modifiedBy
           ciagProfile.inPrisonInterests?.modifiedDateTime = LocalDateTime.now()
         }
 
-        if (!ciagProfileSaved.workExperience?.equals(ciagProfile.workExperience)!!) {
+        if (ciagProfileSaved.workExperience?.equals(ciagProfile.workExperience) == false) {
           ciagProfile.workExperience?.modifiedBy = ciagProfileSaved.modifiedBy
           ciagProfile.workExperience?.modifiedDateTime = LocalDateTime.now()
         }
 
-        if (!ciagProfileSaved.qualificationsAndTraining?.equals(ciagProfile.qualificationsAndTraining)!!) {
+        if (ciagProfileSaved.qualificationsAndTraining?.equals(ciagProfile.qualificationsAndTraining) == false) {
           ciagProfile.qualificationsAndTraining?.modifiedBy = ciagProfileSaved.modifiedBy
           ciagProfile.qualificationsAndTraining?.modifiedDateTime = LocalDateTime.now()
         }
-        if (!ciagProfileSaved.skillsAndInterests?.equals(ciagProfile.skillsAndInterests)!!) {
+        if (ciagProfileSaved.skillsAndInterests?.equals(ciagProfile.skillsAndInterests) == false) {
           ciagProfile.skillsAndInterests?.modifiedBy = ciagProfileSaved.modifiedBy
           ciagProfile.skillsAndInterests?.modifiedDateTime = LocalDateTime.now()
         }
