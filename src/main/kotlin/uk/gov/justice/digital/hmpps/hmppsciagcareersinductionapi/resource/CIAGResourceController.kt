@@ -79,7 +79,7 @@ class CIAGResourceController(
     return ciagProfileService.getCIAGProfileForOffender(offenderId)
   }
 
-  @PreAuthorize("hasAnyRole('ROLE_EDUCATION_WORK_PLAN_EDITOR','ROLE_EDUCATION_WORK_PLAN_VIEWER')")
+  @PreAuthorize("hasAnyRole('ROLE_EDUCATION_WORK_PLAN_EDITOR')")
   @DeleteMapping("/{offenderId}")
   @Operation(
     summary = "Delete CIAG Profile",
@@ -129,7 +129,7 @@ class CIAGResourceController(
     return ciagProfileService.deleteCIAGProfile(offenderId)
   }
 
-  @PreAuthorize("hasAnyRole('ROLE_EDUCATION_WORK_PLAN_EDITOR','ROLE_EDUCATION_WORK_PLAN_VIEWER')")
+  @PreAuthorize("hasAnyRole('ROLE_EDUCATION_WORK_PLAN_EDITOR')")
   @PostMapping("/{offenderId}")
   @Operation(
     summary = "Create the CIAG profile for an offender",
@@ -187,7 +187,7 @@ class CIAGResourceController(
     }
   }
 
-  @PreAuthorize("hasAnyRole('ROLE_EDUCATION_WORK_PLAN_EDITOR','ROLE_EDUCATION_WORK_PLAN_VIEWER')")
+  @PreAuthorize("hasAnyRole('ROLE_EDUCATION_WORK_PLAN_EDITOR')")
   @PutMapping("/{offenderId}")
   @Operation(
     summary = "Update the CIAG profile for an offender",
