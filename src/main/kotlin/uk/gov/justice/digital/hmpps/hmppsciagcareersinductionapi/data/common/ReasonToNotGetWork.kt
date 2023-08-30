@@ -7,6 +7,7 @@ enum class ReasonToNotGetWork {
   HEALTH,
   RETIRED,
   NO_RIGHT_TO_WORK,
+  NOT_SURE,
   OTHER,
   NO_REASON,
 }
