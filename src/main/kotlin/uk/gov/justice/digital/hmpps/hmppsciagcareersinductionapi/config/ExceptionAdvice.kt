@@ -8,14 +8,17 @@ import org.springframework.http.ResponseEntity
 import org.springframework.http.converter.HttpMessageNotReadableException
 import org.springframework.security.access.AccessDeniedException
 import org.springframework.security.access.AuthorizationServiceException
+import org.springframework.validation.FieldError
+import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
 import org.springframework.web.client.RestClientException
 import org.springframework.web.client.RestClientResponseException
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.exceptions.NotFoundException
-import java.util.Arrays
+import java.util.*
 import javax.validation.ValidationException
+import kotlin.collections.ArrayList
 
 @RestControllerAdvice
 class ControllerAdvice {
@@ -89,6 +92,29 @@ class ControllerAdvice {
           status = HttpStatus.BAD_REQUEST.value(),
           userMessage = "Validation failure: ${e.message?.let { e.message!!.substring(it.indexOf(":") + 2) }}",
           developerMessage = e.message?.let { e.message!!.substring(it.indexOf(":") + 2) },
+        ),
+      )
+  }
+
+  @ExceptionHandler(MethodArgumentNotValidException::class)
+  fun handleMethodArgumentNotValidException(e: MethodArgumentNotValidException): ResponseEntity<ErrorResponse> {
+    log.info("Validation exception: ${e.message}", e)
+    var messages: ArrayList<String> = ArrayList()
+    if (0 < e.fieldErrorCount) {
+      for (error in e.fieldErrors) {
+        buildMessageText(error)?.let { messages.add(it) }
+      }
+    } else {
+      val error = e.globalError
+      java.util.List.of(error.defaultMessage)
+    }
+    return ResponseEntity
+      .status(HttpStatus.BAD_REQUEST)
+      .body(
+        ErrorResponse(
+          status = HttpStatus.BAD_REQUEST.value(),
+          userMessage = messages.joinToString(System.lineSeparator()),
+          developerMessage = messages.joinToString(System.lineSeparator()),
         ),
       )
   }
@@ -179,6 +205,14 @@ class ControllerAdvice {
           developerMessage = e.message,
         ),
       )
+  }
+
+  fun buildMessageText(error: FieldError): String? {
+    return if (null != error.defaultMessage) {
+      "Field: %s, Value: %s,  Error: %s".format(error.field, error.rejectedValue, error.defaultMessage)
+    } else {
+      "Invalid value for '%s'.".format(error.field)
+    }
   }
 }
 

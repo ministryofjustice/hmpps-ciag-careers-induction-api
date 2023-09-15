@@ -4,7 +4,6 @@ import io.swagger.v3.oas.annotations.media.Schema
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.AbilityToWorkImpactedBy
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.HopingToGetWork
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.ReasonToNotGetWork
-import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity.CIAGProfile
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity.EducationAndQualification
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity.PreviousWork
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity.PrisonWorkAndEducation
@@ -45,23 +44,4 @@ data class CIAGProfileRequestDTO(
 
   @Schema var schemaVersion: String?,
 
-) {
-  constructor(profileEntity: CIAGProfile) : this(
-    offenderId = profileEntity.offenderId,
-    createdBy = profileEntity.createdBy,
-    createdDateTime = profileEntity.createdDateTime,
-    modifiedBy = profileEntity.modifiedBy,
-    desireToWork = profileEntity.desireToWork,
-    modifiedDateTime = profileEntity.modifiedDateTime,
-    hopingToGetWork = profileEntity.hopingToGetWork,
-    reasonToNotGetWorkOther = profileEntity.reasonToNotGetWorkOther,
-    abilityToWorkOther = profileEntity.abilityToWorkOther,
-    abilityToWork = profileEntity.abilityToWork,
-    reasonToNotGetWork = profileEntity.reasonToNotGetWork,
-    workExperience = profileEntity.workExperience,
-    skillsAndInterests = profileEntity.skillsAndInterests,
-    qualificationsAndTraining = profileEntity.qualificationsAndTraining,
-    inPrisonInterests = profileEntity.inPrisonInterests,
-    schemaVersion = profileEntity.schemaVersion,
-  )
-}
+)
