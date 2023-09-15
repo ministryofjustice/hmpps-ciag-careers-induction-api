@@ -20,6 +20,7 @@ import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.config.ErrorRes
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.jsonprofile.CIAGProfileDTO
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.jsonprofile.CIAGProfileRequestDTO
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.service.CIAGProfileService
+import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.service.validation.CIAGValidationService
 import javax.validation.Valid
 import javax.validation.constraints.Pattern
 
@@ -28,6 +29,7 @@ import javax.validation.constraints.Pattern
 @RequestMapping("/ciag/induction", produces = [MediaType.APPLICATION_JSON_VALUE])
 class CIAGResourceController(
   private val ciagProfileService: CIAGProfileService,
+  private val ciagValidationService: CIAGValidationService,
 ) {
   @PreAuthorize("hasAnyRole('ROLE_EDUCATION_WORK_PLAN_EDITOR','ROLE_EDUCATION_WORK_PLAN_VIEWER')")
   @GetMapping("/{offenderId}")
@@ -175,11 +177,12 @@ class CIAGResourceController(
     )
     @PathVariable
     offenderId: String,
-    @Valid @RequestBody
+    @Validated @RequestBody
     requestDTO: CIAGProfileRequestDTO,
     @AuthenticationPrincipal oauth2User: String,
   ): CIAGProfileDTO? {
     requestDTO.modifiedBy = oauth2User
+    ciagValidationService.validateInput(requestDTO)
     return ciagProfileService.createOrUpdateCIAGInductionForOffender(requestDTO)?.let {
       CIAGProfileDTO(
         it,
@@ -238,6 +241,7 @@ class CIAGResourceController(
     @AuthenticationPrincipal oauth2User: String,
   ): CIAGProfileDTO? {
     requestDTO.modifiedBy = oauth2User
+    ciagValidationService.validateInput(requestDTO)
     return ciagProfileService.updateCIAGInductionForOffender(requestDTO)?.let {
       CIAGProfileDTO(
         it,

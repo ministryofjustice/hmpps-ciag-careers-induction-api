@@ -20,7 +20,8 @@ data class CIAGProfileDTO(
 
   @Schema var modifiedBy: String,
 
-  @Schema var desireToWork: Boolean,
+  @Schema
+  var desireToWork: Boolean,
 
   @Schema var modifiedDateTime: LocalDateTime,
 

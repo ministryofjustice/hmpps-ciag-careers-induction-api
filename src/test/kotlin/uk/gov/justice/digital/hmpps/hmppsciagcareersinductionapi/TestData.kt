@@ -22,11 +22,20 @@ import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity.WorkExpe
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity.WorkInterestDetail
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity.WorkInterests
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.service.CIAGProfileService
+import java.io.File
 import java.lang.Boolean.FALSE
 import java.time.LocalDateTime
 
 class TestData {
   companion object {
+    val createInvalidWorkInterestsOther = File("src/test/resources/testdata/CreateProfile_InvalidWorkInterestsOther.json").inputStream().readBytes().toString(Charsets.UTF_8)
+    val createEmptyWorkInterestsOther = File("src/test/resources/testdata/CreateProfile_EmptyWorkInterestsOther.json").inputStream().readBytes().toString(Charsets.UTF_8)
+    val createInvalidAbilityToWork = File("src/test/resources/testdata/CreateProfile_InvalidAbilityToWork.json").inputStream().readBytes().toString(Charsets.UTF_8)
+    val createEmptyAbilityToWork = File("src/test/resources/testdata/CreateProfile_EmptyAbilityToWork.json").inputStream().readBytes().toString(Charsets.UTF_8)
+    val createProfileJsonRequest = File("src/test/resources/testdata/CreateProfile_correct.json").inputStream().readBytes().toString(Charsets.UTF_8)
+    val createEmptyReasonToNotGetWork = File("src/test/resources/testdata/CreateProfile_EmptyReasonToNotGetWork.json").inputStream().readBytes().toString(Charsets.UTF_8)
+    val createInvalidReasonToNotGetWork = File("src/test/resources/testdata/CreateProfile_InvalidReasonToNotGetWork.json").inputStream().readBytes().toString(Charsets.UTF_8)
+
     private lateinit var profileService: CIAGProfileService
     val createdByString = "createdBy"
     val offenderIdString = "offenderId"
