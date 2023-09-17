@@ -28,13 +28,9 @@
       "workInterests":[
         "BEAUTY"
       ],
-      "workInterestsOther":"sample",
       "particularJobInterests":[
-        {
-          "workInterest":"BEAUTY",
-          "role":"tired"
-        }
-      ]
+
+]
     }
   },
   "workInterests": null,

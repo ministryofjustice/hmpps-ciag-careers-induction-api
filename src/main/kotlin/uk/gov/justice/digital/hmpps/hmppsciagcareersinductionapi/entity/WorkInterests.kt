@@ -15,6 +15,7 @@ import javax.persistence.Id
 import javax.persistence.JoinColumn
 import javax.persistence.OneToOne
 import javax.persistence.Table
+import javax.validation.constraints.Size
 
 @Entity
 @Table(name = "CURRENT_WORK_INTERESTS")
@@ -31,14 +32,16 @@ data class WorkInterests(
   @ElementCollection(fetch = FetchType.EAGER)
   @CollectionTable(name = "WORK_INTERESTS", joinColumns = [JoinColumn(name = "WORK_INTERESTS_ID")])
   @Column(name = "WORK_INTERESTS")
-  var workInterests: MutableSet<WorkType>?,
+  @Size(min = 1)
+  var workInterests: MutableSet<WorkType>,
   @Column(name = "OTHER_WORK_INTEREST")
   var workInterestsOther: String?,
 
   @ElementCollection(fetch = FetchType.EAGER)
   @CollectionTable(name = "PARTICULAR_WORK_INTERESTS", joinColumns = [JoinColumn(name = "WORK_INTERESTS_ID")])
   @Column(name = "PARTICULAR_WORK_INTEREST")
-  var particularJobInterests: MutableSet<WorkInterestDetail>?,
+  @Size(min = 1)
+  var particularJobInterests: MutableSet<WorkInterestDetail>,
 
   @OneToOne(mappedBy = "workInterests")
   @JsonIgnore

@@ -14,7 +14,7 @@
     "typeOfWorkExperience":[
       "BEAUTY"
     ],
-    "typeOfWorkExperienceOther":null,
+    "typeOfWorkExperienceOther":"chumma",
     "workExperience":[
       {
         "typeOfWorkExperience":"BEAUTY",
@@ -28,8 +28,7 @@
       "workInterests":[
         "BEAUTY"
       ],
-      "workInterestsOther":"sample",
-      "particularJobInterests":[
+     "particularJobInterests":[
         {
           "workInterest":"BEAUTY",
           "role":"tired"
@@ -38,15 +37,25 @@
     }
   },
   "workInterests": null,
-  "skillsAndInterests": null,
+  "skillsAndInterests":{
+    "modifiedBy":"Sacintha",
+    "modifiedDateTime": "2022-07-06T12:00:00",
+    "skills":[
+      "OTHER"
+    ],
+    "skillsOther":"chumma",
+    "personalInterests":[
+      "COMMUNITY"
+    ]
+  },
   "qualificationsAndTraining": {
     "modifiedBy": "GDUTTON_GEN",
     "modifiedDateTime": "2023-08-24T09:19:12.375",
     "id": 27,
     "educationLevel": null,
     "qualifications": [],
-    "additionalTraining": ["HEALTH_AND_SAFETY"],
-    "additionalTrainingOther": ""
+    "additionalTraining": ["OTHER"],
+    "additionalTrainingOther": "chumma"
   },
   "inPrisonInterests": {
     "modifiedBy": "GDUTTON_GEN",

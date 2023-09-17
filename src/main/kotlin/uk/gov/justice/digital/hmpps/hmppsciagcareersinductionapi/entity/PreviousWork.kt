@@ -16,6 +16,7 @@ import javax.persistence.Id
 import javax.persistence.JoinColumn
 import javax.persistence.OneToOne
 import javax.persistence.Table
+import javax.validation.constraints.Size
 
 @Entity
 @Table(name = "PREVIOUS_WORK")
@@ -34,7 +35,8 @@ data class PreviousWork(
   @ElementCollection(fetch = FetchType.EAGER)
   @CollectionTable(name = "WORK_EXPERIENCE", joinColumns = [JoinColumn(name = "PREVIOUS_WORK_ID")])
   @Column(name = "WORK_EXPERIENCE")
-  var typeOfWorkExperience: MutableSet<WorkType>?,
+  @Size(min = 1)
+  var typeOfWorkExperience: MutableSet<WorkType>,
 
   @Column(name = "WORK_EXPERIENCE_OTHER")
   var typeOfWorkExperienceOther: String?,
@@ -42,7 +44,8 @@ data class PreviousWork(
   @ElementCollection(fetch = FetchType.EAGER)
   @CollectionTable(name = "WORK_EXPERIENCE_DETAIL", joinColumns = [JoinColumn(name = "PREVIOUS_WORK_ID")])
   @Column(name = "WORK_EXPERIENCE_DETAIL")
-  var workExperience: MutableSet<WorkExperience>?,
+  @Size(min = 1)
+  var workExperience: MutableSet<WorkExperience>,
 
   @OneToOne(cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.EAGER)
   @JoinColumn(name = "WORK_INTERESTS_ID")

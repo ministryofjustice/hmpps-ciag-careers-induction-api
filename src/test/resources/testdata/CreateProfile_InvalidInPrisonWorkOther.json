@@ -28,8 +28,7 @@
       "workInterests":[
         "BEAUTY"
       ],
-      "workInterestsOther":"sample",
-      "particularJobInterests":[
+     "particularJobInterests":[
         {
           "workInterest":"BEAUTY",
           "role":"tired"
@@ -38,7 +37,16 @@
     }
   },
   "workInterests": null,
-  "skillsAndInterests": null,
+  "skillsAndInterests":{
+    "modifiedBy":"Sacintha",
+    "modifiedDateTime": "2022-07-06T12:00:00",
+    "skills":[
+      "COMMUNICATION"
+    ],
+    "personalInterests":[
+      "COMMUNITY"
+    ]
+  },
   "qualificationsAndTraining": {
     "modifiedBy": "GDUTTON_GEN",
     "modifiedDateTime": "2023-08-24T09:19:12.375",
@@ -53,7 +61,7 @@
     "modifiedDateTime": "2023-08-24T09:19:12.375",
     "id": 26,
     "inPrisonWork": ["KITCHENS_AND_COOKING"],
-    "inPrisonWorkOther": "",
+    "inPrisonWorkOther": "chumma",
     "inPrisonEducation": ["ENGLISH_LANGUAGE_SKILLS"],
     "inPrisonEducationOther": ""
   }

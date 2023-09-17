@@ -16,6 +16,7 @@ import javax.persistence.Id
 import javax.persistence.JoinColumn
 import javax.persistence.OneToOne
 import javax.persistence.Table
+import javax.validation.constraints.Size
 
 @Entity
 @Table(name = "SKILLS_AND_INTERESTS")
@@ -32,6 +33,7 @@ data class SkillsAndInterests(
   @ElementCollection(fetch = FetchType.EAGER)
   @CollectionTable(name = "SKILLS_WORK_INTERESTS", joinColumns = [JoinColumn(name = "WORK_INTERESTS_ID")])
   @Column(name = "SKILLS")
+  @Size(min = 1)
   var skills: MutableSet<Skills>?,
   @Column(name = "OTHER_SKILL")
   var skillsOther: String?,
@@ -39,6 +41,7 @@ data class SkillsAndInterests(
   @ElementCollection(fetch = FetchType.EAGER)
   @CollectionTable(name = "PERSONAL_WORK_INTERESTS", joinColumns = [JoinColumn(name = "WORK_INTERESTS_ID")])
   @Column(name = "PERSONAL_WORK_INTEREST")
+  @Size(min = 1)
   var personalInterests: MutableSet<PersonalInterests>?,
 
   @Column(name = "OTHER_PERSONAL_INTRESTS")
