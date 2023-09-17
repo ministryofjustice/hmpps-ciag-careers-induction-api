@@ -28,6 +28,23 @@ import java.time.LocalDateTime
 
 class TestData {
   companion object {
+    val createInvalidTypeOfWorkExperienceOther = File("src/test/resources/testdata/CreateProfile_InvalidTypeOfWorkExperienceOther.json").inputStream().readBytes().toString(Charsets.UTF_8)
+    val createTypeOfWorkExperienceOther = File("src/test/resources/testdata/CreateProfile_EmptyTypeOfWorkExperienceOther.json").inputStream().readBytes().toString(Charsets.UTF_8)
+
+    val createInvalidAdditionalTrainingOther = File("src/test/resources/testdata/CreateProfile_InvalidAdditionalTrainingOther.json").inputStream().readBytes().toString(Charsets.UTF_8)
+    val createAdditionalTrainingOther = File("src/test/resources/testdata/CreateProfile_EmptyAdditionalTrainingOther.json").inputStream().readBytes().toString(Charsets.UTF_8)
+
+    val createInvalidInPrisonEducationOther = File("src/test/resources/testdata/CreateProfile_InvalidInPrisonEducationOther.json").inputStream().readBytes().toString(Charsets.UTF_8)
+    val createInPrisonEducationOther = File("src/test/resources/testdata/CreateProfile_EmptyInPrisonEducationOther.json").inputStream().readBytes().toString(Charsets.UTF_8)
+    val createInvalidInPrisonWorkOther = File("src/test/resources/testdata/CreateProfile_InvalidInPrisonWorkOther.json").inputStream().readBytes().toString(Charsets.UTF_8)
+    val createInPrisonWorkOther = File("src/test/resources/testdata/CreateProfile_EmptyInPrisonWorkOther.json").inputStream().readBytes().toString(Charsets.UTF_8)
+
+    val createInvalidPersonalInterestsOther = File("src/test/resources/testdata/CreateProfile_InvalidPersonalIntrestsOther.json").inputStream().readBytes().toString(Charsets.UTF_8)
+    val createPersonalInterestsOther = File("src/test/resources/testdata/CreateProfile_EmptyPersonalInterestsOther.json").inputStream().readBytes().toString(Charsets.UTF_8)
+    val createInvalidSkillsOther = File("src/test/resources/testdata/CreateProfile_InvalidSkillsOther.json").inputStream().readBytes().toString(Charsets.UTF_8)
+    val createSkillsOther = File("src/test/resources/testdata/CreateProfile_EmptySkillsOther.json").inputStream().readBytes().toString(Charsets.UTF_8)
+    val createEmptyParticularJobInterests = File("src/test/resources/testdata/CreateProfile_EmptyParticularJobInterests.json").inputStream().readBytes().toString(Charsets.UTF_8)
+    val createInvalidParticularJobInterests = File("src/test/resources/testdata/CreateProfile_InvalidParticularJobInterests.json").inputStream().readBytes().toString(Charsets.UTF_8)
     val createInvalidWorkInterestsOther = File("src/test/resources/testdata/CreateProfile_InvalidWorkInterestsOther.json").inputStream().readBytes().toString(Charsets.UTF_8)
     val createEmptyWorkInterestsOther = File("src/test/resources/testdata/CreateProfile_EmptyWorkInterestsOther.json").inputStream().readBytes().toString(Charsets.UTF_8)
     val createInvalidAbilityToWork = File("src/test/resources/testdata/CreateProfile_InvalidAbilityToWork.json").inputStream().readBytes().toString(Charsets.UTF_8)
