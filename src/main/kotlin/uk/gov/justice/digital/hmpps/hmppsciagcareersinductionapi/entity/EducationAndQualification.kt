@@ -1,5 +1,6 @@
 package uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity
 import com.fasterxml.jackson.annotation.JsonIgnore
+import io.swagger.v3.oas.annotations.media.Schema
 import org.springframework.data.annotation.LastModifiedBy
 import org.springframework.data.annotation.LastModifiedDate
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.EducationLevels
@@ -21,28 +22,34 @@ import javax.persistence.Table
 @Table(name = "EDUCATION_QUALIFICATION")
 data class EducationAndQualification(
   @LastModifiedBy
+  @Schema(description = "This is the person who modifies the Induction.Even though it is passed from front end it wil be automatically set to the right value at the time of record modification ", name = "modifiedBy", required = true)
   var modifiedBy: String,
 
   @LastModifiedDate
+  @Schema(description = "This is the modified date and time of Induction record .Even though it is passed from front end it wil be automatically set to the right value at the time of record modification ", name = "modifiedDateTime", required = true)
   var modifiedDateTime: LocalDateTime,
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE)
   @Column(name = "id", nullable = false)
   val id: Long?,
   @Column(name = "EDUCATION_LEVEL")
+  @Schema(description = "This is the Highest education level of the inmate.", name = "educationLevel", required = false)
   var educationLevel: EducationLevels?,
 
   @ElementCollection(fetch = FetchType.EAGER)
   @CollectionTable(name = "ACHIEVED_QUALIFICATION", joinColumns = [JoinColumn(name = "work_interests_id")])
   @Column(name = "QUALIFICATION")
+  @Schema(description = "This is the qualification list of the inmate.", name = "qualifications", required = false)
   var qualifications: MutableSet<AchievedQualification>?,
 
   @ElementCollection(fetch = FetchType.EAGER)
   @CollectionTable(name = "EXTRA_QUALIFICATION", joinColumns = [JoinColumn(name = "work_interests_id")])
   @Column(name = "QUALIFICATION")
+  @Schema(description = "This is the additional training list of the inmate.", name = "additionalTraining", required = false)
   var additionalTraining: MutableSet<OtherQualification>?,
 
   @Column(name = "OTHER_QUALIFICATION")
+  @Schema(description = "This is the additional which is peculiar to this inmate  .This field is mandatory when  \"additionalTraining\" has a Value set to \"OTHER\" ", name = "additionalTrainingOther", required = false)
   var additionalTrainingOther: String?,
 
   @OneToOne(mappedBy = "qualificationsAndTraining")

@@ -114,8 +114,8 @@ class TestData {
       "sacintha",
       LocalDateTime.now(),
       "sacintha",
-      true,
-      LocalDateTime.now(), HopingToGetWork.NOT_SURE, null, null, abilityToWorkImpactDetailList, reasonToNotGetWork, previousWork, skillsAndInterests, educationAndQualification, prisonWorkAndEducation, "1.1",
+
+      LocalDateTime.now(), true, HopingToGetWork.NOT_SURE, null, null, abilityToWorkImpactDetailList, reasonToNotGetWork, previousWork, skillsAndInterests, educationAndQualification, prisonWorkAndEducation, "1.1",
 
     )
 

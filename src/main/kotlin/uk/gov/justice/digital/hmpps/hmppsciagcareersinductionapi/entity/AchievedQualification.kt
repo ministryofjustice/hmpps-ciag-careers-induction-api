@@ -1,12 +1,16 @@
 package uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity
 
+import io.swagger.v3.oas.annotations.media.Schema
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.QualificationLevel
 import javax.persistence.Embeddable
 
 @Embeddable
 data class AchievedQualification(
+  @Schema(description = "This is the subject the inmate has chosen.", name = "subject", required = false)
   var subject: String?,
+  @Schema(description = "This is the grade on the subject the inmate has chosen.", name = "subject", required = false)
   var grade: String?,
+  @Schema(description = "This is the level of  the subject the inmate has chosen.", name = "subject", required = false)
   var level: QualificationLevel?,
 ) {
   override fun equals(other: Any?): Boolean {
