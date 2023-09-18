@@ -1,5 +1,6 @@
 package uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity
 import com.fasterxml.jackson.annotation.JsonIgnore
+import io.swagger.v3.oas.annotations.media.Schema
 import org.springframework.data.annotation.LastModifiedBy
 import org.springframework.data.annotation.LastModifiedDate
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.PrisonTraining
@@ -16,15 +17,20 @@ import javax.persistence.Id
 import javax.persistence.JoinColumn
 import javax.persistence.OneToOne
 import javax.persistence.Table
+import javax.validation.constraints.Size
 
 @Entity
 @Table(name = "PRISON_WORK_EDUCATION")
 data class PrisonWorkAndEducation(
+
   @LastModifiedBy
+  @Schema(description = "This is the person who modifies the Induction.Even though it is passed from front end it wil be automatically set to the right value at the time of record modification ", name = "modifiedBy", required = true)
   var modifiedBy: String,
 
   @LastModifiedDate
+  @Schema(description = "This is the modified date and time of Induction record .Even though it is passed from front end it wil be automatically set to the right value at the time of record modification ", name = "modifiedDateTime", required = true)
   var modifiedDateTime: LocalDateTime,
+
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE)
   @Column(name = "id", nullable = false)
@@ -32,15 +38,21 @@ data class PrisonWorkAndEducation(
   @ElementCollection(fetch = FetchType.EAGER)
   @CollectionTable(name = "PRISON_WORK", joinColumns = [JoinColumn(name = "PRISON_WORK_EDUCATION_ID")])
   @Column(name = "WORK")
+  @Size(min = 1)
+  @Schema(description = "This is the prison work list of the inmate.", name = "inPrisonWork", required = false)
   var inPrisonWork: MutableSet<PrisonWork>?,
   @Column(name = "OTHER_PRISON_WORK")
+  @Schema(description = "This is the prison work which is peculiar to this inmate  .This field is mandatory when  \"inPrisonWork\" has a Value set to \"OTHER\" ", name = "inPrisonWorkOther", required = false)
   var inPrisonWorkOther: String?,
 
   @ElementCollection(fetch = FetchType.EAGER)
   @CollectionTable(name = "PRISON_EDUCATION", joinColumns = [JoinColumn(name = "PRISON_WORK_EDUCATION_ID")])
   @Column(name = "EDUCATION")
+  @Size(min = 1)
+  @Schema(description = "This is the prison education list of the inmate.", name = "inPrisonEducation", required = false)
   var inPrisonEducation: MutableSet<PrisonTraining>?,
   @Column(name = "OTHER_PRISON_EDUCATION")
+  @Schema(description = "This is the prison education which is peculiar to this inmate  .This field is mandatory when  \"inPrisonEducation\" has a Value set to \"OTHER\" ", name = "inPrisonEducationOther", required = false)
   var inPrisonEducationOther: String?,
   @OneToOne(mappedBy = "inPrisonInterests")
   @JsonIgnore

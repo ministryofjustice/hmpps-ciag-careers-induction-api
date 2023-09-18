@@ -1,11 +1,14 @@
 package uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity
+import io.swagger.v3.oas.annotations.media.Schema
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.WorkType
 import javax.persistence.Embeddable
 
 @Embeddable
 data class WorkInterestDetail(
-  var workInterest: WorkType?,
-  var role: String?,
+  @Schema(description = "This is the interest of the inmate, being detailed.", name = "workInterest", required = true)
+  var workInterest: WorkType,
+  @Schema(description = "This is the role of the inmate for the given work interest.", name = "role", required = true)
+  var role: String,
 ) {
   override fun equals(other: Any?): Boolean {
     if (this === other) return true
