@@ -1,13 +1,20 @@
 package uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity
+import io.swagger.v3.oas.annotations.media.Schema
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.WorkType
 import javax.persistence.Embeddable
 
 @Embeddable
 data class WorkExperience(
-  var typeOfWorkExperience: WorkType?,
+  @Schema(description = "This is the experience of the inmate, being detailed.", name = "typeOfWorkExperience", required = true)
+  var typeOfWorkExperience: WorkType,
+
+  @Schema(description = "This is the experience of the inmate, being detailed, which is not listed in typeOfWorkExperience Enum", name = "otherWork", required = false)
   var otherWork: String?,
 
+  @Schema(description = "This is the role  of the inmate, in the work ,being detailed", name = "role", required = false)
   var role: String?,
+
+  @Schema(description = "This is the detail of the work ", name = "details", required = false)
   var details: String?,
 ) {
   override fun equals(other: Any?): Boolean {

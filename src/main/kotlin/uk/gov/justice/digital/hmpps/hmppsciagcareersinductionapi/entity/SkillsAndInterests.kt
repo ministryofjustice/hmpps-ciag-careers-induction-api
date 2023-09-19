@@ -1,5 +1,6 @@
 package uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity
 import com.fasterxml.jackson.annotation.JsonIgnore
+import io.swagger.v3.oas.annotations.media.Schema
 import org.springframework.data.annotation.LastModifiedBy
 import org.springframework.data.annotation.LastModifiedDate
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.PersonalInterests
@@ -16,14 +17,17 @@ import javax.persistence.Id
 import javax.persistence.JoinColumn
 import javax.persistence.OneToOne
 import javax.persistence.Table
+import javax.validation.constraints.Size
 
 @Entity
 @Table(name = "SKILLS_AND_INTERESTS")
 data class SkillsAndInterests(
   @LastModifiedBy
+  @Schema(description = "This is the person who modifies the Induction.Even though it is passed from front end it wil be automatically set to the right value at the time of record modification ", name = "modifiedBy", required = true)
   var modifiedBy: String,
 
   @LastModifiedDate
+  @Schema(description = "This is the modified date and time of Induction record .Even though it is passed from front end it wil be automatically set to the right value at the time of record modification ", name = "modifiedDateTime", required = true)
   var modifiedDateTime: LocalDateTime,
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -32,16 +36,22 @@ data class SkillsAndInterests(
   @ElementCollection(fetch = FetchType.EAGER)
   @CollectionTable(name = "SKILLS_WORK_INTERESTS", joinColumns = [JoinColumn(name = "WORK_INTERESTS_ID")])
   @Column(name = "SKILLS")
+  @Size(min = 1)
+  @Schema(description = "This is the skill list of the inmate.", name = "skills", required = false)
   var skills: MutableSet<Skills>?,
   @Column(name = "OTHER_SKILL")
+  @Schema(description = "This is the skill which is peculiar to this inmate  .This field is mandatory when  \"skills\" has a Value set to \"OTHER\" ", name = "skillsOther", required = false)
   var skillsOther: String?,
 
   @ElementCollection(fetch = FetchType.EAGER)
   @CollectionTable(name = "PERSONAL_WORK_INTERESTS", joinColumns = [JoinColumn(name = "WORK_INTERESTS_ID")])
   @Column(name = "PERSONAL_WORK_INTEREST")
+  @Size(min = 1)
+  @Schema(description = "This is the interests list of the inmate.", name = "personalInterests", required = false)
   var personalInterests: MutableSet<PersonalInterests>?,
 
   @Column(name = "OTHER_PERSONAL_INTRESTS")
+  @Schema(description = "This is the work interest which is peculiar to this inmate  .This field is mandatory when  \"personalInterests\" has a Value set to \"OTHER\" ", name = "personalInterestsOther", required = false)
   var personalInterestsOther: String?,
   @OneToOne(mappedBy = "skillsAndInterests")
   @JsonIgnore

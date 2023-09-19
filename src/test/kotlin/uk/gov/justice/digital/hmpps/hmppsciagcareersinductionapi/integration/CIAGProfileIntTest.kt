@@ -74,8 +74,8 @@ class CIAGProfileIntTest : IntegrationTestBase() {
     )
     val result = restTemplate.exchange("/ciag/induction/A1234AB", HttpMethod.POST, HttpEntity<CIAGProfileRequestDTO>(actualCIAGProfileRequestDTO, setAuthorisation(roles = listOf("ROLE_EDUCATION_WORK_PLAN_EDITOR", "ROLE_EDUCATION_WORK_PLAN_VIEWER"))), ErrorResponse::class.java)
     assertThat(result).isNotNull
-    assertThat(result.statusCode.equals(HttpStatus.BAD_REQUEST))
-    assertThat(result.body.userMessage.equals("Field: ciagProfileRequestDTO.reasonToNotGetWorkOther, Value: null,  Error: Value cannot be empty"))
+    assertThat(result.statusCode.equals(HttpStatus.BAD_REQUEST)).isTrue()
+    assertThat(result.body.userMessage.equals("Field: ciagProfileRequestDTO.reasonToNotGetWorkOther, Value: null,  Error: Value cannot be empty")).isTrue()
   }
 
   @Test
@@ -86,8 +86,8 @@ class CIAGProfileIntTest : IntegrationTestBase() {
     )
     val result = restTemplate.exchange("/ciag/induction/A1234AB", HttpMethod.POST, HttpEntity<CIAGProfileRequestDTO>(actualCIAGProfileRequestDTO, setAuthorisation(roles = listOf("ROLE_EDUCATION_WORK_PLAN_EDITOR", "ROLE_EDUCATION_WORK_PLAN_VIEWER"))), ErrorResponse::class.java)
     assertThat(result).isNotNull
-    assertThat(result.statusCode.equals(HttpStatus.BAD_REQUEST))
-    assertThat(result.body.userMessage.equals("Field: ciagProfileRequestDTO.reasonToNotGetWorkOther, Value: sample,  Error: Field cannot be populated"))
+    assertThat(result.statusCode.equals(HttpStatus.BAD_REQUEST)).isTrue()
+    assertThat(result.body.userMessage.equals("Field: ciagProfileRequestDTO.reasonToNotGetWorkOther, Value: sample,  Error: Field cannot be populated")).isTrue()
   }
 
   @Test
@@ -98,8 +98,8 @@ class CIAGProfileIntTest : IntegrationTestBase() {
     )
     val result = restTemplate.exchange("/ciag/induction/A1234AB", HttpMethod.POST, HttpEntity<CIAGProfileRequestDTO>(actualCIAGProfileRequestDTO, setAuthorisation(roles = listOf("ROLE_EDUCATION_WORK_PLAN_EDITOR", "ROLE_EDUCATION_WORK_PLAN_VIEWER"))), ErrorResponse::class.java)
     assertThat(result).isNotNull
-    assertThat(result.statusCode.equals(HttpStatus.BAD_REQUEST))
-    assertThat(result.body.userMessage.equals("Field: ciagProfileRequestDTO.abilityToWorkOther, Value: null,  Error: Value cannot be empty"))
+    assertThat(result.statusCode.equals(HttpStatus.BAD_REQUEST)).isTrue()
+    assertThat(result.body.userMessage.equals("Field: ciagProfileRequestDTO.abilityToWorkOther, Value: null,  Error: Value cannot be empty")).isTrue()
   }
 
   @Test
@@ -110,8 +110,8 @@ class CIAGProfileIntTest : IntegrationTestBase() {
     )
     val result = restTemplate.exchange("/ciag/induction/A1234AB", HttpMethod.POST, HttpEntity<CIAGProfileRequestDTO>(actualCIAGProfileRequestDTO, setAuthorisation(roles = listOf("ROLE_EDUCATION_WORK_PLAN_EDITOR", "ROLE_EDUCATION_WORK_PLAN_VIEWER"))), ErrorResponse::class.java)
     assertThat(result).isNotNull
-    assertThat(result.statusCode.equals(HttpStatus.BAD_REQUEST))
-    assertThat(result.body.userMessage.equals("Field: ciagProfileRequestDTO.abilityToWorkOther, Value: sample,  Error: Field cannot be populated"))
+    assertThat(result.statusCode.equals(HttpStatus.BAD_REQUEST)).isTrue()
+    assertThat(result.body.userMessage.equals("Field: ciagProfileRequestDTO.abilityToWorkOther, Value: sample,  Error: Field cannot be populated")).isTrue()
   }
 
   @Test
@@ -122,8 +122,8 @@ class CIAGProfileIntTest : IntegrationTestBase() {
     )
     val result = restTemplate.exchange("/ciag/induction/A1234AB", HttpMethod.POST, HttpEntity<CIAGProfileRequestDTO>(actualCIAGProfileRequestDTO, setAuthorisation(roles = listOf("ROLE_EDUCATION_WORK_PLAN_EDITOR", "ROLE_EDUCATION_WORK_PLAN_VIEWER"))), ErrorResponse::class.java)
     assertThat(result).isNotNull
-    assertThat(result.statusCode.equals(HttpStatus.BAD_REQUEST))
-    assertThat(result.body.userMessage.equals("Field: ciagProfileRequestDTO.workExperience.workInterests.workInterestsOther, Value: null,  Error: Value cannot be empty"))
+    assertThat(result.statusCode.equals(HttpStatus.BAD_REQUEST)).isTrue()
+    assertThat(result.body.userMessage.equals("Field: ciagProfileRequestDTO.workExperience.workInterests.workInterestsOther, Value: null,  Error: Value cannot be empty")).isTrue()
   }
 
   @Test
@@ -134,7 +134,151 @@ class CIAGProfileIntTest : IntegrationTestBase() {
     )
     val result = restTemplate.exchange("/ciag/induction/A1234AB", HttpMethod.POST, HttpEntity<CIAGProfileRequestDTO>(actualCIAGProfileRequestDTO, setAuthorisation(roles = listOf("ROLE_EDUCATION_WORK_PLAN_EDITOR", "ROLE_EDUCATION_WORK_PLAN_VIEWER"))), ErrorResponse::class.java)
     assertThat(result).isNotNull
-    assertThat(result.statusCode.equals(HttpStatus.BAD_REQUEST))
-    assertThat(result.body.userMessage.equals("Field: ciagProfileRequestDTO.workExperience.workInterests.workInterestsOther, Value: sample,  Error: Field cannot be populated"))
+    assertThat(result.statusCode.equals(HttpStatus.BAD_REQUEST)).isTrue()
+    assertThat(result.body.userMessage?.contains("Field: ciagProfileRequestDTO.workExperience.workInterests.workInterestsOther, Value: sample,  Error: Field cannot be populated")).isTrue()
+  }
+
+  @Test
+  fun `Post a CIAG profile for an offender with empty skillsOther `() {
+    val actualCIAGProfileRequestDTO = objectMapper.readValue(
+      TestData.createSkillsOther,
+      object : TypeReference<CIAGProfileRequestDTO>() {},
+    )
+    val result = restTemplate.exchange("/ciag/induction/A1234AB", HttpMethod.POST, HttpEntity<CIAGProfileRequestDTO>(actualCIAGProfileRequestDTO, setAuthorisation(roles = listOf("ROLE_EDUCATION_WORK_PLAN_EDITOR", "ROLE_EDUCATION_WORK_PLAN_VIEWER"))), ErrorResponse::class.java)
+    assertThat(result).isNotNull
+    assertThat(result.statusCode.equals(HttpStatus.BAD_REQUEST)).isTrue()
+    assertThat(result.body.userMessage?.contains("Field: ciagProfileRequestDTO.skillsAndInterests.skillsOther, Value: null,  Error: Value cannot be empty")).isTrue()
+  }
+
+  @Test
+  fun `Post a CIAG profile for an offender with invalid skillsOther `() {
+    val actualCIAGProfileRequestDTO = objectMapper.readValue(
+      TestData.createInvalidSkillsOther,
+      object : TypeReference<CIAGProfileRequestDTO>() {},
+    )
+    val result = restTemplate.exchange("/ciag/induction/A1234AB", HttpMethod.POST, HttpEntity<CIAGProfileRequestDTO>(actualCIAGProfileRequestDTO, setAuthorisation(roles = listOf("ROLE_EDUCATION_WORK_PLAN_EDITOR", "ROLE_EDUCATION_WORK_PLAN_VIEWER"))), ErrorResponse::class.java)
+    assertThat(result).isNotNull
+    assertThat(result.statusCode.equals(HttpStatus.BAD_REQUEST)).isTrue()
+    assertThat(result.body.userMessage?.contains("Field: ciagProfileRequestDTO.skillsAndInterests.skillsOther, Value: chumma,  Error: Field cannot be populated")).isTrue()
+  }
+
+  @Test
+  fun `Post a CIAG profile for an offender with empty personalInterestsOther `() {
+    val actualCIAGProfileRequestDTO = objectMapper.readValue(
+      TestData.createPersonalInterestsOther,
+      object : TypeReference<CIAGProfileRequestDTO>() {},
+    )
+    val result = restTemplate.exchange("/ciag/induction/A1234AB", HttpMethod.POST, HttpEntity<CIAGProfileRequestDTO>(actualCIAGProfileRequestDTO, setAuthorisation(roles = listOf("ROLE_EDUCATION_WORK_PLAN_EDITOR", "ROLE_EDUCATION_WORK_PLAN_VIEWER"))), ErrorResponse::class.java)
+    assertThat(result).isNotNull
+    assertThat(result.statusCode.equals(HttpStatus.BAD_REQUEST)).isTrue()
+    assertThat(result.body.userMessage?.contains("Field: ciagProfileRequestDTO.skillsAndInterests.personalInterestsOther, Value: null,  Error: Value cannot be empty")).isTrue()
+  }
+
+  @Test
+  fun `Post a CIAG profile for an offender with invalid personalInterestsOther `() {
+    val actualCIAGProfileRequestDTO = objectMapper.readValue(
+      TestData.createInvalidPersonalInterestsOther,
+      object : TypeReference<CIAGProfileRequestDTO>() {},
+    )
+    val result = restTemplate.exchange("/ciag/induction/A1234AB", HttpMethod.POST, HttpEntity<CIAGProfileRequestDTO>(actualCIAGProfileRequestDTO, setAuthorisation(roles = listOf("ROLE_EDUCATION_WORK_PLAN_EDITOR", "ROLE_EDUCATION_WORK_PLAN_VIEWER"))), ErrorResponse::class.java)
+    assertThat(result).isNotNull
+    assertThat(result.statusCode.equals(HttpStatus.BAD_REQUEST)).isTrue()
+    assertThat(result.body.userMessage?.contains("Field: ciagProfileRequestDTO.skillsAndInterests.personalInterestsOther, Value: chumma,  Error: Field cannot be populated")).isTrue()
+  }
+
+  @Test
+  fun `Post a CIAG profile for an offender with empty inPrisonEducationOOther `() {
+    val actualCIAGProfileRequestDTO = objectMapper.readValue(
+      TestData.createInPrisonEducationOther,
+      object : TypeReference<CIAGProfileRequestDTO>() {},
+    )
+    val result = restTemplate.exchange("/ciag/induction/A1234AB", HttpMethod.POST, HttpEntity<CIAGProfileRequestDTO>(actualCIAGProfileRequestDTO, setAuthorisation(roles = listOf("ROLE_EDUCATION_WORK_PLAN_EDITOR", "ROLE_EDUCATION_WORK_PLAN_VIEWER"))), ErrorResponse::class.java)
+    assertThat(result).isNotNull
+    assertThat(result.statusCode.equals(HttpStatus.BAD_REQUEST)).isTrue()
+    assertThat(result.body.userMessage?.contains("Field: ciagProfileRequestDTO.inPrisonInterests.inPrisonEducationOther, Value: null,  Error: Value cannot be empty")).isTrue()
+  }
+
+  @Test
+  fun `Post a CIAG profile for an offender with invalid InPrisonEducationOther `() {
+    val actualCIAGProfileRequestDTO = objectMapper.readValue(
+      TestData.createInvalidInPrisonEducationOther,
+      object : TypeReference<CIAGProfileRequestDTO>() {},
+    )
+    val result = restTemplate.exchange("/ciag/induction/A1234AB", HttpMethod.POST, HttpEntity<CIAGProfileRequestDTO>(actualCIAGProfileRequestDTO, setAuthorisation(roles = listOf("ROLE_EDUCATION_WORK_PLAN_EDITOR", "ROLE_EDUCATION_WORK_PLAN_VIEWER"))), ErrorResponse::class.java)
+    assertThat(result).isNotNull
+    assertThat(result.statusCode.equals(HttpStatus.BAD_REQUEST)).isTrue()
+    assertThat(result.body.userMessage?.contains("Field: ciagProfileRequestDTO.inPrisonInterests.inPrisonEducationOther, Value: chumma,  Error: Field cannot be populated")).isTrue()
+  }
+
+  @Test
+  fun `Post a CIAG profile for an offender with empty inPrisonWorkOther `() {
+    val actualCIAGProfileRequestDTO = objectMapper.readValue(
+      TestData.createInPrisonWorkOther,
+      object : TypeReference<CIAGProfileRequestDTO>() {},
+    )
+    val result = restTemplate.exchange("/ciag/induction/A1234AB", HttpMethod.POST, HttpEntity<CIAGProfileRequestDTO>(actualCIAGProfileRequestDTO, setAuthorisation(roles = listOf("ROLE_EDUCATION_WORK_PLAN_EDITOR", "ROLE_EDUCATION_WORK_PLAN_VIEWER"))), ErrorResponse::class.java)
+    assertThat(result).isNotNull
+    assertThat(result.statusCode.equals(HttpStatus.BAD_REQUEST)).isTrue()
+    assertThat(result.body.userMessage?.contains("Field: ciagProfileRequestDTO.inPrisonInterests.inPrisonWorkOther, Value: null,  Error: Value cannot be empty")).isTrue()
+  }
+
+  @Test
+  fun `Post a CIAG profile for an offender with invalid inPrisonWorkOther `() {
+    val actualCIAGProfileRequestDTO = objectMapper.readValue(
+      TestData.createInvalidInPrisonWorkOther,
+      object : TypeReference<CIAGProfileRequestDTO>() {},
+    )
+    val result = restTemplate.exchange("/ciag/induction/A1234AB", HttpMethod.POST, HttpEntity<CIAGProfileRequestDTO>(actualCIAGProfileRequestDTO, setAuthorisation(roles = listOf("ROLE_EDUCATION_WORK_PLAN_EDITOR", "ROLE_EDUCATION_WORK_PLAN_VIEWER"))), ErrorResponse::class.java)
+    assertThat(result).isNotNull
+    assertThat(result.statusCode.equals(HttpStatus.BAD_REQUEST)).isTrue()
+    assertThat(result.body.userMessage?.contains("Field: ciagProfileRequestDTO.inPrisonInterests.inPrisonWorkOther, Value: chumma,  Error: Field cannot be populated")).isTrue()
+  }
+
+  @Test
+  fun `Post a CIAG profile for an offender with empty additionalTrainingOther `() {
+    val actualCIAGProfileRequestDTO = objectMapper.readValue(
+      TestData.createAdditionalTrainingOther,
+      object : TypeReference<CIAGProfileRequestDTO>() {},
+    )
+    val result = restTemplate.exchange("/ciag/induction/A1234AB", HttpMethod.POST, HttpEntity<CIAGProfileRequestDTO>(actualCIAGProfileRequestDTO, setAuthorisation(roles = listOf("ROLE_EDUCATION_WORK_PLAN_EDITOR", "ROLE_EDUCATION_WORK_PLAN_VIEWER"))), ErrorResponse::class.java)
+    assertThat(result).isNotNull
+    assertThat(result.statusCode.equals(HttpStatus.BAD_REQUEST)).isTrue()
+    assertThat(result.body.userMessage?.contains("Field: ciagProfileRequestDTO.qualificationsAndTraining.additionalTrainingOther, Value: null,  Error: Value cannot be empty")).isTrue()
+  }
+
+  @Test
+  fun `Post a CIAG profile for an offender with invalid additionalTrainingOther `() {
+    val actualCIAGProfileRequestDTO = objectMapper.readValue(
+      TestData.createInvalidAdditionalTrainingOther,
+      object : TypeReference<CIAGProfileRequestDTO>() {},
+    )
+    val result = restTemplate.exchange("/ciag/induction/A1234AB", HttpMethod.POST, HttpEntity<CIAGProfileRequestDTO>(actualCIAGProfileRequestDTO, setAuthorisation(roles = listOf("ROLE_EDUCATION_WORK_PLAN_EDITOR", "ROLE_EDUCATION_WORK_PLAN_VIEWER"))), ErrorResponse::class.java)
+    assertThat(result).isNotNull
+    assertThat(result.statusCode.equals(HttpStatus.BAD_REQUEST)).isTrue()
+    assertThat(result.body.userMessage?.contains("Field: ciagProfileRequestDTO.qualificationsAndTraining.additionalTrainingOther, Value: chumma,  Error: Field cannot be populated")).isTrue()
+  }
+
+  @Test
+  fun `Post a CIAG profile for an offender with empty typeOfWorkExperienceOther `() {
+    val actualCIAGProfileRequestDTO = objectMapper.readValue(
+      TestData.createTypeOfWorkExperienceOther,
+      object : TypeReference<CIAGProfileRequestDTO>() {},
+    )
+    val result = restTemplate.exchange("/ciag/induction/A1234AB", HttpMethod.POST, HttpEntity<CIAGProfileRequestDTO>(actualCIAGProfileRequestDTO, setAuthorisation(roles = listOf("ROLE_EDUCATION_WORK_PLAN_EDITOR", "ROLE_EDUCATION_WORK_PLAN_VIEWER"))), ErrorResponse::class.java)
+    assertThat(result).isNotNull
+    assertThat(result.statusCode.equals(HttpStatus.BAD_REQUEST)).isTrue()
+    assertThat(result.body.userMessage?.contains("Field: ciagProfileRequestDTO.workExperience.typeOfWorkExperienceOther, Value: null,  Error: Value cannot be empty")).isTrue()
+  }
+
+  @Test
+  fun `Post a CIAG profile for an offender with invalid typeOfWorkExperienceOther `() {
+    val actualCIAGProfileRequestDTO = objectMapper.readValue(
+      TestData.createInvalidTypeOfWorkExperienceOther,
+      object : TypeReference<CIAGProfileRequestDTO>() {},
+    )
+    val result = restTemplate.exchange("/ciag/induction/A1234AB", HttpMethod.POST, HttpEntity<CIAGProfileRequestDTO>(actualCIAGProfileRequestDTO, setAuthorisation(roles = listOf("ROLE_EDUCATION_WORK_PLAN_EDITOR", "ROLE_EDUCATION_WORK_PLAN_VIEWER"))), ErrorResponse::class.java)
+    assertThat(result).isNotNull
+    assertThat(result.statusCode.equals(HttpStatus.BAD_REQUEST)).isTrue()
+    assertThat(result.body.userMessage?.contains("Field: ciagProfileRequestDTO.workExperience.typeOfWorkExperienceOther, Value: chumma,  Error: Field cannot be populated")).isTrue()
   }
 }

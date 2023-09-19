@@ -19,6 +19,7 @@ import javax.persistence.Id
 import javax.persistence.JoinColumn
 import javax.persistence.OneToOne
 import javax.persistence.Table
+import javax.validation.constraints.Size
 
 @Entity
 @Table(name = "CIAG_PROFILE")
@@ -52,11 +53,13 @@ data class CIAGProfile(
   @ElementCollection(fetch = FetchType.EAGER)
   @CollectionTable(name = "ABILITY_TO_WORK_IMPACT", joinColumns = [JoinColumn(name = "OFFENDER_ID")])
   @Column(name = "WORK_IMPACT")
+  @Size(min = 1)
   var abilityToWork: MutableSet<AbilityToWorkImpactedBy>?,
 
   @ElementCollection(fetch = FetchType.EAGER)
   @CollectionTable(name = "REASON_TO_NOT_WORK", joinColumns = [JoinColumn(name = "OFFENDER_ID")])
   @Column(name = "REASON")
+  @Size(min = 1)
   var reasonToNotGetWork: MutableSet<ReasonToNotGetWork>?,
 
   @OneToOne(cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.EAGER)
