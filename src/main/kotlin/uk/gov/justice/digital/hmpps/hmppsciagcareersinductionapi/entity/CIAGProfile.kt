@@ -38,6 +38,9 @@ data class CIAGProfile(
   @Column(name = "DESIRE_TO_WORK")
   var desireToWork: Boolean,
 
+  @Column(name = "PRISON_NAME")
+  var prisonName: String,
+
   @LastModifiedDate
   var modifiedDateTime: LocalDateTime,
 
@@ -94,6 +97,7 @@ data class CIAGProfile(
     hopingToGetWork = ciagProfileRequestDTO.hopingToGetWork!!,
     reasonToNotGetWorkOther = ciagProfileRequestDTO.reasonToNotGetWorkOther,
     abilityToWorkOther = ciagProfileRequestDTO.abilityToWorkOther,
+    prisonName = ciagProfileRequestDTO.prisonName,
     abilityToWork = ciagProfileRequestDTO.abilityToWork,
     reasonToNotGetWork = ciagProfileRequestDTO.reasonToNotGetWork,
     workExperience = ciagProfileRequestDTO.workExperience,

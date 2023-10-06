@@ -4,6 +4,7 @@
   "reasonToNotGetWork": ["LIMIT_THEIR_ABILITY", "FULL_TIME_CARER"],
   "reasonToNotGetWorkOther": "sample",
   "abilityToWork": [],
+  "prisonName": "MDI",
   "abilityToWorkOther": null,
   "createdBy": "GDUTTON_GEN",
   "createdDateTime": "2023-08-24T10:19:12.911509",

@@ -13,6 +13,8 @@ import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.TestData
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.config.ErrorResponse
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.jsonprofile.CIAGProfileDTO
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.jsonprofile.CIAGProfileRequestDTO
+import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.messaging.OutboundEventsPublisher
+import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.messaging.OutboundEventsService
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.repository.CIAGProfileRepository
 
 @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
@@ -20,6 +22,12 @@ class CIAGProfileIntTest : IntegrationTestBase() {
 
   @Autowired
   lateinit var ciagProfileRepository: CIAGProfileRepository
+
+  @Autowired
+  lateinit var outboundEventsPublisher: OutboundEventsPublisher
+
+  @Autowired
+  lateinit var outboundEventsService: OutboundEventsService
 
   @Autowired
   lateinit var objectMapper: ObjectMapper

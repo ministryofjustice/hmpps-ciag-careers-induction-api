@@ -5,12 +5,15 @@ import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.jsonprofil
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.jsonprofile.CIAGProfileRequestDTO
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity.CIAGProfile
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.exceptions.NotFoundException
+import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.messaging.EventType
+import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.messaging.OutboundEventsService
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.repository.CIAGProfileRepository
 import java.time.LocalDateTime
 
 @Service
 class CIAGProfileService(
   private val ciagProfileRepository: CIAGProfileRepository,
+  private val outboundEventsService: OutboundEventsService,
 ) {
   fun createOrUpdateCIAGInductionForOffender(
     ciagProfileDTO: CIAGProfileRequestDTO,
@@ -24,6 +27,7 @@ class CIAGProfileService(
       ciagProfile = updateCIAGInductionForOffender(ciagProfileDTO)!!
     } else {
       ciagProfile = ciagProfileRepository.saveAndFlush(ciagProfile)
+      outboundEventsService.createAndPublishEventMessage(ciagProfile, EventType.CIAG_INDUCTION_CREATED)
     }
 
     return ciagProfile
@@ -68,7 +72,7 @@ class CIAGProfileService(
       throw NotFoundException(ciagProfileDTO.offenderId)
     }
     ciagProfile = ciagProfileRepository.saveAndFlush(ciagProfile)
-
+    outboundEventsService.createAndPublishEventMessage(ciagProfile, EventType.CIAG_INDUCTION_UPDATED)
     return ciagProfile
   }
 

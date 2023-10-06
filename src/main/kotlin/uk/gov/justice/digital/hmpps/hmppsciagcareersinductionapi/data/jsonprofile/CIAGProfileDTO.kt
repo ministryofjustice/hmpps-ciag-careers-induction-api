@@ -19,6 +19,9 @@ data class CIAGProfileDTO(
   @Schema(description = "This is the person who creates the Induction.Even though it is passed from front end it wil be automatically set to the right value at the time of record creation ", name = "createdBy", required = true)
   var createdBy: String,
 
+  @Schema(description = "This is the name of prison used", name = "prisonName", required = true)
+  var prisonName: String,
+
   @Schema(description = "This is the creation date and time of Induction record .Even though it is passed from front end it wil be automatically set to the right value at the time of record creation ", name = "createdDateTime", required = true)
   var createdDateTime: LocalDateTime,
 
@@ -67,6 +70,7 @@ data class CIAGProfileDTO(
     createdBy = profileEntity.createdBy,
     createdDateTime = profileEntity.createdDateTime,
     modifiedBy = profileEntity.modifiedBy,
+    prisonName = profileEntity.prisonName,
     desireToWork = profileEntity.desireToWork,
     modifiedDateTime = profileEntity.modifiedDateTime,
     hopingToGetWork = profileEntity.hopingToGetWork,

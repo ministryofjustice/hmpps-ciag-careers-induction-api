@@ -4,7 +4,11 @@ plugins {
   kotlin("plugin.jpa") version "1.8.10"
   id("jacoco")
 }
-
+ext["mapstruct.version"] = "1.5.5.Final"
+ext["postgresql.version"] = "42.6.0"
+ext["kotlin.logging.version"] = "3.0.5"
+ext["springdoc.openapi.version"] = "2.2.0"
+ext["awaitility.version"] = "4.2.0"
 configurations {
   testImplementation { exclude(group = "org.junit.vintage") }
 }
@@ -48,7 +52,8 @@ dependencies {
 
   // GOVUK Notify:
   implementation("uk.gov.service.notify:notifications-java-client:3.17.3-RELEASE")
-
+  implementation("uk.gov.justice.service.hmpps:hmpps-sqs-spring-boot-starter:2.0.1")
+  implementation("io.opentelemetry.instrumentation:opentelemetry-instrumentation-annotations:1.29.0")
   // Enable kotlin reflect
   implementation("org.jetbrains.kotlin:kotlin-reflect:1.6.20")
 
@@ -63,6 +68,7 @@ dependencies {
   implementation("org.springdoc:springdoc-openapi-ui:1.6.9")
   implementation("org.springdoc:springdoc-openapi-data-rest:1.6.9")
   implementation("org.springdoc:springdoc-openapi-kotlin:1.6.9")
+  implementation("io.github.microutils:kotlin-logging:${property("kotlin.logging.version")}")
 
   implementation("com.google.code.gson:gson:2.9.0")
 
@@ -72,9 +78,13 @@ dependencies {
   testImplementation("io.jsonwebtoken:jjwt:0.9.1")
   testImplementation("net.javacrumbs.json-unit:json-unit-assertj:2.35.0")
   testImplementation("io.swagger.parser.v3:swagger-parser-v2-converter:2.0.33")
+  testImplementation("org.awaitility:awaitility-kotlin:${property("awaitility.version")}")
+  testImplementation("org.testcontainers:localstack:1.18.1")
   testImplementation("org.mockito:mockito-inline:4.6.1")
   testImplementation("org.junit.jupiter:junit-jupiter:5.8.2")
   testImplementation("com.h2database:h2")
+  testImplementation("org.springframework.boot:spring-boot-starter-test")
+  testImplementation("org.testcontainers:localstack:1.18.1")
 }
 repositories {
   mavenCentral()

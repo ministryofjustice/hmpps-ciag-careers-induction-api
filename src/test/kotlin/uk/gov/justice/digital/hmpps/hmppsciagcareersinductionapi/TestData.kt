@@ -112,6 +112,7 @@ class TestData {
     val ciagDTO = CIAGProfileRequestDTO(
       "A1234AB",
       "sacintha",
+      "MDI",
       LocalDateTime.now(),
       "sacintha",
 
@@ -122,9 +123,11 @@ class TestData {
     val ciag = CIAGProfile(
       "A1234AB",
       "sacintha",
+
       LocalDateTime.now(),
       "sacintha",
       true,
+      "MDI",
       LocalDateTime.now(), HopingToGetWork.NOT_SURE, null, null, abilityToWorkImpactDetailList, reasonToNotGetWork, previousWork, skillsAndInterests, educationAndQualification, prisonWorkAndEducation, "1.1",
 
     )
@@ -135,6 +138,7 @@ class TestData {
       LocalDateTime.now(),
       "sacintha",
       true,
+      "MDI",
       LocalDateTime.now(), HopingToGetWork.NOT_SURE, null, null, abilityToWorkImpactDetailList, reasonToNotGetWork, null, null, educationAndQualification, null, "1.1",
 
     )
@@ -145,6 +149,7 @@ class TestData {
       LocalDateTime.now(),
       "sacintha",
       true,
+      "MDI",
       LocalDateTime.now(), HopingToGetWork.NOT_SURE, null, null, abilityToWorkImpactDetailList, reasonToNotGetWork, previousWork, null, null, null, "1.1",
 
     )
@@ -155,6 +160,7 @@ class TestData {
       LocalDateTime.now(),
       "sacintha",
       true,
+      "MDI",
       LocalDateTime.now(), HopingToGetWork.NOT_SURE, null, null, abilityToWorkImpactDetailList, reasonToNotGetWork, null, null, null, prisonWorkAndEducation, "1.1",
 
     )
