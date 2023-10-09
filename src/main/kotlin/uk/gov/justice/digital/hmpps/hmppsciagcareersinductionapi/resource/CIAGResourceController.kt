@@ -242,7 +242,6 @@ class CIAGResourceController(
     @AuthenticationPrincipal oauth2User: DpsPrincipal,
   ): CIAGProfileDTO? {
     requestDTO.modifiedBy = oauth2User.name
-    ciagValidationService.validateInput(requestDTO)
     return ciagProfileService.updateCIAGInductionForOffender(requestDTO)?.let {
       CIAGProfileDTO(
         it,

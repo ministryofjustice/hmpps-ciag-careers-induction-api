@@ -52,7 +52,7 @@ dependencies {
 
   // GOVUK Notify:
   implementation("uk.gov.service.notify:notifications-java-client:3.17.3-RELEASE")
-  implementation("uk.gov.justice.service.hmpps:hmpps-sqs-spring-boot-starter:2.0.1")
+  implementation("uk.gov.justice.service.hmpps:hmpps-sqs-spring-boot-starter:1.3.1")
   implementation("io.opentelemetry.instrumentation:opentelemetry-instrumentation-annotations:1.29.0")
   // Enable kotlin reflect
   implementation("org.jetbrains.kotlin:kotlin-reflect:1.6.20")
@@ -83,6 +83,7 @@ dependencies {
   testImplementation("org.mockito:mockito-inline:4.6.1")
   testImplementation("org.junit.jupiter:junit-jupiter:5.8.2")
   testImplementation("com.h2database:h2")
+  testImplementation("uk.gov.justice.service.hmpps:hmpps-sqs-spring-boot-starter:1.3.1")
   testImplementation("org.springframework.boot:spring-boot-starter-test")
   testImplementation("org.testcontainers:localstack:1.18.1")
 }

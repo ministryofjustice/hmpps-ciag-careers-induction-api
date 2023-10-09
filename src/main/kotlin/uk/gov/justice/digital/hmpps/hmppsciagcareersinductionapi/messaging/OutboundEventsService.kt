@@ -7,7 +7,7 @@ import java.time.Instant
 
 @Service
 class OutboundEventsService(
-  private val outboundEventsPublisher: OutboundEventsPublisher,
+  var outboundEventsPublisher: OutboundEventsPublisher,
 ) {
   fun createAndPublishEventMessage(ciagProfile: CIAGProfile, eventType: EventType) {
     val outboundEvent = createValidCiagInductionEvent(ciagProfile.offenderId, ciagProfile.prisonName, eventType)
