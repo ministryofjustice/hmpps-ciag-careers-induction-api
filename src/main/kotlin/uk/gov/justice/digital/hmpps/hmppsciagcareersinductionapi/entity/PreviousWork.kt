@@ -51,7 +51,6 @@ data class PreviousWork(
   @ElementCollection(fetch = FetchType.EAGER)
   @CollectionTable(name = "WORK_EXPERIENCE_DETAIL", joinColumns = [JoinColumn(name = "PREVIOUS_WORK_ID")])
   @Column(name = "WORK_EXPERIENCE_DETAIL")
-  @Size(min = 1)
   @Schema(description = "This is the list of work experience details of the inmate.", name = "workExperience", required = true)
   var workExperience: MutableSet<WorkExperience>?,
 
