@@ -70,6 +70,16 @@ class CIAGProfileServiceTest {
   }
 
   @Test
+  fun `makes a call to the repository to get list of CIAG profile`() {
+    whenever(ciagProfileRepository.findAllById((any()))).thenReturn(TestData.ciagProfileList)
+
+    val rProfileList = TestData.offenderIdList?.let { profileService.getAllCIAGProfileForGivenOffenderIds(it) }
+    assertThat(rProfileList?.size).isEqualTo(2)
+    assertThat(TestData.offenderIdList).contains(rProfileList?.get(0)?.offenderId)
+    assertThat(TestData.offenderIdList).contains(rProfileList?.get(1)?.offenderId)
+  }
+
+  @Test
   fun `makes a call to the repository to get the CIAG profile but getting a null object`() {
     AssertionsForClassTypes.assertThatExceptionOfType(NotFoundException::class.java).isThrownBy {
       whenever(ciagProfileRepository.findById((any()))).thenReturn(null)

@@ -87,6 +87,17 @@ class CIAGProfileService(
     return ciagProfile.let { CIAGProfileDTO(it.get()) }
   }
 
+  fun getAllCIAGProfileForGivenOffenderIds(
+    offenderIdList: List<String>,
+  ): List<CIAGProfileDTO>? {
+    var ciagProfileList = ciagProfileRepository.findAllById(offenderIdList)
+    var ciagProfileDTOList = mutableListOf<CIAGProfileDTO>()
+    for (ciagProfile in ciagProfileList) {
+      ciagProfileDTOList.add(CIAGProfileDTO(ciagProfile))
+    }
+    return ciagProfileDTOList
+  }
+
   fun deleteCIAGProfile(
     offenderId: String,
   ) {
