@@ -1,8 +1,8 @@
 package uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity
 
 import io.swagger.v3.oas.annotations.media.Schema
+import jakarta.persistence.Embeddable
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.QualificationLevel
-import javax.persistence.Embeddable
 
 @Embeddable
 data class AchievedQualification(

@@ -1,6 +1,5 @@
 package uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.integration.health
 
-import com.vladmihalcea.hibernate.type.json.internal.JacksonUtil
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.springframework.http.HttpEntity
@@ -26,7 +25,7 @@ class HealthCheckTest : IntegrationTestBase() {
     assert(result != null)
     assert(result.hasBody())
     assert(result.statusCode.is2xxSuccessful)
-    var stringcompanion = JacksonUtil.toJsonNode(result.body.toString())
+    var stringcompanion = mapper.readTree(result.body.toString())
     var version = stringcompanion.get("components").get("healthInfo").get("details").get("version")
     assertThat(version.asText().toString()).startsWith(LocalDateTime.now().format(DateTimeFormatter.ISO_DATE))
   }
@@ -37,7 +36,7 @@ class HealthCheckTest : IntegrationTestBase() {
     assert(result != null)
     assert(result.hasBody())
     assert(result.statusCode.is2xxSuccessful)
-    var stringcompanion = JacksonUtil.toJsonNode(result.body.toString())
+    var stringcompanion = mapper.readTree(result.body.toString())
     var status = stringcompanion.get("status")
     assertThat(status.asText().toString()).isEqualTo("UP")
   }
@@ -48,7 +47,7 @@ class HealthCheckTest : IntegrationTestBase() {
     assert(result != null)
     assert(result.hasBody())
     assert(result.statusCode.is2xxSuccessful)
-    var stringcompanion = JacksonUtil.toJsonNode(result.body.toString())
+    var stringcompanion = mapper.readTree(result.body.toString())
     var status = stringcompanion.get("status")
     assertThat(status.asText().toString()).isEqualTo("UP")
   }
@@ -59,7 +58,7 @@ class HealthCheckTest : IntegrationTestBase() {
     assert(result != null)
     assert(result.hasBody())
     assert(result.statusCode.is2xxSuccessful)
-    var stringcompanion = JacksonUtil.toJsonNode(result.body.toString())
+    var stringcompanion = mapper.readTree(result.body.toString())
     var status = stringcompanion.get("status")
     assertThat(status.asText().toString()).isEqualTo("UP")
   }

@@ -3,6 +3,7 @@ package uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.integration
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpEntity
@@ -23,6 +24,11 @@ class CIAGProfileIntTest : IntegrationTestBase() {
 
   @Autowired
   lateinit var objectMapper: ObjectMapper
+
+  @BeforeEach
+  internal fun setUp() {
+    ciagProfileRepository.deleteAll()
+  }
 
   @Test
   fun `Get the exception for profile for a unknown offender`() {

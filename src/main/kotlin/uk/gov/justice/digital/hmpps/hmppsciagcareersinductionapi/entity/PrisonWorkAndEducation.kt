@@ -1,23 +1,21 @@
 package uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity
-import com.fasterxml.jackson.annotation.JsonIgnore
 import io.swagger.v3.oas.annotations.media.Schema
+import jakarta.persistence.CollectionTable
+import jakarta.persistence.Column
+import jakarta.persistence.ElementCollection
+import jakarta.persistence.Entity
+import jakarta.persistence.FetchType
+import jakarta.persistence.GeneratedValue
+import jakarta.persistence.GenerationType
+import jakarta.persistence.Id
+import jakarta.persistence.JoinColumn
+import jakarta.persistence.Table
+import jakarta.validation.constraints.Size
 import org.springframework.data.annotation.LastModifiedBy
 import org.springframework.data.annotation.LastModifiedDate
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.PrisonTraining
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.PrisonWork
 import java.time.LocalDateTime
-import javax.persistence.CollectionTable
-import javax.persistence.Column
-import javax.persistence.ElementCollection
-import javax.persistence.Entity
-import javax.persistence.FetchType
-import javax.persistence.GeneratedValue
-import javax.persistence.GenerationType
-import javax.persistence.Id
-import javax.persistence.JoinColumn
-import javax.persistence.OneToOne
-import javax.persistence.Table
-import javax.validation.constraints.Size
 
 @Entity
 @Table(name = "PRISON_WORK_EDUCATION")
@@ -54,9 +52,7 @@ data class PrisonWorkAndEducation(
   @Column(name = "OTHER_PRISON_EDUCATION")
   @Schema(description = "This is the prison education which is peculiar to this inmate  .This field is mandatory when  \"inPrisonEducation\" has a Value set to \"OTHER\" ", name = "inPrisonEducationOther", required = false)
   var inPrisonEducationOther: String?,
-  @OneToOne(mappedBy = "inPrisonInterests")
-  @JsonIgnore
-  var profile: CIAGProfile?,
+
 ) {
   override fun equals(other: Any?): Boolean {
     if (this === other) return true

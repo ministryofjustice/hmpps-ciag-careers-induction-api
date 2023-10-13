@@ -1,5 +1,6 @@
 package uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.integration
 
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -24,6 +25,8 @@ abstract class IntegrationTestBase internal constructor() {
 
   @Autowired
   lateinit var jwtAuthHelper: JwtAuthHelper
+
+  val mapper = jacksonObjectMapper()
   internal fun setAuthorisation(
     user: String = "test-client",
     roles: List<String> = listOf(),

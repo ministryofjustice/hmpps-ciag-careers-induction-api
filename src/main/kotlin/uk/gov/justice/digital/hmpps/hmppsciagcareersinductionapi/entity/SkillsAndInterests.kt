@@ -1,23 +1,21 @@
 package uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity
-import com.fasterxml.jackson.annotation.JsonIgnore
 import io.swagger.v3.oas.annotations.media.Schema
+import jakarta.persistence.CollectionTable
+import jakarta.persistence.Column
+import jakarta.persistence.ElementCollection
+import jakarta.persistence.Entity
+import jakarta.persistence.FetchType
+import jakarta.persistence.GeneratedValue
+import jakarta.persistence.GenerationType
+import jakarta.persistence.Id
+import jakarta.persistence.JoinColumn
+import jakarta.persistence.Table
+import jakarta.validation.constraints.Size
 import org.springframework.data.annotation.LastModifiedBy
 import org.springframework.data.annotation.LastModifiedDate
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.PersonalInterests
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.Skills
 import java.time.LocalDateTime
-import javax.persistence.CollectionTable
-import javax.persistence.Column
-import javax.persistence.ElementCollection
-import javax.persistence.Entity
-import javax.persistence.FetchType
-import javax.persistence.GeneratedValue
-import javax.persistence.GenerationType
-import javax.persistence.Id
-import javax.persistence.JoinColumn
-import javax.persistence.OneToOne
-import javax.persistence.Table
-import javax.validation.constraints.Size
 
 @Entity
 @Table(name = "SKILLS_AND_INTERESTS")
@@ -53,9 +51,7 @@ data class SkillsAndInterests(
   @Column(name = "OTHER_PERSONAL_INTRESTS")
   @Schema(description = "This is the work interest which is peculiar to this inmate  .This field is mandatory when  \"personalInterests\" has a Value set to \"OTHER\" ", name = "personalInterestsOther", required = false)
   var personalInterestsOther: String?,
-  @OneToOne(mappedBy = "skillsAndInterests")
-  @JsonIgnore
-  var profile: CIAGProfile?,
+
 ) {
   override fun equals(other: Any?): Boolean {
     if (this === other) return true
@@ -82,6 +78,6 @@ data class SkillsAndInterests(
   }
 
   override fun toString(): String {
-    return "SkillsAndInterests(modifiedBy='$modifiedBy', modifiedDateTime=$modifiedDateTime, id=$id, skills=$skills, skillsOther=$skillsOther, personalInterests=$personalInterests, personalInterestsOther=$personalInterestsOther, profile=$profile)"
+    return "SkillsAndInterests(modifiedBy='$modifiedBy', modifiedDateTime=$modifiedDateTime, id=$id, skills=$skills, skillsOther=$skillsOther, personalInterests=$personalInterests, personalInterestsOther=$personalInterestsOther)"
   }
 }

@@ -1,6 +1,5 @@
 package uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.integration.health
 
-import com.vladmihalcea.hibernate.type.json.internal.JacksonUtil
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 import org.springframework.http.HttpEntity
@@ -19,7 +18,7 @@ class InfoTest : IntegrationTestBase() {
     assert(result != null)
     assert(result.hasBody())
     assert(result.statusCode.is2xxSuccessful)
-    var stringcompanion = JacksonUtil.toJsonNode(result.body.toString())
+    var stringcompanion = mapper.readTree(result.body.toString())
     var version = stringcompanion.get("build").get("version")
     var name = stringcompanion.get("build").get("name")
     Assertions.assertThat(name.asText().toString()).isEqualTo("hmpps-ciag-careers-induction-api")
@@ -31,7 +30,7 @@ class InfoTest : IntegrationTestBase() {
     assert(result != null)
     assert(result.hasBody())
     assert(result.statusCode.is2xxSuccessful)
-    var stringcompanion = JacksonUtil.toJsonNode(result.body.toString())
+    var stringcompanion = mapper.readTree(result.body.toString())
     var version = stringcompanion.get("build").get("version")
     Assertions.assertThat(version.asText().toString()).startsWith(LocalDateTime.now().format(DateTimeFormatter.ISO_DATE))
   }

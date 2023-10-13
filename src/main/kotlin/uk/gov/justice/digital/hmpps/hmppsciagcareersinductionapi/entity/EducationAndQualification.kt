@@ -1,22 +1,20 @@
 package uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity
-import com.fasterxml.jackson.annotation.JsonIgnore
 import io.swagger.v3.oas.annotations.media.Schema
+import jakarta.persistence.CollectionTable
+import jakarta.persistence.Column
+import jakarta.persistence.ElementCollection
+import jakarta.persistence.Entity
+import jakarta.persistence.FetchType
+import jakarta.persistence.GeneratedValue
+import jakarta.persistence.GenerationType
+import jakarta.persistence.Id
+import jakarta.persistence.JoinColumn
+import jakarta.persistence.Table
 import org.springframework.data.annotation.LastModifiedBy
 import org.springframework.data.annotation.LastModifiedDate
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.EducationLevels
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.OtherQualification
 import java.time.LocalDateTime
-import javax.persistence.CollectionTable
-import javax.persistence.Column
-import javax.persistence.ElementCollection
-import javax.persistence.Entity
-import javax.persistence.FetchType
-import javax.persistence.GeneratedValue
-import javax.persistence.GenerationType
-import javax.persistence.Id
-import javax.persistence.JoinColumn
-import javax.persistence.OneToOne
-import javax.persistence.Table
 
 @Entity
 @Table(name = "EDUCATION_QUALIFICATION")
@@ -52,13 +50,10 @@ data class EducationAndQualification(
   @Schema(description = "This is the additional which is peculiar to this inmate  .This field is mandatory when  \"additionalTraining\" has a Value set to \"OTHER\" ", name = "additionalTrainingOther", required = false)
   var additionalTrainingOther: String?,
 
-  @OneToOne(mappedBy = "qualificationsAndTraining")
-  @JsonIgnore
-  var profile: CIAGProfile?,
 ) {
 
   override fun toString(): String {
-    return "EducationAndQualification(modifiedBy='$modifiedBy', modifiedDateTime=$modifiedDateTime, id=$id, educationLevel=$educationLevel, qualifications=$qualifications, additionalTraining=$additionalTraining, additionalTrainingOther=$additionalTrainingOther, profile=$profile)"
+    return "EducationAndQualification(modifiedBy='$modifiedBy', modifiedDateTime=$modifiedDateTime, id=$id, educationLevel=$educationLevel, qualifications=$qualifications, additionalTraining=$additionalTraining, additionalTrainingOther=$additionalTrainingOther)"
   }
 
   override fun equals(other: Any?): Boolean {
