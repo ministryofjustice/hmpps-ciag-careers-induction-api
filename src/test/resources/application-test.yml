@@ -25,7 +25,7 @@ spring:
     password: dummy
 
   flyway:
-    locations: classpath:/db/hs
+    locations: classpath:/db/h2
     url: ${spring.datasource.url}
     user: create_vary
     password: dummy
