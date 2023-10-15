@@ -53,7 +53,7 @@ dependencies {
   implementation("org.jetbrains.kotlin:kotlin-reflect:1.6.20")
 
   // Database dependencies
-  runtimeOnly("org.flywaydb:flyway-core")
+  implementation("org.flywaydb:flyway-core")
   runtimeOnly("org.postgresql:postgresql:42.4.0")
 
   implementation("io.arrow-kt:arrow-core:1.1.2")
