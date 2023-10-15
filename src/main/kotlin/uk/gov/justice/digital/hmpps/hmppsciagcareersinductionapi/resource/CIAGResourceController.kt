@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.config.ErrorResponse
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.jsonprofile.CIAGProfileDTO
+import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.jsonprofile.CIAGProfileListDTO
+import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.jsonprofile.CIAGProfileOffenderIdListRequestDTO
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.jsonprofile.CIAGProfileRequestDTO
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.service.CIAGProfileService
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.service.validation.CIAGValidationService
@@ -79,6 +81,51 @@ class CIAGResourceController(
     offenderId: String,
   ): CIAGProfileDTO? {
     return ciagProfileService.getCIAGProfileForOffender(offenderId)
+  }
+
+  @PreAuthorize("hasAnyRole('ROLE_EDUCATION_WORK_PLAN_EDITOR','ROLE_EDUCATION_WORK_PLAN_VIEWER')")
+  @PostMapping("/list")
+  @Operation(
+    summary = "Fetch the CIAG profile for the given offender ids",
+    description = "Currently requires role <b>ROLE_VIEW_PRISONER_DATA</b>",
+    responses = [
+      ApiResponse(
+        responseCode = "200",
+        description = "CIAG profile list is returned",
+        content = [
+          Content(
+            mediaType = "application/json",
+            schema = Schema(implementation = List::class),
+          ),
+        ],
+      ),
+      ApiResponse(
+        responseCode = "401",
+        description = "Unauthorized to access this endpoint",
+        content = [Content(mediaType = "application/json", schema = Schema(implementation = String::class))],
+      ),
+      ApiResponse(
+        responseCode = "403",
+        description = "Incorrect permissions to access this endpoint",
+        content = [Content(mediaType = "application/json", schema = Schema(implementation = String::class))],
+      ),
+      ApiResponse(
+        responseCode = "400",
+        description = "Invalid Parameters have been passed",
+        content = [Content(mediaType = "application/json", schema = Schema(implementation = ErrorResponse::class))],
+      ),
+      ApiResponse(
+        responseCode = "404",
+        description = "Resource not found",
+        content = [Content(mediaType = "application/json", schema = Schema(implementation = ErrorResponse::class))],
+      ),
+    ],
+  )
+  fun getAllCIAGProfileForGivenOffenderIds(
+    @Valid @RequestBody
+    offenderIdList: CIAGProfileOffenderIdListRequestDTO,
+  ): CIAGProfileListDTO? {
+    return CIAGProfileListDTO(ciagProfileService.getAllCIAGProfileForGivenOffenderIds(offenderIdList.offenderIds))
   }
 
   @PreAuthorize("hasAnyRole('ROLE_EDUCATION_WORK_PLAN_EDITOR')")
