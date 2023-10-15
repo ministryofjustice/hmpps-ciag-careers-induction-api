@@ -28,6 +28,25 @@ import java.time.LocalDateTime
 
 class TestData {
   companion object {
+    val offenderId_A1234AB = "A1234AB"
+    val offenderId_A1234AC = "A1234AC"
+    val offenderId_A1234AD = "A1234AC"
+    val createValidProfile_A1234AB =
+      File("src/test/resources/testdata/CreateProfile_correct_A1234AB.json").inputStream().readBytes()
+        .toString(Charsets.UTF_8)
+    val createValidProfile_A1234AC =
+      File("src/test/resources/testdata/CreateProfile_correct_A1234AC.json").inputStream().readBytes()
+        .toString(Charsets.UTF_8)
+    val createValidProfile_A1234AD =
+      File("src/test/resources/testdata/CreateProfile_correct_A1234AD.json").inputStream().readBytes()
+        .toString(Charsets.UTF_8)
+    val correctOffenderIdList =
+      File("src/test/resources/testdata/GetProfileList_forValidIds.json").inputStream().readBytes()
+        .toString(Charsets.UTF_8)
+    val inCorrectOffenderIdList =
+      File("src/test/resources/testdata/GetProfileList_forInValidIds.json").inputStream().readBytes()
+        .toString(Charsets.UTF_8)
+
     val createInvalidTypeOfWorkExperienceOther = File("src/test/resources/testdata/CreateProfile_InvalidTypeOfWorkExperienceOther.json").inputStream().readBytes().toString(Charsets.UTF_8)
     val createTypeOfWorkExperienceOther = File("src/test/resources/testdata/CreateProfile_EmptyTypeOfWorkExperienceOther.json").inputStream().readBytes().toString(Charsets.UTF_8)
 
@@ -158,5 +177,28 @@ class TestData {
       LocalDateTime.now(), HopingToGetWork.NOT_SURE, null, null, abilityToWorkImpactDetailList, reasonToNotGetWork, null, null, null, prisonWorkAndEducation, "1.1",
 
     )
+    val offenderIdList = mutableListOf<String>("A1234AC", "A1234AB", "A1234AD")
+
+    val ciagSecond = CIAGProfile(
+      "A1234AC",
+      "sacintha",
+
+      LocalDateTime.now(),
+      "sacintha",
+      true,
+      LocalDateTime.now(),
+      HopingToGetWork.NOT_SURE,
+      null,
+      null,
+      abilityToWorkImpactDetailList,
+      reasonToNotGetWork,
+      previousWork,
+      skillsAndInterests,
+      educationAndQualification,
+      prisonWorkAndEducation,
+      "1.1",
+
+    )
+    val ciagProfileList = mutableListOf<CIAGProfile>(ciag, ciagSecond)
   }
 }
