@@ -190,6 +190,9 @@ class CIAGValidationService {
     }
   }
   fun validatePreviousExperience(ciagProfileRequestDTO: CIAGProfileRequestDTO, result: BeanPropertyBindingResult) {
+    if (ciagProfileRequestDTO.workExperience?.hasWorkedBefore == false) {
+      return
+    }
     if (ciagProfileRequestDTO.workExperience?.typeOfWorkExperience?.isEmpty() == true || ciagProfileRequestDTO.workExperience?.workExperience?.isEmpty() == true) {
       val fieldError = FieldError("ciagProfileRequestDTO.workExperience.workExperience", "ciagProfileRequestDTO.workExperience.workExperience", ciagProfileRequestDTO.workExperience?.workExperience, false, null, null, invalidField)
       result.addError(fieldError)

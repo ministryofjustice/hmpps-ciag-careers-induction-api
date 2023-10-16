@@ -42,7 +42,7 @@ data class PreviousWork(
   @Column(name = "WORK_EXPERIENCE")
   @Size(min = 1)
   @Schema(description = "This is the work experience list of the inmate.", name = "typeOfWorkExperience", required = false)
-  var typeOfWorkExperience: MutableSet<WorkType>,
+  var typeOfWorkExperience: MutableSet<WorkType>?,
 
   @Column(name = "WORK_EXPERIENCE_OTHER")
   @Schema(description = "This is the work experience which is peculiar to this inmate  .This field is mandatory when  \"typeOfWorkExperience\" has a Value set to \"OTHER\" ", name = "typeOfWorkExperienceOther", required = false)
@@ -53,7 +53,7 @@ data class PreviousWork(
   @Column(name = "WORK_EXPERIENCE_DETAIL")
   @Size(min = 1)
   @Schema(description = "This is the list of work experience details of the inmate.", name = "workExperience", required = true)
-  var workExperience: MutableSet<WorkExperience>,
+  var workExperience: MutableSet<WorkExperience>?,
 
   @OneToOne(cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.EAGER)
   @JoinColumn(name = "WORK_INTERESTS_ID")
