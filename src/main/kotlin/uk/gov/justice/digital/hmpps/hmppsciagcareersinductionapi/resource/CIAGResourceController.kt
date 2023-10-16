@@ -95,7 +95,7 @@ class CIAGResourceController(
         content = [
           Content(
             mediaType = "application/json",
-            schema = Schema(implementation = List::class),
+            schema = Schema(implementation = CIAGProfileListDTO::class),
           ),
         ],
       ),
@@ -119,7 +119,7 @@ class CIAGResourceController(
   fun getAllCIAGProfileForGivenOffenderIds(
     @Valid @RequestBody
     offenderIdList: CIAGProfileOffenderIdListRequestDTO,
-  ): CIAGProfileListDTO? {
+  ): CIAGProfileListDTO {
     return CIAGProfileListDTO(ciagProfileService.getAllCIAGProfileForGivenOffenderIds(offenderIdList.offenderIds))
   }
 
