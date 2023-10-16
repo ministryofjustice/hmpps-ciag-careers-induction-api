@@ -21,13 +21,46 @@ import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity.SkillsAn
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity.WorkExperience
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity.WorkInterestDetail
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity.WorkInterests
-import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.service.CIAGProfileService
 import java.io.File
 import java.lang.Boolean.FALSE
 import java.time.LocalDateTime
 
 class TestData {
   companion object {
+    val createdByString = "createdBy"
+    val offenderIdString = "offenderId"
+    val modifiedByString = "modifiedBy"
+    val prisonIdString = "prisonId"
+    val prisonNameString = "prisonName"
+    val offenderId_A1234AB = "A1234AB"
+    val offenderId_A1234AC = "A1234AC"
+    val offenderId_A1234AD = "A1234AC"
+    val createValidProfile_A1234AB =
+      File("src/test/resources/testdata/CreateProfile_correct_A1234AB.json")
+        .inputStream()
+        .readBytes()
+        .toString(Charsets.UTF_8)
+    val createValidProfile_A1234AC =
+      File("src/test/resources/testdata/CreateProfile_correct_A1234AC.json")
+        .inputStream()
+        .readBytes()
+        .toString(Charsets.UTF_8)
+    val createValidProfile_A1234AD =
+      File("src/test/resources/testdata/CreateProfile_correct_A1234AD.json")
+        .inputStream()
+        .readBytes()
+        .toString(Charsets.UTF_8)
+    val correctOffenderIdList =
+      File("src/test/resources/testdata/GetProfileList_forValidIds.json")
+        .inputStream()
+        .readBytes()
+        .toString(Charsets.UTF_8)
+    val inCorrectOffenderIdList =
+      File("src/test/resources/testdata/GetProfileList_forInValidIds.json")
+        .inputStream()
+        .readBytes()
+        .toString(Charsets.UTF_8)
+
     val createInvalidTypeOfWorkExperienceOther =
       File("src/test/resources/testdata/CreateProfile_InvalidTypeOfWorkExperienceOther.json")
         .inputStream()
@@ -38,7 +71,11 @@ class TestData {
         .inputStream()
         .readBytes()
         .toString(Charsets.UTF_8)
-
+    val createProfileWithPrsionDetailsJsonRequest =
+      File("src/test/resources/testdata/CreateProfile_Prsion_Details_Valid.json")
+        .inputStream()
+        .readBytes()
+        .toString(Charsets.UTF_8)
     val createInvalidAdditionalTrainingOther =
       File("src/test/resources/testdata/CreateProfile_InvalidAdditionalTrainingOther.json")
         .inputStream()
@@ -136,18 +173,8 @@ class TestData {
         .inputStream()
         .readBytes()
         .toString(Charsets.UTF_8)
-    val createProfileWithPrsionDetailsJsonRequest =
-      File("src/test/resources/testdata/CreateProfile_Prsion_Details_Valid.json")
-        .inputStream()
-        .readBytes()
-        .toString(Charsets.UTF_8)
+    val offenderIdList = mutableListOf<String>("A1234AC", "A1234AB", "A1234AD")
 
-    private lateinit var profileService: CIAGProfileService
-    val createdByString = "createdBy"
-    val offenderIdString = "offenderId"
-    val prisonIdString = "prisonId"
-    val prisonNameString = "prisonName"
-    val modifiedByString = "modifiedBy"
     var hopingToGetWork = HopingToGetWork.NOT_SURE
     var abilityToWorkImpactDetailList = mutableSetOf(AbilityToWorkImpactedBy.HEALTH_ISSUES)
     var reasonToNotGetWork = mutableSetOf(ReasonToNotGetWork.FULL_TIME_CARER)
@@ -219,9 +246,9 @@ class TestData {
     val ciagDTO =
       CIAGProfileRequestDTO(
         "A1234AB",
-        "MDI",
-        "prison MDI",
         "sacintha",
+        "MDI",
+        "MOOR",
         LocalDateTime.now(),
         "sacintha",
         LocalDateTime.now(),
@@ -241,9 +268,9 @@ class TestData {
     val ciag =
       CIAGProfile(
         "A1234AB",
-        "MDI",
-        "prison MDI",
         "sacintha",
+        "MDI",
+        "MOOR",
         LocalDateTime.now(),
         "sacintha",
         true,
@@ -263,9 +290,9 @@ class TestData {
     val ciagEducation =
       CIAGProfile(
         "A1234AB",
-        "MDI",
-        "prison MDI",
         "sacintha",
+        "MDI",
+        "MOOR",
         LocalDateTime.now(),
         "sacintha",
         true,
@@ -285,9 +312,9 @@ class TestData {
     val ciagPreviousWork =
       CIAGProfile(
         "A1234AB",
-        "MDI",
-        "prison MDI",
         "sacintha",
+        "MDI",
+        "MOOR",
         LocalDateTime.now(),
         "sacintha",
         true,
@@ -307,9 +334,9 @@ class TestData {
     val ciagPrisonWork =
       CIAGProfile(
         "A1234AB",
-        "MDI",
-        "prison MDI",
         "sacintha",
+        "MDI",
+        "MOOR",
         LocalDateTime.now(),
         "sacintha",
         true,
@@ -325,5 +352,28 @@ class TestData {
         prisonWorkAndEducation,
         "1.1",
       )
+
+    val ciagSecond =
+      CIAGProfile(
+        "A1234AC",
+        "sacintha",
+        "MDI",
+        "MOOR",
+        LocalDateTime.now(),
+        "sacintha",
+        true,
+        LocalDateTime.now(),
+        HopingToGetWork.NOT_SURE,
+        null,
+        null,
+        abilityToWorkImpactDetailList,
+        reasonToNotGetWork,
+        previousWork,
+        skillsAndInterests,
+        educationAndQualification,
+        prisonWorkAndEducation,
+        "1.1",
+      )
+    val ciagProfileList = mutableListOf<CIAGProfile>(ciag, ciagSecond)
   }
 }
