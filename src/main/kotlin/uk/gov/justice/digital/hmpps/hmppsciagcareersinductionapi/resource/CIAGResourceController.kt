@@ -114,11 +114,6 @@ class CIAGResourceController(
         description = "Invalid Parameters have been passed",
         content = [Content(mediaType = "application/json", schema = Schema(implementation = ErrorResponse::class))],
       ),
-      ApiResponse(
-        responseCode = "404",
-        description = "Resource not found",
-        content = [Content(mediaType = "application/json", schema = Schema(implementation = ErrorResponse::class))],
-      ),
     ],
   )
   fun getAllCIAGProfileForGivenOffenderIds(
