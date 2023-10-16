@@ -26,6 +26,11 @@ import javax.validation.constraints.Size
 data class CIAGProfile(
   @Id
   val offenderId: String,
+  @Column(name = "PRISON_ID")
+  var prisonId: String?,
+
+  @Column(name = "PRISON_NAME")
+  var prisonName: String?,
   @CreatedBy
   var createdBy: String,
 
@@ -89,6 +94,8 @@ data class CIAGProfile(
     createdBy = ciagProfileRequestDTO.createdBy!!,
     createdDateTime = ciagProfileRequestDTO.createdDateTime!!,
     modifiedBy = ciagProfileRequestDTO.modifiedBy!!,
+    prisonId = ciagProfileRequestDTO.prisonId,
+    prisonName = ciagProfileRequestDTO.prisonName,
     desireToWork = ciagProfileRequestDTO.desireToWork!!,
     modifiedDateTime = ciagProfileRequestDTO.modifiedDateTime!!,
     hopingToGetWork = ciagProfileRequestDTO.hopingToGetWork!!,
@@ -122,6 +129,8 @@ data class CIAGProfile(
     if (qualificationsAndTraining != other.qualificationsAndTraining) return false
     if (inPrisonInterests != other.inPrisonInterests) return false
     if (schemaVersion != other.schemaVersion) return false
+    if (prisonId != other.prisonId) return false
+    if (prisonName != other.prisonName) return false
 
     return true
   }
@@ -139,10 +148,12 @@ data class CIAGProfile(
     result = 31 * result + qualificationsAndTraining.hashCode()
     result = 31 * result + inPrisonInterests.hashCode()
     result = 31 * result + schemaVersion.hashCode()
+    result = 31 * result + prisonId.hashCode()
+    result = 31 * result + prisonName.hashCode()
     return result
   }
 
   override fun toString(): String {
-    return "CIAGProfile(offenderId='$offenderId', createdBy='$createdBy', createdDateTime=$createdDateTime, modifiedBy='$modifiedBy', desireToWork=$desireToWork, modifiedDateTime=$modifiedDateTime, hopingToGetWork=$hopingToGetWork, reasonToNotGetWorkOther=$reasonToNotGetWorkOther, abilityToWorkOther=$abilityToWorkOther, abilityToWork=$abilityToWork, reasonToNotGetWork=$reasonToNotGetWork, workExperience=$workExperience,  skillsAndInterests=$skillsAndInterests, qualificationsAndTraining=$qualificationsAndTraining, inPrisonInterests=$inPrisonInterests, schemaVersion='$schemaVersion')"
+    return "CIAGProfile(offenderId='$offenderId', createdBy='$createdBy', createdDateTime=$createdDateTime, modifiedBy='$modifiedBy', desireToWork=$desireToWork, modifiedDateTime=$modifiedDateTime, hopingToGetWork=$hopingToGetWork, reasonToNotGetWorkOther=$reasonToNotGetWorkOther, abilityToWorkOther=$abilityToWorkOther, abilityToWork=$abilityToWork, reasonToNotGetWork=$reasonToNotGetWork, prisonName=$prisonName, prisonId=$prisonId, workExperience=$workExperience,  skillsAndInterests=$skillsAndInterests, qualificationsAndTraining=$qualificationsAndTraining, inPrisonInterests=$inPrisonInterests, schemaVersion='$schemaVersion')"
   }
 }

@@ -3,6 +3,8 @@ package uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.integration
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpEntity
@@ -19,10 +21,20 @@ import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.repository.CIAG
 class CIAGProfileIntTest : IntegrationTestBase() {
 
   @Autowired
-  lateinit var ciagProfileRepository: CIAGProfileRepository
+  lateinit var objectMapper: ObjectMapper
 
   @Autowired
-  lateinit var objectMapper: ObjectMapper
+  lateinit var ciagProfileRepository: CIAGProfileRepository
+
+  @AfterEach
+  internal fun tearDown() {
+    ciagProfileRepository.deleteAll()
+  }
+
+  @BeforeEach
+  internal fun setUp() {
+    ciagProfileRepository.deleteAll()
+  }
 
   @Test
   fun `Get the exception for profile for a unknown offender`() {
@@ -41,6 +53,22 @@ class CIAGProfileIntTest : IntegrationTestBase() {
     )
     val result = restTemplate.exchange("/ciag/induction/A1234AB", HttpMethod.POST, HttpEntity<CIAGProfileRequestDTO>(actualCIAGProfileRequestDTO, setAuthorisation(roles = listOf("ROLE_EDUCATION_WORK_PLAN_EDITOR", "ROLE_EDUCATION_WORK_PLAN_VIEWER"))), CIAGProfileDTO::class.java)
     assertThat(result).isNotNull
+  }
+
+  @Test
+  fun `Post a CIAG profile for an offender with prison name and Prison Id`() {
+    val actualCIAGProfileRequestDTO = objectMapper.readValue(
+      TestData.createProfileWithPrsionDetailsJsonRequest,
+      object : TypeReference<CIAGProfileRequestDTO>() {},
+    )
+    val result = restTemplate.exchange("/ciag/induction/A1234AC", HttpMethod.POST, HttpEntity<CIAGProfileRequestDTO>(actualCIAGProfileRequestDTO, setAuthorisation(roles = listOf("ROLE_EDUCATION_WORK_PLAN_EDITOR", "ROLE_EDUCATION_WORK_PLAN_VIEWER"))), CIAGProfileDTO::class.java)
+    assertThat(result).isNotNull
+
+    val storedProfile = restTemplate.exchange("/ciag/induction/A1234AC", HttpMethod.GET, HttpEntity<HttpHeaders>(setAuthorisation(roles = listOf("ROLE_EDUCATION_WORK_PLAN_VIEWER"))), CIAGProfileDTO::class.java)
+    assertThat(result).isNotNull
+
+    assertThat(storedProfile.body).extracting(TestData.prisonIdString, TestData.prisonNameString)
+      .contains(result.body.prisonId, result.body.prisonName)
   }
 
   @Test
