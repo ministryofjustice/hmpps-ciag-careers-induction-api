@@ -1,6 +1,6 @@
 plugins {
-  id("uk.gov.justice.hmpps.gradle-spring-boot") version "5.4.1"
-  kotlin("plugin.spring") version "1.8.22"
+  id("uk.gov.justice.hmpps.gradle-spring-boot") version "5.5.1"
+  kotlin("plugin.spring") version "1.9.10"
   kotlin("plugin.jpa") version "1.8.22"
   id("jacoco")
 }
@@ -55,9 +55,9 @@ dependencies {
   implementation("com.microsoft.azure:applicationinsights-logging-logback:2.6.4")
 
   // GOVUK Notify:
-  implementation("io.opentelemetry.instrumentation:opentelemetry-instrumentation-annotations:1.29.0")
+  implementation("io.opentelemetry.instrumentation:opentelemetry-instrumentation-annotations")
   // Enable kotlin reflect
-  runtimeOnly("org.jetbrains.kotlin:kotlin-reflect:1.6.0-M1")
+  runtimeOnly("org.jetbrains.kotlin:kotlin-reflect:1.6.20")
   // Database dependencies
   runtimeOnly("org.flywaydb:flyway-core")
   runtimeOnly("org.postgresql:postgresql:42.6.0")
@@ -101,12 +101,12 @@ jacoco {
 
 kotlin {
   jvmToolchain {
-    this.languageVersion.set(JavaLanguageVersion.of("19"))
+    this.languageVersion.set(JavaLanguageVersion.of("20"))
   }
 }
 
 java {
-  toolchain.languageVersion.set(JavaLanguageVersion.of(19))
+  toolchain.languageVersion.set(JavaLanguageVersion.of(20))
 }
 
 dependencyCheck {
