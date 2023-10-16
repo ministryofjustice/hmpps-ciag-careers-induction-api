@@ -16,10 +16,10 @@ data class CIAGProfileDTO(
   @Schema(description = "This is the ID of the inmate ", name = "offenderId", pattern = "^[A-Z]\\d{4}[A-Z]{2}\$", required = true)
   val offenderId: String,
 
-  @Schema(description = "This is the prision ID of the inmate ", name = "prisonId", pattern = "^[A-Z]{3}\$", required = true)
+  @Schema(description = "This is the prision ID of the inmate ", name = "prisonId")
   var prisonId: String?,
 
-  @Schema(description = "This is the prision Name of the inmate ", name = "prisonName",  required = true)
+  @Schema(description = "This is the prision Name of the inmate ", name = "prisonName")
   var prisonName: String?,
   @Schema(description = "This is the person who creates the Induction.Even though it is passed from front end it wil be automatically set to the right value at the time of record creation ", name = "createdBy", required = true)
   var createdBy: String,
