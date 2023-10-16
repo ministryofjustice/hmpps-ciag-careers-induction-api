@@ -45,9 +45,8 @@ data class WorkInterests(
   @ElementCollection(fetch = FetchType.EAGER)
   @CollectionTable(name = "PARTICULAR_WORK_INTERESTS", joinColumns = [JoinColumn(name = "WORK_INTERESTS_ID")])
   @Column(name = "PARTICULAR_WORK_INTEREST")
-  @Size(min = 1)
-  @Schema(description = "This is the list of detailed interests of the inmate.", name = "particularJobInterests", required = true)
-  var particularJobInterests: MutableSet<WorkInterestDetail>,
+  @Schema(description = "This is the list of detailed interests of the inmate.", name = "particularJobInterests")
+  var particularJobInterests: MutableSet<WorkInterestDetail>?,
 
   @OneToOne(mappedBy = "workInterests")
   @JsonIgnore
