@@ -14,6 +14,8 @@ import org.springframework.http.HttpStatus
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.TestData
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.config.ErrorResponse
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.jsonprofile.CIAGProfileDTO
+import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.jsonprofile.CIAGProfileListDTO
+import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.jsonprofile.CIAGProfileOffenderIdListRequestDTO
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.jsonprofile.CIAGProfileRequestDTO
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.repository.CIAGProfileRepository
 
@@ -308,5 +310,77 @@ class CIAGProfileIntTest : IntegrationTestBase() {
     assertThat(result).isNotNull
     assertThat(result.statusCode.equals(HttpStatus.BAD_REQUEST)).isTrue()
     assertThat(result.body.userMessage?.contains("Field: ciagProfileRequestDTO.workExperience.typeOfWorkExperienceOther, Value: chumma,  Error: Field cannot be populated")).isTrue()
+  }
+
+  @Test
+  fun `Post multiple CIAG profile for different Offenders and retreive it as a list`() {
+    val validCIAGProfileRequestDTO_A1234AC: CIAGProfileRequestDTO = objectMapper.readValue(
+      TestData.createValidProfile_A1234AC,
+      CIAGProfileRequestDTO::class.java,
+    )
+    val result_A1234AC = restTemplate.exchange("/ciag/induction/" + TestData.offenderId_A1234AC, HttpMethod.POST, HttpEntity<CIAGProfileRequestDTO>(validCIAGProfileRequestDTO_A1234AC, setAuthorisation(roles = listOf("ROLE_EDUCATION_WORK_PLAN_EDITOR", "ROLE_EDUCATION_WORK_PLAN_VIEWER"))), CIAGProfileDTO::class.java)
+    assertThat(result_A1234AC).isNotNull
+    assertThat(result_A1234AC.body).isNotNull
+
+    val validCIAGProfileRequestDTO_A1234AB: CIAGProfileRequestDTO = objectMapper.readValue(
+      TestData.createValidProfile_A1234AB,
+      CIAGProfileRequestDTO::class.java,
+    )
+    val result_A1234AB = restTemplate.exchange("/ciag/induction/" + TestData.offenderId_A1234AB, HttpMethod.POST, HttpEntity<CIAGProfileRequestDTO>(validCIAGProfileRequestDTO_A1234AB, setAuthorisation(roles = listOf("ROLE_EDUCATION_WORK_PLAN_EDITOR", "ROLE_EDUCATION_WORK_PLAN_VIEWER"))), CIAGProfileDTO::class.java)
+    assertThat(result_A1234AB).isNotNull
+    assertThat(result_A1234AB.body).isNotNull
+
+    val validCIAGProfileRequestDTO_A1234AD: CIAGProfileRequestDTO = objectMapper.readValue(
+      TestData.createValidProfile_A1234AD,
+      CIAGProfileRequestDTO::class.java,
+    )
+    val result_A1234AD = restTemplate.exchange("/ciag/induction/" + TestData.offenderId_A1234AD, HttpMethod.POST, HttpEntity<CIAGProfileRequestDTO>(validCIAGProfileRequestDTO_A1234AD, setAuthorisation(roles = listOf("ROLE_EDUCATION_WORK_PLAN_EDITOR", "ROLE_EDUCATION_WORK_PLAN_VIEWER"))), CIAGProfileDTO::class.java)
+    assertThat(result_A1234AD).isNotNull
+    assertThat(result_A1234AD.body).isNotNull
+
+    val validOffenderIdList: CIAGProfileOffenderIdListRequestDTO = objectMapper.readValue(
+      TestData.correctOffenderIdList,
+      CIAGProfileOffenderIdListRequestDTO::class.java,
+    )
+    val result_List = restTemplate.exchange("/ciag/induction/list", HttpMethod.POST, HttpEntity<CIAGProfileOffenderIdListRequestDTO>(validOffenderIdList, setAuthorisation(roles = listOf("ROLE_EDUCATION_WORK_PLAN_EDITOR", "ROLE_EDUCATION_WORK_PLAN_VIEWER"))), CIAGProfileListDTO::class.java)
+    assertThat(result_List).isNotNull
+    assertThat(result_List.body).isNotNull
+    assertThat(result_List.body.ciagProfileList?.size).isEqualTo(3)
+  }
+
+  @Test
+  fun `Post multiple CIAG profile for different Offenders and throw an exception while retreiving it with Invalid data`() {
+    val validCIAGProfileRequestDTO_A1234AC: CIAGProfileRequestDTO = objectMapper.readValue(
+      TestData.createValidProfile_A1234AC,
+      CIAGProfileRequestDTO::class.java,
+    )
+    val result_A1234AC = restTemplate.exchange("/ciag/induction/" + TestData.offenderId_A1234AC, HttpMethod.POST, HttpEntity<CIAGProfileRequestDTO>(validCIAGProfileRequestDTO_A1234AC, setAuthorisation(roles = listOf("ROLE_EDUCATION_WORK_PLAN_EDITOR", "ROLE_EDUCATION_WORK_PLAN_VIEWER"))), CIAGProfileDTO::class.java)
+    assertThat(result_A1234AC).isNotNull
+    assertThat(result_A1234AC.body).isNotNull
+
+    val validCIAGProfileRequestDTO_A1234AB: CIAGProfileRequestDTO = objectMapper.readValue(
+      TestData.createValidProfile_A1234AB,
+      CIAGProfileRequestDTO::class.java,
+    )
+    val result_A1234AB = restTemplate.exchange("/ciag/induction/" + TestData.offenderId_A1234AB, HttpMethod.POST, HttpEntity<CIAGProfileRequestDTO>(validCIAGProfileRequestDTO_A1234AB, setAuthorisation(roles = listOf("ROLE_EDUCATION_WORK_PLAN_EDITOR", "ROLE_EDUCATION_WORK_PLAN_VIEWER"))), CIAGProfileDTO::class.java)
+    assertThat(result_A1234AB).isNotNull
+    assertThat(result_A1234AB.body).isNotNull
+
+    val validCIAGProfileRequestDTO_A1234AD: CIAGProfileRequestDTO = objectMapper.readValue(
+      TestData.createValidProfile_A1234AD,
+      CIAGProfileRequestDTO::class.java,
+    )
+    val result_A1234AD = restTemplate.exchange("/ciag/induction/" + TestData.offenderId_A1234AD, HttpMethod.POST, HttpEntity<CIAGProfileRequestDTO>(validCIAGProfileRequestDTO_A1234AD, setAuthorisation(roles = listOf("ROLE_EDUCATION_WORK_PLAN_EDITOR", "ROLE_EDUCATION_WORK_PLAN_VIEWER"))), CIAGProfileDTO::class.java)
+    assertThat(result_A1234AD).isNotNull
+    assertThat(result_A1234AD.body).isNotNull
+
+    val validOffenderIdList: CIAGProfileOffenderIdListRequestDTO = objectMapper.readValue(
+      TestData.inCorrectOffenderIdList,
+      CIAGProfileOffenderIdListRequestDTO::class.java,
+    )
+    val result_List = restTemplate.exchange("/ciag/induction/list", HttpMethod.POST, HttpEntity<CIAGProfileOffenderIdListRequestDTO>(validOffenderIdList, setAuthorisation(roles = listOf("ROLE_EDUCATION_WORK_PLAN_EDITOR", "ROLE_EDUCATION_WORK_PLAN_VIEWER"))), CIAGProfileListDTO::class.java)
+    assertThat(result_List).isNotNull
+    assertThat(result_List.body).isNotNull
+    assertThat(result_List.body.ciagProfileList?.size).isEqualTo(1)
   }
 }

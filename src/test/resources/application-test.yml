@@ -20,12 +20,15 @@ spring:
       ddl-auto: none
 
   datasource:
-    url: 'jdbc:h2:mem:ciag-careers;MODE=PostgreSQL;INIT=create domain if not exists jsonb as json'
+    url: 'jdbc:h2:mem:ciag-careers;MODE=PostgreSQL;'
     username: create_vary
     password: dummy
 
+
+
   flyway:
-    locations: classpath:/db/h2
+    locations: classpath:/db/migration
+    initOnMigrate: true
     url: ${spring.datasource.url}
     user: create_vary
     password: dummy
