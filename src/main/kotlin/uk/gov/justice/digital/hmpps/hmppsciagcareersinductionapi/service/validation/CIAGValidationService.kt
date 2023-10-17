@@ -213,15 +213,6 @@ class CIAGValidationService {
       result.addError(fieldError)
     }
 
-    if (ciagProfileRequestDTO.workExperience?.workInterests?.workInterests.isNullOrEmpty() == false && ciagProfileRequestDTO.workExperience?.workInterests?.particularJobInterests.isNullOrEmpty() == true) {
-      val fieldError = FieldError("ciagProfileRequestDTO.workExperience.workInterests.particularJobInterests", "ciagProfileRequestDTO.workExperience.workInterests.particularJobInterests", ciagProfileRequestDTO.workExperience?.workInterests?.particularJobInterests, false, null, null, emptyField)
-      result.addError(fieldError)
-    }
-
-    if (ciagProfileRequestDTO.workExperience?.workInterests?.workInterests.isNullOrEmpty() == true && ciagProfileRequestDTO.workExperience?.workInterests?.particularJobInterests?.isEmpty() == false) {
-      val fieldError = FieldError("ciagProfileRequestDTO.workExperience.workInterests.particularJobInterests", "ciagProfileRequestDTO.workExperience.workInterests.particularJobInterests", ciagProfileRequestDTO.workExperience?.workInterests?.particularJobInterests, false, null, null, invalidField)
-      result.addError(fieldError)
-    }
     if (ciagProfileRequestDTO.workExperience?.workInterests?.workInterests?.contains(WorkType.OTHER) == true && ciagProfileRequestDTO.workExperience?.workInterests?.workInterestsOther.isNullOrEmpty() == true) {
       val fieldError = FieldError("ciagProfileRequestDTO.workExperience.workInterests.workInterestsOther", "ciagProfileRequestDTO.workExperience.workInterests.workInterestsOther", ciagProfileRequestDTO.workExperience?.workInterests?.workInterestsOther, false, null, null, emptyField)
       result.addError(fieldError)
