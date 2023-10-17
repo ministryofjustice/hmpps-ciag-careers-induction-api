@@ -20,7 +20,7 @@ spring:
       ddl-auto: none
 
   datasource:
-    url: 'jdbc:h2:mem:ciag-careers;MODE=PostgreSQL;'
+    url: 'jdbc:h2:mem:ciag-careers-db;'
     username: create_vary
     password: dummy
 
@@ -28,7 +28,7 @@ spring:
 
   flyway:
     locations: classpath:/db/migration
-    initOnMigrate: true
+    enabled: true
     url: ${spring.datasource.url}
     user: create_vary
     password: dummy

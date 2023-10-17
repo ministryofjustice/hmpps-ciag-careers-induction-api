@@ -1,5 +1,6 @@
 package uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.service.validation
 
+import jakarta.validation.Valid
 import org.springframework.core.MethodParameter
 import org.springframework.stereotype.Service
 import org.springframework.validation.BeanPropertyBindingResult
@@ -15,7 +16,6 @@ import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.Rea
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.Skills
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.WorkType
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.jsonprofile.CIAGProfileRequestDTO
-import javax.validation.Valid
 
 @Service
 @Validated
