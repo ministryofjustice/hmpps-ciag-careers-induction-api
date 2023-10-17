@@ -7,11 +7,13 @@ import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpMethod
 import org.springframework.http.HttpStatus
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.TestData
+import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.config.CapturedSpringMapperConfiguration
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.config.ErrorResponse
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.jsonprofile.CIAGProfileDTO
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.jsonprofile.CIAGProfileListDTO
@@ -28,14 +30,17 @@ class CIAGProfileIntTest : IntegrationTestBase() {
   @Autowired
   lateinit var ciagProfileRepository: CIAGProfileRepository
 
+  @Value("\${server.port}")
+  private val serverPort = 0
+
   @AfterEach
   internal fun tearDown() {
-    ciagProfileRepository.deleteAll()
+//    ciagProfileRepository.deleteAll()
   }
 
   @BeforeEach
   internal fun setUp() {
-    ciagProfileRepository.deleteAll()
+//    ciagProfileRepository.deleteAll()
   }
 
   @Test
@@ -49,7 +54,7 @@ class CIAGProfileIntTest : IntegrationTestBase() {
 
   @Test
   fun `Post a CIAG profile for an offender`() {
-    val actualCIAGProfileRequestDTO = objectMapper.readValue(
+    val actualCIAGProfileRequestDTO = CapturedSpringMapperConfiguration.OBJECT_MAPPER.readValue(
       TestData.createProfileJsonRequest,
       object : TypeReference<CIAGProfileRequestDTO>() {},
     )
@@ -59,7 +64,7 @@ class CIAGProfileIntTest : IntegrationTestBase() {
 
   @Test
   fun `Post a CIAG profile for an offender with prison name and Prison Id`() {
-    val actualCIAGProfileRequestDTO = objectMapper.readValue(
+    val actualCIAGProfileRequestDTO = CapturedSpringMapperConfiguration.OBJECT_MAPPER.readValue(
       TestData.createProfileWithPrsionDetailsJsonRequest,
       object : TypeReference<CIAGProfileRequestDTO>() {},
     )
@@ -75,7 +80,7 @@ class CIAGProfileIntTest : IntegrationTestBase() {
 
   @Test
   fun `Modify a CIAG profile for an offender`() {
-    val actualCIAGProfileRequestDTO = objectMapper.readValue(
+    val actualCIAGProfileRequestDTO = CapturedSpringMapperConfiguration.OBJECT_MAPPER.readValue(
       TestData.createProfileJsonRequest,
       object : TypeReference<CIAGProfileRequestDTO>() {},
     )
@@ -98,7 +103,7 @@ class CIAGProfileIntTest : IntegrationTestBase() {
 
   @Test
   fun `Post a CIAG profile for an offender with empty ReasonNotToGetWorkOther `() {
-    val actualCIAGProfileRequestDTO = objectMapper.readValue(
+    val actualCIAGProfileRequestDTO = CapturedSpringMapperConfiguration.OBJECT_MAPPER.readValue(
       TestData.createEmptyReasonToNotGetWork,
       object : TypeReference<CIAGProfileRequestDTO>() {},
     )
@@ -110,7 +115,7 @@ class CIAGProfileIntTest : IntegrationTestBase() {
 
   @Test
   fun `Post a CIAG profile for an offender with invalid ReasonNotToGetWorkOther `() {
-    val actualCIAGProfileRequestDTO = objectMapper.readValue(
+    val actualCIAGProfileRequestDTO = CapturedSpringMapperConfiguration.OBJECT_MAPPER.readValue(
       TestData.createInvalidReasonToNotGetWork,
       object : TypeReference<CIAGProfileRequestDTO>() {},
     )
@@ -122,7 +127,7 @@ class CIAGProfileIntTest : IntegrationTestBase() {
 
   @Test
   fun `Post a CIAG profile for an offender with empty abilityToWork `() {
-    val actualCIAGProfileRequestDTO = objectMapper.readValue(
+    val actualCIAGProfileRequestDTO = CapturedSpringMapperConfiguration.OBJECT_MAPPER.readValue(
       TestData.createEmptyAbilityToWork,
       object : TypeReference<CIAGProfileRequestDTO>() {},
     )
@@ -134,7 +139,7 @@ class CIAGProfileIntTest : IntegrationTestBase() {
 
   @Test
   fun `Post a CIAG profile for an offender with invalid abilityToWork `() {
-    val actualCIAGProfileRequestDTO = objectMapper.readValue(
+    val actualCIAGProfileRequestDTO = CapturedSpringMapperConfiguration.OBJECT_MAPPER.readValue(
       TestData.createInvalidAbilityToWork,
       object : TypeReference<CIAGProfileRequestDTO>() {},
     )
@@ -146,7 +151,7 @@ class CIAGProfileIntTest : IntegrationTestBase() {
 
   @Test
   fun `Post a CIAG profile for an offender with empty workInterestsOther `() {
-    val actualCIAGProfileRequestDTO = objectMapper.readValue(
+    val actualCIAGProfileRequestDTO = CapturedSpringMapperConfiguration.OBJECT_MAPPER.readValue(
       TestData.createEmptyWorkInterestsOther,
       object : TypeReference<CIAGProfileRequestDTO>() {},
     )
@@ -158,7 +163,7 @@ class CIAGProfileIntTest : IntegrationTestBase() {
 
   @Test
   fun `Post a CIAG profile for an offender with invalid workInterestsOther `() {
-    val actualCIAGProfileRequestDTO = objectMapper.readValue(
+    val actualCIAGProfileRequestDTO = CapturedSpringMapperConfiguration.OBJECT_MAPPER.readValue(
       TestData.createInvalidWorkInterestsOther,
       object : TypeReference<CIAGProfileRequestDTO>() {},
     )
@@ -170,7 +175,7 @@ class CIAGProfileIntTest : IntegrationTestBase() {
 
   @Test
   fun `Post a CIAG profile for an offender with empty skillsOther `() {
-    val actualCIAGProfileRequestDTO = objectMapper.readValue(
+    val actualCIAGProfileRequestDTO = CapturedSpringMapperConfiguration.OBJECT_MAPPER.readValue(
       TestData.createSkillsOther,
       object : TypeReference<CIAGProfileRequestDTO>() {},
     )
@@ -182,7 +187,7 @@ class CIAGProfileIntTest : IntegrationTestBase() {
 
   @Test
   fun `Post a CIAG profile for an offender with invalid skillsOther `() {
-    val actualCIAGProfileRequestDTO = objectMapper.readValue(
+    val actualCIAGProfileRequestDTO = CapturedSpringMapperConfiguration.OBJECT_MAPPER.readValue(
       TestData.createInvalidSkillsOther,
       object : TypeReference<CIAGProfileRequestDTO>() {},
     )
@@ -194,7 +199,7 @@ class CIAGProfileIntTest : IntegrationTestBase() {
 
   @Test
   fun `Post a CIAG profile for an offender with empty personalInterestsOther `() {
-    val actualCIAGProfileRequestDTO = objectMapper.readValue(
+    val actualCIAGProfileRequestDTO = CapturedSpringMapperConfiguration.OBJECT_MAPPER.readValue(
       TestData.createPersonalInterestsOther,
       object : TypeReference<CIAGProfileRequestDTO>() {},
     )
@@ -206,7 +211,7 @@ class CIAGProfileIntTest : IntegrationTestBase() {
 
   @Test
   fun `Post a CIAG profile for an offender with invalid personalInterestsOther `() {
-    val actualCIAGProfileRequestDTO = objectMapper.readValue(
+    val actualCIAGProfileRequestDTO = CapturedSpringMapperConfiguration.OBJECT_MAPPER.readValue(
       TestData.createInvalidPersonalInterestsOther,
       object : TypeReference<CIAGProfileRequestDTO>() {},
     )
@@ -218,7 +223,7 @@ class CIAGProfileIntTest : IntegrationTestBase() {
 
   @Test
   fun `Post a CIAG profile for an offender with empty inPrisonEducationOOther `() {
-    val actualCIAGProfileRequestDTO = objectMapper.readValue(
+    val actualCIAGProfileRequestDTO = CapturedSpringMapperConfiguration.OBJECT_MAPPER.readValue(
       TestData.createInPrisonEducationOther,
       object : TypeReference<CIAGProfileRequestDTO>() {},
     )
@@ -230,7 +235,7 @@ class CIAGProfileIntTest : IntegrationTestBase() {
 
   @Test
   fun `Post a CIAG profile for an offender with invalid InPrisonEducationOther `() {
-    val actualCIAGProfileRequestDTO = objectMapper.readValue(
+    val actualCIAGProfileRequestDTO = CapturedSpringMapperConfiguration.OBJECT_MAPPER.readValue(
       TestData.createInvalidInPrisonEducationOther,
       object : TypeReference<CIAGProfileRequestDTO>() {},
     )
@@ -242,7 +247,7 @@ class CIAGProfileIntTest : IntegrationTestBase() {
 
   @Test
   fun `Post a CIAG profile for an offender with empty inPrisonWorkOther `() {
-    val actualCIAGProfileRequestDTO = objectMapper.readValue(
+    val actualCIAGProfileRequestDTO = CapturedSpringMapperConfiguration.OBJECT_MAPPER.readValue(
       TestData.createInPrisonWorkOther,
       object : TypeReference<CIAGProfileRequestDTO>() {},
     )
@@ -254,7 +259,7 @@ class CIAGProfileIntTest : IntegrationTestBase() {
 
   @Test
   fun `Post a CIAG profile for an offender with invalid inPrisonWorkOther `() {
-    val actualCIAGProfileRequestDTO = objectMapper.readValue(
+    val actualCIAGProfileRequestDTO = CapturedSpringMapperConfiguration.OBJECT_MAPPER.readValue(
       TestData.createInvalidInPrisonWorkOther,
       object : TypeReference<CIAGProfileRequestDTO>() {},
     )
@@ -266,7 +271,7 @@ class CIAGProfileIntTest : IntegrationTestBase() {
 
   @Test
   fun `Post a CIAG profile for an offender with empty additionalTrainingOther `() {
-    val actualCIAGProfileRequestDTO = objectMapper.readValue(
+    val actualCIAGProfileRequestDTO = CapturedSpringMapperConfiguration.OBJECT_MAPPER.readValue(
       TestData.createAdditionalTrainingOther,
       object : TypeReference<CIAGProfileRequestDTO>() {},
     )
@@ -278,7 +283,7 @@ class CIAGProfileIntTest : IntegrationTestBase() {
 
   @Test
   fun `Post a CIAG profile for an offender with invalid additionalTrainingOther `() {
-    val actualCIAGProfileRequestDTO = objectMapper.readValue(
+    val actualCIAGProfileRequestDTO = CapturedSpringMapperConfiguration.OBJECT_MAPPER.readValue(
       TestData.createInvalidAdditionalTrainingOther,
       object : TypeReference<CIAGProfileRequestDTO>() {},
     )
@@ -290,7 +295,7 @@ class CIAGProfileIntTest : IntegrationTestBase() {
 
   @Test
   fun `Post a CIAG profile for an offender with empty typeOfWorkExperienceOther `() {
-    val actualCIAGProfileRequestDTO = objectMapper.readValue(
+    val actualCIAGProfileRequestDTO = CapturedSpringMapperConfiguration.OBJECT_MAPPER.readValue(
       TestData.createTypeOfWorkExperienceOther,
       object : TypeReference<CIAGProfileRequestDTO>() {},
     )
@@ -302,7 +307,7 @@ class CIAGProfileIntTest : IntegrationTestBase() {
 
   @Test
   fun `Post a CIAG profile for an offender with invalid typeOfWorkExperienceOther `() {
-    val actualCIAGProfileRequestDTO = objectMapper.readValue(
+    val actualCIAGProfileRequestDTO = CapturedSpringMapperConfiguration.OBJECT_MAPPER.readValue(
       TestData.createInvalidTypeOfWorkExperienceOther,
       object : TypeReference<CIAGProfileRequestDTO>() {},
     )
@@ -314,7 +319,7 @@ class CIAGProfileIntTest : IntegrationTestBase() {
 
   @Test
   fun `Post multiple CIAG profile for different Offenders and retreive it as a list`() {
-    val validCIAGProfileRequestDTO_A1234AC: CIAGProfileRequestDTO = objectMapper.readValue(
+    val validCIAGProfileRequestDTO_A1234AC: CIAGProfileRequestDTO = CapturedSpringMapperConfiguration.OBJECT_MAPPER.readValue(
       TestData.createValidProfile_A1234AC,
       CIAGProfileRequestDTO::class.java,
     )
@@ -322,7 +327,7 @@ class CIAGProfileIntTest : IntegrationTestBase() {
     assertThat(result_A1234AC).isNotNull
     assertThat(result_A1234AC.body).isNotNull
 
-    val validCIAGProfileRequestDTO_A1234AB: CIAGProfileRequestDTO = objectMapper.readValue(
+    val validCIAGProfileRequestDTO_A1234AB: CIAGProfileRequestDTO = CapturedSpringMapperConfiguration.OBJECT_MAPPER.readValue(
       TestData.createValidProfile_A1234AB,
       CIAGProfileRequestDTO::class.java,
     )
@@ -330,7 +335,7 @@ class CIAGProfileIntTest : IntegrationTestBase() {
     assertThat(result_A1234AB).isNotNull
     assertThat(result_A1234AB.body).isNotNull
 
-    val validCIAGProfileRequestDTO_A1234AD: CIAGProfileRequestDTO = objectMapper.readValue(
+    val validCIAGProfileRequestDTO_A1234AD: CIAGProfileRequestDTO = CapturedSpringMapperConfiguration.OBJECT_MAPPER.readValue(
       TestData.createValidProfile_A1234AD,
       CIAGProfileRequestDTO::class.java,
     )
@@ -338,7 +343,7 @@ class CIAGProfileIntTest : IntegrationTestBase() {
     assertThat(result_A1234AD).isNotNull
     assertThat(result_A1234AD.body).isNotNull
 
-    val validOffenderIdList: CIAGProfileOffenderIdListRequestDTO = objectMapper.readValue(
+    val validOffenderIdList: CIAGProfileOffenderIdListRequestDTO = CapturedSpringMapperConfiguration.OBJECT_MAPPER.readValue(
       TestData.correctOffenderIdList,
       CIAGProfileOffenderIdListRequestDTO::class.java,
     )
@@ -350,7 +355,7 @@ class CIAGProfileIntTest : IntegrationTestBase() {
 
   @Test
   fun `Post multiple CIAG profile for different Offenders and throw an exception while retreiving it with Invalid data`() {
-    val validCIAGProfileRequestDTO_A1234AC: CIAGProfileRequestDTO = objectMapper.readValue(
+    val validCIAGProfileRequestDTO_A1234AC: CIAGProfileRequestDTO = CapturedSpringMapperConfiguration.OBJECT_MAPPER.readValue(
       TestData.createValidProfile_A1234AC,
       CIAGProfileRequestDTO::class.java,
     )
@@ -358,7 +363,7 @@ class CIAGProfileIntTest : IntegrationTestBase() {
     assertThat(result_A1234AC).isNotNull
     assertThat(result_A1234AC.body).isNotNull
 
-    val validCIAGProfileRequestDTO_A1234AB: CIAGProfileRequestDTO = objectMapper.readValue(
+    val validCIAGProfileRequestDTO_A1234AB: CIAGProfileRequestDTO = CapturedSpringMapperConfiguration.OBJECT_MAPPER.readValue(
       TestData.createValidProfile_A1234AB,
       CIAGProfileRequestDTO::class.java,
     )
@@ -366,7 +371,7 @@ class CIAGProfileIntTest : IntegrationTestBase() {
     assertThat(result_A1234AB).isNotNull
     assertThat(result_A1234AB.body).isNotNull
 
-    val validCIAGProfileRequestDTO_A1234AD: CIAGProfileRequestDTO = objectMapper.readValue(
+    val validCIAGProfileRequestDTO_A1234AD: CIAGProfileRequestDTO = CapturedSpringMapperConfiguration.OBJECT_MAPPER.readValue(
       TestData.createValidProfile_A1234AD,
       CIAGProfileRequestDTO::class.java,
     )
@@ -374,7 +379,7 @@ class CIAGProfileIntTest : IntegrationTestBase() {
     assertThat(result_A1234AD).isNotNull
     assertThat(result_A1234AD.body).isNotNull
 
-    val validOffenderIdList: CIAGProfileOffenderIdListRequestDTO = objectMapper.readValue(
+    val validOffenderIdList: CIAGProfileOffenderIdListRequestDTO = CapturedSpringMapperConfiguration.OBJECT_MAPPER.readValue(
       TestData.inCorrectOffenderIdList,
       CIAGProfileOffenderIdListRequestDTO::class.java,
     )

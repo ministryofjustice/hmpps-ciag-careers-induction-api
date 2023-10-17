@@ -4,6 +4,8 @@ import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.media.Content
 import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.responses.ApiResponse
+import jakarta.validation.Valid
+import jakarta.validation.constraints.Pattern
 import org.springframework.http.MediaType
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.core.annotation.AuthenticationPrincipal
@@ -23,8 +25,6 @@ import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.jsonprofil
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.jsonprofile.CIAGProfileRequestDTO
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.service.CIAGProfileService
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.service.validation.CIAGValidationService
-import javax.validation.Valid
-import javax.validation.constraints.Pattern
 
 @Validated
 @RestController
