@@ -17,7 +17,7 @@ import org.springframework.web.client.RestClientException
 import org.springframework.web.client.RestClientResponseException
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.exceptions.NotFoundException
-import java.util.*
+import java.util.Arrays
 import kotlin.collections.ArrayList
 
 @RestControllerAdvice
@@ -58,10 +58,10 @@ class ControllerAdvice {
   fun handleRestClientException(e: RestClientResponseException): ResponseEntity<ErrorResponse> {
     log.error("RestClientResponseException: ${e.message}", e)
     return ResponseEntity
-      .status(e.rawStatusCode)
+      .status(e.statusCode.value())
       .body(
         ErrorResponse(
-          status = e.rawStatusCode,
+          status = e.statusCode.value(),
           userMessage = "Rest client exception ${e.message}",
           developerMessage = e.message,
         ),
