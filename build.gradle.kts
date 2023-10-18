@@ -1,10 +1,10 @@
 plugins {
   id("uk.gov.justice.hmpps.gradle-spring-boot") version "5.5.1"
-  kotlin("plugin.spring") version "1.8.22"
-  kotlin("plugin.jpa") version "1.8.22"
+  kotlin("plugin.spring") version "1.9.10"
+  kotlin("plugin.jpa") version "1.9.10"
   id("jacoco")
 }
-
+ext["hibernate.version"] = "6.2.5.Final"
 allOpen {
   annotations(
     "jakarta.persistence.Entity",
@@ -55,7 +55,7 @@ dependencies {
   implementation("com.microsoft.azure:applicationinsights-logging-logback:2.6.4")
 
   // Enable kotlin reflect
-  runtimeOnly("org.jetbrains.kotlin:kotlin-reflect:1.6.0-M1")
+  runtimeOnly("org.jetbrains.kotlin:kotlin-reflect:1.9.20-RC")
   // Database dependencies
   runtimeOnly("org.flywaydb:flyway-core")
   runtimeOnly("org.postgresql:postgresql:42.6.0")
@@ -65,8 +65,8 @@ dependencies {
   testRuntimeOnly("com.fasterxml.jackson.module:jackson-module-kotlin:2.15.2")
   testRuntimeOnly("com.fasterxml.jackson.core:jackson-databind:2.15.2")
   testRuntimeOnly("javax.xml.bind:jaxb-api:2.2.3")
-  testRuntimeOnly("org.jetbrains.kotlin:kotlin-stdlib:1.6.0-M1")
-  testRuntimeOnly("org.jetbrains.kotlin:kotlin-reflect:1.6.0-M1")
+  testRuntimeOnly("org.jetbrains.kotlin:kotlin-stdlib:1.9.20-RC")
+  testRuntimeOnly("org.jetbrains.kotlin:kotlin-reflect:1.9.20-RC")
   testRuntimeOnly("org.flywaydb:flyway-core")
   testRuntimeOnly("org.postgresql:postgresql:42.6.0")
   // OpenAPI
@@ -107,6 +107,14 @@ java {
   toolchain.languageVersion.set(JavaLanguageVersion.of(19))
 }
 
+tasks {
+  withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+    kotlinOptions {
+      freeCompilerArgs = listOf("-Xjvm-default=all")
+      jvmTarget = "19"
+    }
+  }
+}
 dependencyCheck {
   suppressionFiles.add("$rootDir/dependencyCheck/suppression.xml")
 }
