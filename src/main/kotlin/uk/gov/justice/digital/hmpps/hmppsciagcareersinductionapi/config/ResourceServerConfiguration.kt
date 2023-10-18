@@ -2,42 +2,50 @@ package uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.config
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity
+import org.springframework.http.HttpMethod
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
-import org.springframework.security.config.annotation.web.invoke
 import org.springframework.security.config.http.SessionCreationPolicy
+import org.springframework.security.config.web.servlet.invoke
 import org.springframework.security.web.SecurityFilterChain
+import org.springframework.security.web.header.writers.ReferrerPolicyHeaderWriter
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher
 
 @Configuration
+@EnableGlobalMethodSecurity(prePostEnabled = true, proxyTargetClass = true)
 @EnableWebSecurity
-@EnableMethodSecurity(prePostEnabled = true, proxyTargetClass = true)
-class ResourceServerConfiguration {
-
+private class ResourceServerConfiguration {
   @Bean
-  fun filterChain(http: HttpSecurity): SecurityFilterChain {
+  fun web(http: HttpSecurity): SecurityFilterChain {
     http {
-      sessionManagement { SessionCreationPolicy.STATELESS }
-      headers { frameOptions { sameOrigin = true } }
+      sessionManagement {
+        sessionCreationPolicy = SessionCreationPolicy.STATELESS
+      }
       csrf { disable() }
+      headers {
+        referrerPolicy {
+          policy = ReferrerPolicyHeaderWriter.ReferrerPolicy.SAME_ORIGIN
+        }
+      }
       authorizeHttpRequests {
-        listOf(
-          "/webjars/**",
-          "favicon.ico",
-          "/health/**",
-          "/info",
-          "/swagger-resources/**",
-          "/v3/api-docs/**",
-          "/swagger-ui/**",
-          "/swagger-ui.html",
-          "/openapi/**",
-          "/h2-console/**",
-        ).forEach { authorize(it, permitAll) }
+        authorize(AntPathRequestMatcher("/webjars/**", HttpMethod.GET.name), permitAll)
+        authorize(AntPathRequestMatcher("favicon.ico", HttpMethod.GET.name), permitAll)
+        authorize(AntPathRequestMatcher("/health/**", HttpMethod.GET.name), permitAll)
+        authorize(AntPathRequestMatcher("/info", HttpMethod.GET.name), permitAll)
+        authorize(AntPathRequestMatcher("/swagger-resources/**", HttpMethod.GET.name), permitAll)
+        authorize(AntPathRequestMatcher("/v3/api-docs/**", HttpMethod.GET.name), permitAll)
+        authorize(AntPathRequestMatcher("/swagger-ui/**", HttpMethod.GET.name), permitAll)
+        authorize(AntPathRequestMatcher("/swagger-ui.html", HttpMethod.GET.name), permitAll)
+        authorize(AntPathRequestMatcher("/h2-console/**", HttpMethod.POST.name), permitAll)
         authorize(anyRequest, authenticated)
       }
-      oauth2ResourceServer { jwt { jwtAuthenticationConverter = AuthAwareTokenConverter() } }
+      oauth2ResourceServer {
+        jwt {
+          jwtAuthenticationConverter = AuthAwareTokenConverter()
+        }
+      }
     }
-
     return http.build()
   }
 }

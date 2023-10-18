@@ -1,16 +1,5 @@
 package uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity
 
-import jakarta.persistence.CascadeType
-import jakarta.persistence.CollectionTable
-import jakarta.persistence.Column
-import jakarta.persistence.ElementCollection
-import jakarta.persistence.Entity
-import jakarta.persistence.FetchType
-import jakarta.persistence.Id
-import jakarta.persistence.JoinColumn
-import jakarta.persistence.OneToOne
-import jakarta.persistence.Table
-import jakarta.validation.constraints.Size
 import org.springframework.data.annotation.CreatedBy
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.LastModifiedBy
@@ -20,6 +9,17 @@ import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.Hop
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.ReasonToNotGetWork
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.jsonprofile.CIAGProfileRequestDTO
 import java.time.LocalDateTime
+import javax.persistence.CascadeType
+import javax.persistence.CollectionTable
+import javax.persistence.Column
+import javax.persistence.ElementCollection
+import javax.persistence.Entity
+import javax.persistence.FetchType
+import javax.persistence.Id
+import javax.persistence.JoinColumn
+import javax.persistence.OneToOne
+import javax.persistence.Table
+import javax.validation.constraints.Size
 
 @Entity
 @Table(name = "CIAG_PROFILE")
