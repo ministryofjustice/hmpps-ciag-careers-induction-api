@@ -46,11 +46,10 @@ dependencies {
   implementation("org.springframework.boot:spring-boot-starter-actuator")
   implementation("org.apache.commons:commons-collections4:4.0")
 
-  // GOVUK Notify:
-  implementation("uk.gov.service.notify:notifications-java-client:3.17.3-RELEASE")
-
   // Enable kotlin reflect
   implementation("org.jetbrains.kotlin:kotlin-reflect:1.6.20")
+
+  implementation("io.opentelemetry.instrumentation:opentelemetry-instrumentation-annotations:1.29.0")
 
   // Database dependencies
   implementation("org.flywaydb:flyway-core")
