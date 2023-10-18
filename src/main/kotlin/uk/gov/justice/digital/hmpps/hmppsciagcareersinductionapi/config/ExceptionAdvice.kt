@@ -2,7 +2,6 @@ package uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.config
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException
 import com.fasterxml.jackson.module.kotlin.MissingKotlinParameterException
-import jakarta.validation.ValidationException
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -17,7 +16,8 @@ import org.springframework.web.client.RestClientException
 import org.springframework.web.client.RestClientResponseException
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.exceptions.NotFoundException
-import java.util.Arrays
+import java.util.*
+import javax.validation.ValidationException
 import kotlin.collections.ArrayList
 
 @RestControllerAdvice
@@ -58,10 +58,10 @@ class ControllerAdvice {
   fun handleRestClientException(e: RestClientResponseException): ResponseEntity<ErrorResponse> {
     log.error("RestClientResponseException: ${e.message}", e)
     return ResponseEntity
-      .status(e.statusCode.value())
+      .status(e.rawStatusCode)
       .body(
         ErrorResponse(
-          status = e.statusCode.value(),
+          status = e.rawStatusCode,
           userMessage = "Rest client exception ${e.message}",
           developerMessage = e.message,
         ),
