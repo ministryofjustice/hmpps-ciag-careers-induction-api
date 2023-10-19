@@ -4,4 +4,8 @@ enum class HopingToGetWork {
   YES,
   NO,
   NOT_SURE,
+  ;
+  companion object {
+    fun fromInt(value: Int) = HopingToGetWork.values().first { it.ordinal == value }
+  }
 }

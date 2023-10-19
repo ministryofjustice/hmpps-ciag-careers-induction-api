@@ -7,20 +7,50 @@ import org.springframework.data.annotation.LastModifiedDate
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.AbilityToWorkImpactedBy
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.HopingToGetWork
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.ReasonToNotGetWork
+import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.jsonprofile.CIAGProfileDTO
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.jsonprofile.CIAGProfileRequestDTO
 import java.time.LocalDateTime
 import javax.persistence.CascadeType
 import javax.persistence.CollectionTable
 import javax.persistence.Column
+import javax.persistence.ColumnResult
+import javax.persistence.ConstructorResult
 import javax.persistence.ElementCollection
 import javax.persistence.Entity
 import javax.persistence.FetchType
 import javax.persistence.Id
 import javax.persistence.JoinColumn
+import javax.persistence.NamedNativeQuery
 import javax.persistence.OneToOne
+import javax.persistence.SqlResultSetMapping
 import javax.persistence.Table
 import javax.validation.constraints.Size
 
+@NamedNativeQuery(
+  name = "CIAGProfile.findInductionsByIdList_Named",
+  query = "SELECT c.offender_id AS offenderId, c.created_date_time AS createdDateTime, c.created_by AS createdBy," +
+    "c.modified_by AS modifiedBy,c.DESIRE_TO_WORK AS desireToWork,c.modified_date_time AS modifiedDateTime, " +
+    "c.HOPING_TO_GET_WORK AS hopingToGetWork FROM CIAG_PROFILE c where  c.offender_id in :offenderIdList",
+  resultSetMapping = "Mapping.CIAGProfileDTO",
+)
+@SqlResultSetMapping(
+  name = "Mapping.CIAGProfileDTO",
+  classes = [
+    ConstructorResult(
+      targetClass = CIAGProfileDTO::class,
+      columns = arrayOf(
+        ColumnResult(name = "offenderId"),
+        ColumnResult(name = "createdDateTime", type = LocalDateTime::class),
+        ColumnResult(name = "createdBy"),
+        ColumnResult(name = "modifiedBy"),
+
+        ColumnResult(name = "modifiedDateTime", type = LocalDateTime::class),
+        ColumnResult(name = "desireToWork"),
+        ColumnResult(name = "hopingToGetWork"),
+      ),
+    ),
+  ],
+)
 @Entity
 @Table(name = "CIAG_PROFILE")
 data class CIAGProfile(
