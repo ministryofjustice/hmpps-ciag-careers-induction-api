@@ -13,6 +13,9 @@ generic-service:
     enabled: true
     host: app-hostname.local    # override per environment
     tlsSecretName: hmpps-ciag-careers-induction-api-cert
+    
+  # Used for SQS queues and SNS topics
+  serviceAccountName: hmpps-ciag-careers-induction-api
 
   # Environment variables to load into the deployment
   env:
@@ -21,6 +24,7 @@ generic-service:
     SPRING_PROFILES_ACTIVE: "logstash"
     APPLICATIONINSIGHTS_CONNECTION_STRING: "InstrumentationKey=$(APPINSIGHTS_INSTRUMENTATIONKEY)"
     APPLICATIONINSIGHTS_CONFIGURATION_FILE: applicationinsights.json
+    HMPPS_SQS_USE_WEB_TOKEN: true
 
   # Pre-existing kubernetes secrets to load as environment variables in the deployment.
   # namespace_secrets:
@@ -35,7 +39,14 @@ generic-service:
       DATABASE_PASSWORD: "database_password"
       DATABASE_NAME: "database_name"
       DATABASE_ENDPOINT: "rds_instance_endpoint"
-
+      
+    # SQS config
+    hmpps-domain-events-topic:
+      HMPPS_SQS_TOPICS_DOMAINEVENTS_ARN: "topic_arn"
+    ciag-domain-events-sqs-instance-output:
+      HMPPS_SQS_QUEUES_CIAG_QUEUE_NAME: "sqs_queue_name"
+    ciag-domain-events-sqs-dl-instance-output:
+      HMPPS_SQS_QUEUES_CIAG_DLQ_NAME: "sqs_queue_name"
 
   allowlist:
     office: "217.33.148.210/32"
