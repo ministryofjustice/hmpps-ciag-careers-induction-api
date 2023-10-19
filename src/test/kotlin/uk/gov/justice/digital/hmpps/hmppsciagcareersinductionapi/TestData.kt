@@ -11,6 +11,7 @@ import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.Qua
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.ReasonToNotGetWork
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.Skills
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.WorkType
+import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.jsonprofile.CIAGProfileDTO
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.jsonprofile.CIAGProfileRequestDTO
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity.AchievedQualification
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity.CIAGProfile
@@ -374,6 +375,51 @@ class TestData {
         prisonWorkAndEducation,
         "1.1",
       )
-    val ciagProfileList = mutableListOf<CIAGProfile>(ciag, ciagSecond)
+    val ciagProfileDTO =
+      CIAGProfileDTO(
+        "A1234AB",
+        "sacintha",
+        "MDI",
+        "MOOR",
+        LocalDateTime.now(),
+        "sacintha",
+
+        LocalDateTime.now(),
+        true,
+        HopingToGetWork.NOT_SURE,
+        null,
+        null,
+        abilityToWorkImpactDetailList,
+        reasonToNotGetWork,
+        null,
+        null,
+        null,
+        prisonWorkAndEducation,
+        "1.1",
+      )
+
+    val ciagDTOSecond =
+      CIAGProfileDTO(
+        "A1234AC",
+        "sacintha",
+        "MDI",
+        "MOOR",
+        LocalDateTime.now(),
+        "sacintha",
+
+        LocalDateTime.now(),
+        true,
+        HopingToGetWork.NOT_SURE,
+        null,
+        null,
+        abilityToWorkImpactDetailList,
+        reasonToNotGetWork,
+        previousWork,
+        skillsAndInterests,
+        educationAndQualification,
+        prisonWorkAndEducation,
+        "1.1",
+      )
+    val ciagProfileList = mutableListOf<CIAGProfileDTO>(ciagProfileDTO, ciagDTOSecond)
   }
 }

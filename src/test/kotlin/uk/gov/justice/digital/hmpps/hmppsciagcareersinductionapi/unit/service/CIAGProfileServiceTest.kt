@@ -69,7 +69,7 @@ class CIAGProfileServiceTest {
 
   @Test
   fun `makes a call to the repository to get list of CIAG profile`() {
-    whenever(ciagProfileRepository.findAllById((any()))).thenReturn(TestData.ciagProfileList)
+    whenever(ciagProfileRepository.findAllCIAGProfilesByIdList((any()))).thenReturn(TestData.ciagProfileList)
 
     val rProfileList = TestData.offenderIdList?.let { profileService.getAllCIAGProfileForGivenOffenderIds(it) }
     assertThat(rProfileList?.size).isEqualTo(2)

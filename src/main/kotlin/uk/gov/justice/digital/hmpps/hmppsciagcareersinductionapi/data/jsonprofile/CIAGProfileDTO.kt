@@ -17,10 +17,10 @@ data class CIAGProfileDTO(
   val offenderId: String,
 
   @Schema(description = "This is the prision ID of the inmate ", name = "prisonId")
-  var prisonId: String?,
+  var prisonId: String? = null,
 
   @Schema(description = "This is the prision Name of the inmate ", name = "prisonName")
-  var prisonName: String?,
+  var prisonName: String? = null,
   @Schema(description = "This is the person who creates the Induction.Even though it is passed from front end it wil be automatically set to the right value at the time of record creation ", name = "createdBy", required = true)
   var createdBy: String,
 
@@ -40,33 +40,64 @@ data class CIAGProfileDTO(
   var hopingToGetWork: HopingToGetWork,
 
   @Schema(description = "This is the reason that is given when the inmate do not want to work .This field is mandatory when  \"reasonToNotGetWork\" has a Value set to \"OTHER\" ", name = "reasonToNotGetWorkOther", required = false)
-  var reasonToNotGetWorkOther: String?,
+  var reasonToNotGetWorkOther: String? = null,
 
   @Schema(description = "This is the factor affecting work which is peculiar to this inmate  .This field is mandatory when  \"abilityToWork\" has a Value set to \"OTHER\" ", name = "abilityToWorkOther", required = false)
-  var abilityToWorkOther: String?,
+  var abilityToWorkOther: String? = null,
 
   @Schema(description = "This is the factors affecting work to this inmate .", name = "abilityToWork", required = false)
-  var abilityToWork: MutableSet<AbilityToWorkImpactedBy>?,
+  var abilityToWork: MutableSet<AbilityToWorkImpactedBy>? = null,
 
   @Schema(description = "This is the reasons for the inmate not to get work.", name = "reasonToNotGetWork", required = false)
-  var reasonToNotGetWork: MutableSet<ReasonToNotGetWork>?,
+  var reasonToNotGetWork: MutableSet<ReasonToNotGetWork>? = null,
 
   @Schema(description = "This is the previous experience of the inmate.", name = "workExperience", required = false)
-  var workExperience: PreviousWork?,
+  var workExperience: PreviousWork? = null,
 
   @Schema(description = "This is the  skills and interests of the inmate.", name = "skillsAndInterests", required = false)
-  var skillsAndInterests: SkillsAndInterests?,
+  var skillsAndInterests: SkillsAndInterests? = null,
 
   @Schema(description = "This is the qualification and training achived in the prison by the inmate.", name = "qualificationsAndTraining", required = false)
-  var qualificationsAndTraining: EducationAndQualification?,
+  var qualificationsAndTraining: EducationAndQualification? = null,
 
   @Schema(description = "This is the work and training the inmate.wants to receive in prison", name = "inPrisonInterests", required = false)
-  var inPrisonInterests: PrisonWorkAndEducation?,
+  var inPrisonInterests: PrisonWorkAndEducation? = null,
 
   @Schema(description = "This is the schema version used", name = "schemaVersion", required = false)
-  var schemaVersion: String?,
+  var schemaVersion: String? = null,
 
 ) {
+  constructor(
+    offenderId: String,
+    createdDateTime: LocalDateTime,
+    createdBy: String,
+
+    modifiedBy: String,
+
+    modifiedDateTime: LocalDateTime,
+    desireToWork: Boolean,
+    hopingToGetWork: Int,
+  ) : this(
+    offenderId = offenderId!!,
+    createdBy = createdBy!!,
+    createdDateTime = createdDateTime!!,
+    modifiedBy = modifiedBy!!,
+    desireToWork = desireToWork!!,
+    modifiedDateTime = modifiedDateTime!!,
+    hopingToGetWork = HopingToGetWork.fromInt(hopingToGetWork)!!,
+    prisonId = null,
+    prisonName = null,
+    reasonToNotGetWorkOther = null,
+    abilityToWorkOther = null,
+    abilityToWork = null,
+    reasonToNotGetWork = null,
+    workExperience = null,
+    skillsAndInterests = null,
+    qualificationsAndTraining = null,
+    inPrisonInterests = null,
+    schemaVersion = null,
+  ) {
+  }
   constructor(profileEntity: CIAGProfile) : this(
     offenderId = profileEntity.offenderId,
     prisonId = profileEntity.prisonId,

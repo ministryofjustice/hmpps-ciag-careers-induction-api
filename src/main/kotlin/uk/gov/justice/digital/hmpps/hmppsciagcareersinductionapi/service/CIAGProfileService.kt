@@ -85,10 +85,12 @@ class CIAGProfileService(
   fun getAllCIAGProfileForGivenOffenderIds(
     offenderIdList: List<String>,
   ): List<CIAGProfileDTO>? {
-    var ciagProfileList = ciagProfileRepository.findAllById(offenderIdList)
+    var ciagProfileMutableList = ciagProfileRepository.findAllCIAGProfilesByIdList(offenderIdList)
     var ciagProfileDTOList = mutableListOf<CIAGProfileDTO>()
-    for (ciagProfile in ciagProfileList) {
-      ciagProfileDTOList.add(CIAGProfileDTO(ciagProfile))
+    val ciagProfileIstIterator = ciagProfileMutableList?.iterator()
+    while (ciagProfileIstIterator?.hasNext() == true) {
+      var ciagProfile = ciagProfileIstIterator?.next()
+      ciagProfileDTOList?.add(ciagProfile!!)
     }
     return ciagProfileDTOList
   }
