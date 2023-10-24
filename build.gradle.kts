@@ -45,6 +45,7 @@ dependencies {
   implementation("org.springframework.boot:spring-boot-starter-data-jpa")
   implementation("org.springframework.boot:spring-boot-starter-actuator")
   implementation("org.apache.commons:commons-collections4:4.0")
+  implementation("uk.gov.justice.service.hmpps:hmpps-sqs-spring-boot-starter:1.3.1")
 
   // Enable kotlin reflect
   implementation("org.jetbrains.kotlin:kotlin-reflect:1.6.20")
@@ -73,6 +74,7 @@ dependencies {
   testImplementation("io.swagger.parser.v3:swagger-parser-v2-converter:2.0.33")
   testImplementation("org.mockito:mockito-inline:4.6.1")
   testImplementation("org.junit.jupiter:junit-jupiter:5.8.2")
+  testImplementation("org.testcontainers:localstack:1.18.1")
   testImplementation("com.h2database:h2")
 }
 repositories {
