@@ -8,6 +8,8 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDO
 import org.springframework.boot.test.web.client.TestRestTemplate
 import org.springframework.http.HttpHeaders
 import org.springframework.test.context.ActiveProfiles
+import org.springframework.test.context.DynamicPropertyRegistry
+import org.springframework.test.context.DynamicPropertySource
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.HmppsCiagCareersInductionApi
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.helpers.JwtAuthHelper
 
@@ -31,6 +33,13 @@ abstract class IntegrationTestBase internal constructor() {
     return jwtAuthHelper.setAuthorisationForUnitTests(user, roles)
   }
   companion object {
+    private val localStackContainer = LocalStackContainer.instance
+
+    @JvmStatic
+    @DynamicPropertySource
+    fun testcontainers(registry: DynamicPropertyRegistry) {
+      localStackContainer?.also { LocalStackContainer.setLocalStackProperties(it, registry) }
+    }
     val log: Logger = LoggerFactory.getLogger(this::class.java)
   }
 }
