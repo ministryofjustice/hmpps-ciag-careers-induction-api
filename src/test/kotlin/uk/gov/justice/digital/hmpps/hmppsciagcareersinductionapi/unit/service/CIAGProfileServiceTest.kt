@@ -13,17 +13,19 @@ import org.mockito.kotlin.whenever
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.TestData
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity.CIAGProfile
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.exceptions.NotFoundException
+import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.messaging.OutboundEventsService
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.repository.CIAGProfileRepository
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.service.CIAGProfileService
 import java.util.*
 
 class CIAGProfileServiceTest {
   private val ciagProfileRepository: CIAGProfileRepository = mock()
+  private val outboundEventsService: OutboundEventsService = mock()
   private lateinit var profileService: CIAGProfileService
 
   @BeforeEach
   fun beforeEach() {
-    profileService = CIAGProfileService(ciagProfileRepository)
+    profileService = CIAGProfileService(ciagProfileRepository, outboundEventsService)
   }
 
   @Test
@@ -39,7 +41,7 @@ class CIAGProfileServiceTest {
 
   @Test
   fun `makes a call to the repository to update the CIAG profile`() {
-    whenever(ciagProfileRepository.saveAndFlush(TestData.ciag)).thenReturn(TestData.ciag)
+    whenever(ciagProfileRepository.saveAndFlush(any())).thenReturn(TestData.ciag)
 
     val rProfile = profileService.createOrUpdateCIAGInductionForOffender(TestData.ciagDTO)
     val argumentCaptor = ArgumentCaptor.forClass(CIAGProfile::class.java)

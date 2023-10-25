@@ -269,9 +269,10 @@ class TestData {
     val ciag =
       CIAGProfile(
         "A1234AB",
-        "sacintha",
+
         "MDI",
         "MOOR",
+        "sacintha",
         LocalDateTime.now(),
         "sacintha",
         true,
