@@ -4,6 +4,7 @@ import org.springframework.data.annotation.CreatedBy
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.LastModifiedBy
 import org.springframework.data.annotation.LastModifiedDate
+import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.config.CapturedSpringConfigValues
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.AbilityToWorkImpactedBy
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.HopingToGetWork
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.ReasonToNotGetWork
@@ -22,6 +23,8 @@ import javax.persistence.Id
 import javax.persistence.JoinColumn
 import javax.persistence.NamedNativeQuery
 import javax.persistence.OneToOne
+import javax.persistence.PrePersist
+import javax.persistence.PreUpdate
 import javax.persistence.SqlResultSetMapping
 import javax.persistence.Table
 import javax.validation.constraints.Size
@@ -85,31 +88,31 @@ data class CIAGProfile(
   @Column(name = "OTHER_ABILITY_TO_WORK_IMPACT")
   var abilityToWorkOther: String?,
 
-  @ElementCollection(fetch = FetchType.EAGER)
+  @ElementCollection(fetch = FetchType.LAZY)
   @CollectionTable(name = "ABILITY_TO_WORK_IMPACT", joinColumns = [JoinColumn(name = "OFFENDER_ID")])
   @Column(name = "WORK_IMPACT")
   @Size(min = 1)
   var abilityToWork: MutableSet<AbilityToWorkImpactedBy>?,
 
-  @ElementCollection(fetch = FetchType.EAGER)
+  @ElementCollection(fetch = FetchType.LAZY)
   @CollectionTable(name = "REASON_TO_NOT_WORK", joinColumns = [JoinColumn(name = "OFFENDER_ID")])
   @Column(name = "REASON")
   @Size(min = 1)
   var reasonToNotGetWork: MutableSet<ReasonToNotGetWork>?,
 
-  @OneToOne(cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.LAZY)
+  @OneToOne(cascade = [CascadeType.REMOVE], orphanRemoval = true, fetch = FetchType.LAZY)
   @JoinColumn(name = "PREVIOUS_WORK_ID")
   var workExperience: PreviousWork?,
 
-  @OneToOne(cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.LAZY)
+  @OneToOne(cascade = [CascadeType.REMOVE], orphanRemoval = true, fetch = FetchType.LAZY)
   @JoinColumn(name = "SKILLS_AND_INTERESTS_ID")
   var skillsAndInterests: SkillsAndInterests?,
 
-  @OneToOne(cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.LAZY)
+  @OneToOne(cascade = [CascadeType.REMOVE], orphanRemoval = true, fetch = FetchType.LAZY)
   @JoinColumn(name = "EDUCATION_AND_QUALIFICATION_ID")
   var qualificationsAndTraining: EducationAndQualification?,
 
-  @OneToOne(cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.LAZY)
+  @OneToOne(cascade = [CascadeType.REMOVE], orphanRemoval = true, fetch = FetchType.LAZY)
   @JoinColumn(name = "PRISON_WORK_AND_EDUCATION_ID")
   var inPrisonInterests: PrisonWorkAndEducation?,
 
@@ -185,5 +188,19 @@ data class CIAGProfile(
 
   override fun toString(): String {
     return "CIAGProfile(offenderId='$offenderId', createdBy='$createdBy', createdDateTime=$createdDateTime, modifiedBy='$modifiedBy', desireToWork=$desireToWork, modifiedDateTime=$modifiedDateTime, hopingToGetWork=$hopingToGetWork, reasonToNotGetWorkOther=$reasonToNotGetWorkOther, abilityToWorkOther=$abilityToWorkOther, abilityToWork=$abilityToWork, reasonToNotGetWork=$reasonToNotGetWork, prisonName=$prisonName, prisonId=$prisonId, workExperience=$workExperience,  skillsAndInterests=$skillsAndInterests, qualificationsAndTraining=$qualificationsAndTraining, inPrisonInterests=$inPrisonInterests, schemaVersion='$schemaVersion')"
+  }
+
+  @PrePersist
+  fun prePersist() {
+    this.createdBy = CapturedSpringConfigValues.principal.toString()
+    this.createdDateTime = LocalDateTime.now()
+    this.modifiedBy = CapturedSpringConfigValues.principal.toString()
+    this.modifiedDateTime = LocalDateTime.now()
+  }
+
+  @PreUpdate
+  fun preUpdate() {
+    this.modifiedBy = CapturedSpringConfigValues.principal.toString()
+    this.modifiedDateTime = LocalDateTime.now()
   }
 }

@@ -191,7 +191,6 @@ class TestData {
         mutableSetOf(
           WorkInterestDetail(WorkType.BEAUTY, "tired"),
         ),
-        null,
       )
 
     var previousWork =
@@ -204,7 +203,6 @@ class TestData {
         null,
         previousWorkDetailSet,
         workInterests,
-        null,
       )
     var skillsAndInterests =
       SkillsAndInterests(
@@ -214,7 +212,6 @@ class TestData {
         mutableSetOf(Skills.COMMUNICATION),
         null,
         mutableSetOf(PersonalInterests.COMMUNITY),
-        null,
         null,
       )
     var acchievedQualification =
@@ -230,7 +227,6 @@ class TestData {
         acchievedQualificationSet,
         mutableSetOf(OtherQualification.CSCS_CARD),
         null,
-        null,
       )
     var prisonWorkAndEducation =
       PrisonWorkAndEducation(
@@ -240,7 +236,6 @@ class TestData {
         mutableSetOf(PrisonWork.PRISON_LAUNDRY),
         null,
         mutableSetOf(PrisonTraining.BARBERING_AND_HAIRDRESSING),
-        null,
         null,
       )
 

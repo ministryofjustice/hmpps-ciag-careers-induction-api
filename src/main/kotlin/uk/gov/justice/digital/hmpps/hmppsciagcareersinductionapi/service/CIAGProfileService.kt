@@ -1,34 +1,34 @@
 package uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.service
 
+import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Service
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.jsonprofile.CIAGProfileDTO
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.jsonprofile.CIAGProfileRequestDTO
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity.CIAGProfile
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.exceptions.NotFoundException
-import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.messaging.EventType
-import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.messaging.OutboundEventsService
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.repository.CIAGProfileRepository
 import java.time.LocalDateTime
 
 @Service
 class CIAGProfileService(
   private val ciagProfileRepository: CIAGProfileRepository,
-  private val outboundEventsService: OutboundEventsService,
 ) {
+
+  companion object {
+    const val TOPIC_ID = "domainevents"
+    const val EVENT_TYPE_KEY = "eventType"
+    val principal by lazy {
+      SecurityContextHolder.getContext().authentication.principal
+    }
+  }
+
   fun createOrUpdateCIAGInductionForOffender(
     ciagProfileDTO: CIAGProfileRequestDTO,
 
   ): CIAGProfile? {
     var ciagProfile = CIAGProfile(ciagProfileDTO)
     var ciagProfileSavedOptional = ciagProfileRepository.findById(ciagProfileDTO.offenderId)
-    ciagProfile.createdDateTime = LocalDateTime.now()
-    ciagProfile.createdBy = ciagProfileDTO.modifiedBy
-    if (ciagProfileSavedOptional != null && ciagProfileSavedOptional.isPresent()) {
-      ciagProfile = updateCIAGInductionForOffender(ciagProfileDTO)!!
-    } else {
-      ciagProfile = ciagProfileRepository.saveAndFlush(ciagProfile)
-      outboundEventsService.createAndPublishEventMessage(ciagProfile, EventType.CIAG_INDUCTION_CREATED)
-    }
+    ciagProfile = ciagProfileRepository.saveAndFlush(ciagProfile)
 
     return ciagProfile
   }
@@ -38,7 +38,7 @@ class CIAGProfileService(
 
   ): CIAGProfile? {
     var ciagProfile = CIAGProfile(ciagProfileDTO)
-    var ciagProfileSavedOptional = ciagProfileRepository.findById(ciagProfileDTO.offenderId)
+/*    var ciagProfileSavedOptional = ciagProfileRepository.findById(ciagProfileDTO.offenderId)
     ciagProfile.createdDateTime = LocalDateTime.now()
     ciagProfile.createdBy = ciagProfileDTO.modifiedBy
     if (ciagProfileSavedOptional != null && ciagProfileSavedOptional.isPresent()) {
@@ -72,7 +72,6 @@ class CIAGProfileService(
       throw NotFoundException(ciagProfileDTO.offenderId)
     }
     ciagProfile = ciagProfileRepository.saveAndFlush(ciagProfile)
-    outboundEventsService.createAndPublishEventMessage(ciagProfile, EventType.CIAG_INDUCTION_UPDATED)
 
     return ciagProfile
   }

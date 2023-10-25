@@ -1,8 +1,8 @@
 package uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity
-import com.fasterxml.jackson.annotation.JsonIgnore
 import io.swagger.v3.oas.annotations.media.Schema
 import org.springframework.data.annotation.LastModifiedBy
 import org.springframework.data.annotation.LastModifiedDate
+import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.config.CapturedSpringConfigValues
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.PrisonTraining
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.PrisonWork
 import java.time.LocalDateTime
@@ -15,7 +15,8 @@ import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
 import javax.persistence.Id
 import javax.persistence.JoinColumn
-import javax.persistence.OneToOne
+import javax.persistence.PrePersist
+import javax.persistence.PreUpdate
 import javax.persistence.Table
 import javax.validation.constraints.Size
 
@@ -35,7 +36,7 @@ data class PrisonWorkAndEducation(
   @GeneratedValue(strategy = GenerationType.SEQUENCE)
   @Column(name = "id", nullable = false)
   val id: Long?,
-  @ElementCollection(fetch = FetchType.EAGER)
+  @ElementCollection(fetch = FetchType.LAZY)
   @CollectionTable(name = "PRISON_WORK", joinColumns = [JoinColumn(name = "PRISON_WORK_EDUCATION_ID")])
   @Column(name = "WORK")
   @Size(min = 1)
@@ -45,7 +46,7 @@ data class PrisonWorkAndEducation(
   @Schema(description = "This is the prison work which is peculiar to this inmate  .This field is mandatory when  \"inPrisonWork\" has a Value set to \"OTHER\" ", name = "inPrisonWorkOther", required = false)
   var inPrisonWorkOther: String?,
 
-  @ElementCollection(fetch = FetchType.EAGER)
+  @ElementCollection(fetch = FetchType.LAZY)
   @CollectionTable(name = "PRISON_EDUCATION", joinColumns = [JoinColumn(name = "PRISON_WORK_EDUCATION_ID")])
   @Column(name = "EDUCATION")
   @Size(min = 1)
@@ -54,9 +55,7 @@ data class PrisonWorkAndEducation(
   @Column(name = "OTHER_PRISON_EDUCATION")
   @Schema(description = "This is the prison education which is peculiar to this inmate  .This field is mandatory when  \"inPrisonEducation\" has a Value set to \"OTHER\" ", name = "inPrisonEducationOther", required = false)
   var inPrisonEducationOther: String?,
-  @OneToOne(mappedBy = "inPrisonInterests")
-  @JsonIgnore
-  var profile: CIAGProfile?,
+
 ) {
   override fun equals(other: Any?): Boolean {
     if (this === other) return true
@@ -80,5 +79,21 @@ data class PrisonWorkAndEducation(
     result = 31 * result + (inPrisonEducation?.hashCode() ?: 0)
     result = 31 * result + (inPrisonEducationOther?.hashCode() ?: 0)
     return result
+  }
+
+  override fun toString(): String {
+    return "PrisonWorkAndEducation(modifiedBy='$modifiedBy', modifiedDateTime=$modifiedDateTime, id=$id, inPrisonWork=$inPrisonWork, inPrisonWorkOther=$inPrisonWorkOther, inPrisonEducation=$inPrisonEducation, inPrisonEducationOther=$inPrisonEducationOther)"
+  }
+
+  @PrePersist
+  fun prePersist() {
+    this.modifiedBy = CapturedSpringConfigValues.principal.toString()
+    this.modifiedDateTime = LocalDateTime.now()
+  }
+
+  @PreUpdate
+  fun preUpdate() {
+    this.modifiedBy = CapturedSpringConfigValues.principal.toString()
+    this.modifiedDateTime = LocalDateTime.now()
   }
 }
