@@ -1,8 +1,8 @@
 package uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity
-import com.fasterxml.jackson.annotation.JsonIgnore
 import io.swagger.v3.oas.annotations.media.Schema
 import org.springframework.data.annotation.LastModifiedBy
 import org.springframework.data.annotation.LastModifiedDate
+import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.config.CapturedSpringConfigValues
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.WorkType
 import java.time.LocalDateTime
 import javax.persistence.CollectionTable
@@ -14,7 +14,8 @@ import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
 import javax.persistence.Id
 import javax.persistence.JoinColumn
-import javax.persistence.OneToOne
+import javax.persistence.PrePersist
+import javax.persistence.PreUpdate
 import javax.persistence.Table
 import javax.validation.constraints.Size
 
@@ -32,7 +33,7 @@ data class WorkInterests(
   @GeneratedValue(strategy = GenerationType.SEQUENCE)
   @Column(name = "ID", nullable = false)
   val id: Long?,
-  @ElementCollection(fetch = FetchType.EAGER)
+  @ElementCollection(fetch = FetchType.LAZY)
   @CollectionTable(name = "WORK_INTERESTS", joinColumns = [JoinColumn(name = "WORK_INTERESTS_ID")])
   @Column(name = "WORK_INTERESTS")
   @Size(min = 1)
@@ -42,15 +43,12 @@ data class WorkInterests(
   @Schema(description = "This is the work interest which is peculiar to this inmate  .This field is mandatory when  \"workInterests\" has a Value set to \"OTHER\" ", name = "workInterestsOther", required = false)
   var workInterestsOther: String?,
 
-  @ElementCollection(fetch = FetchType.EAGER)
+  @ElementCollection(fetch = FetchType.LAZY)
   @CollectionTable(name = "PARTICULAR_WORK_INTERESTS", joinColumns = [JoinColumn(name = "WORK_INTERESTS_ID")])
   @Column(name = "PARTICULAR_WORK_INTEREST")
   @Schema(description = "This is the list of detailed interests of the inmate.", name = "particularJobInterests")
   var particularJobInterests: MutableSet<WorkInterestDetail>?,
 
-  @OneToOne(mappedBy = "workInterests")
-  @JsonIgnore
-  var previousWork: PreviousWork?,
 ) {
   override fun equals(other: Any?): Boolean {
     if (this === other) return true
@@ -75,6 +73,18 @@ data class WorkInterests(
   }
 
   override fun toString(): String {
-    return "WorkInterests(modifiedBy='$modifiedBy', modifiedDateTime=$modifiedDateTime, id=$id, workInterests=$workInterests, workInterestsOther=$workInterestsOther, particularJobInterests=$particularJobInterests, previousWork=$previousWork)"
+    return "WorkInterests(modifiedBy='$modifiedBy', modifiedDateTime=$modifiedDateTime, id=$id, workInterests=$workInterests, workInterestsOther=$workInterestsOther, particularJobInterests=$particularJobInterests)"
+  }
+
+  @PrePersist
+  fun prePersist() {
+    this.modifiedBy = CapturedSpringConfigValues.principal.toString()
+    this.modifiedDateTime = LocalDateTime.now()
+  }
+
+  @PreUpdate
+  fun preUpdate() {
+    this.modifiedBy = CapturedSpringConfigValues.principal.toString()
+    this.modifiedDateTime = LocalDateTime.now()
   }
 }

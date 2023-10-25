@@ -1,8 +1,8 @@
 package uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity
-import com.fasterxml.jackson.annotation.JsonIgnore
 import io.swagger.v3.oas.annotations.media.Schema
 import org.springframework.data.annotation.LastModifiedBy
 import org.springframework.data.annotation.LastModifiedDate
+import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.config.CapturedSpringConfigValues
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.WorkType
 import java.time.LocalDateTime
 import javax.persistence.CascadeType
@@ -16,6 +16,8 @@ import javax.persistence.GenerationType
 import javax.persistence.Id
 import javax.persistence.JoinColumn
 import javax.persistence.OneToOne
+import javax.persistence.PrePersist
+import javax.persistence.PreUpdate
 import javax.persistence.Table
 import javax.validation.constraints.Size
 
@@ -37,7 +39,7 @@ data class PreviousWork(
   @Column(name = "id", nullable = false)
   val id: Long?,
 
-  @ElementCollection(fetch = FetchType.EAGER)
+  @ElementCollection(fetch = FetchType.LAZY)
   @CollectionTable(name = "WORK_EXPERIENCE", joinColumns = [JoinColumn(name = "PREVIOUS_WORK_ID")])
   @Column(name = "WORK_EXPERIENCE")
   @Size(min = 1)
@@ -48,25 +50,22 @@ data class PreviousWork(
   @Schema(description = "This is the work experience which is peculiar to this inmate  .This field is mandatory when  \"typeOfWorkExperience\" has a Value set to \"OTHER\" ", name = "typeOfWorkExperienceOther", required = false)
   var typeOfWorkExperienceOther: String?,
 
-  @ElementCollection(fetch = FetchType.EAGER)
+  @ElementCollection(fetch = FetchType.LAZY)
   @CollectionTable(name = "WORK_EXPERIENCE_DETAIL", joinColumns = [JoinColumn(name = "PREVIOUS_WORK_ID")])
   @Column(name = "WORK_EXPERIENCE_DETAIL")
   @Size(min = 1)
   @Schema(description = "This is the list of work experience details of the inmate.", name = "workExperience", required = true)
   var workExperience: MutableSet<WorkExperience>?,
 
-  @OneToOne(cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.EAGER)
+  @OneToOne(cascade = [CascadeType.REMOVE], orphanRemoval = true, fetch = FetchType.LAZY)
   @JoinColumn(name = "WORK_INTERESTS_ID")
   @Schema(description = "This is the work interests of the inmate.", name = "workInterests", required = true)
   var workInterests: WorkInterests?,
 
-  @OneToOne(mappedBy = "workExperience")
-  @JsonIgnore
-  var profile: CIAGProfile?,
 ) {
 
   override fun toString(): String {
-    return "PreviousWork(hasWorkedBefore=$hasWorkedBefore, modifiedBy='$modifiedBy', modifiedDateTime=$modifiedDateTime, id=$id, typeOfWorkExperience=$typeOfWorkExperience, typeOfWorkExperienceOther=$typeOfWorkExperienceOther, workExperience=$workExperience, workInterests=$workInterests, profile=$profile)"
+    return "PreviousWork(hasWorkedBefore=$hasWorkedBefore, modifiedBy='$modifiedBy', modifiedDateTime=$modifiedDateTime, id=$id, typeOfWorkExperience=$typeOfWorkExperience, typeOfWorkExperienceOther=$typeOfWorkExperienceOther, workExperience=$workExperience, workInterests=$workInterests)"
   }
 
   override fun equals(other: Any?): Boolean {
@@ -93,5 +92,17 @@ data class PreviousWork(
     result = 31 * result + (workExperience?.hashCode() ?: 0)
     result = 31 * result + (workInterests?.hashCode() ?: 0)
     return result
+  }
+
+  @PrePersist
+  fun prePersist() {
+    this.modifiedBy = CapturedSpringConfigValues.principal.toString()
+    this.modifiedDateTime = LocalDateTime.now()
+  }
+
+  @PreUpdate
+  fun preUpdate() {
+    this.modifiedBy = CapturedSpringConfigValues.principal.toString()
+    this.modifiedDateTime = LocalDateTime.now()
   }
 }

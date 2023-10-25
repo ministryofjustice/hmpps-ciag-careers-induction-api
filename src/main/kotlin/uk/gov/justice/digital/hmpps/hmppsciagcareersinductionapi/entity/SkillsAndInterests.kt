@@ -1,8 +1,8 @@
 package uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity
-import com.fasterxml.jackson.annotation.JsonIgnore
 import io.swagger.v3.oas.annotations.media.Schema
 import org.springframework.data.annotation.LastModifiedBy
 import org.springframework.data.annotation.LastModifiedDate
+import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.config.CapturedSpringConfigValues
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.PersonalInterests
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.Skills
 import java.time.LocalDateTime
@@ -15,7 +15,8 @@ import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
 import javax.persistence.Id
 import javax.persistence.JoinColumn
-import javax.persistence.OneToOne
+import javax.persistence.PrePersist
+import javax.persistence.PreUpdate
 import javax.persistence.Table
 import javax.validation.constraints.Size
 
@@ -33,7 +34,7 @@ data class SkillsAndInterests(
   @GeneratedValue(strategy = GenerationType.SEQUENCE)
   @Column(name = "id", nullable = false)
   val id: Long?,
-  @ElementCollection(fetch = FetchType.EAGER)
+  @ElementCollection(fetch = FetchType.LAZY)
   @CollectionTable(name = "SKILLS_WORK_INTERESTS", joinColumns = [JoinColumn(name = "WORK_INTERESTS_ID")])
   @Column(name = "SKILLS")
   @Size(min = 1)
@@ -43,7 +44,7 @@ data class SkillsAndInterests(
   @Schema(description = "This is the skill which is peculiar to this inmate  .This field is mandatory when  \"skills\" has a Value set to \"OTHER\" ", name = "skillsOther", required = false)
   var skillsOther: String?,
 
-  @ElementCollection(fetch = FetchType.EAGER)
+  @ElementCollection(fetch = FetchType.LAZY)
   @CollectionTable(name = "PERSONAL_WORK_INTERESTS", joinColumns = [JoinColumn(name = "WORK_INTERESTS_ID")])
   @Column(name = "PERSONAL_WORK_INTEREST")
   @Size(min = 1)
@@ -53,9 +54,7 @@ data class SkillsAndInterests(
   @Column(name = "OTHER_PERSONAL_INTRESTS")
   @Schema(description = "This is the work interest which is peculiar to this inmate  .This field is mandatory when  \"personalInterests\" has a Value set to \"OTHER\" ", name = "personalInterestsOther", required = false)
   var personalInterestsOther: String?,
-  @OneToOne(mappedBy = "skillsAndInterests")
-  @JsonIgnore
-  var profile: CIAGProfile?,
+
 ) {
   override fun equals(other: Any?): Boolean {
     if (this === other) return true
@@ -82,6 +81,18 @@ data class SkillsAndInterests(
   }
 
   override fun toString(): String {
-    return "SkillsAndInterests(modifiedBy='$modifiedBy', modifiedDateTime=$modifiedDateTime, id=$id, skills=$skills, skillsOther=$skillsOther, personalInterests=$personalInterests, personalInterestsOther=$personalInterestsOther, profile=$profile)"
+    return "SkillsAndInterests(modifiedBy='$modifiedBy', modifiedDateTime=$modifiedDateTime, id=$id, skills=$skills, skillsOther=$skillsOther, personalInterests=$personalInterests, personalInterestsOther=$personalInterestsOther)"
+  }
+
+  @PrePersist
+  fun prePersist() {
+    this.modifiedBy = CapturedSpringConfigValues.principal.toString()
+    this.modifiedDateTime = LocalDateTime.now()
+  }
+
+  @PreUpdate
+  fun preUpdate() {
+    this.modifiedBy = CapturedSpringConfigValues.principal.toString()
+    this.modifiedDateTime = LocalDateTime.now()
   }
 }
