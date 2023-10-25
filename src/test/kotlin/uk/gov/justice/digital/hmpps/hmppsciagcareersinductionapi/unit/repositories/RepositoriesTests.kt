@@ -14,6 +14,7 @@ import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.test.context.ActiveProfiles
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.TestData
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.config.CapturedSpringConfigValues
+import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.config.DpsPrincipal
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.Skills
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity.CIAGProfile
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.repository.CIAGProfileRepository
@@ -41,7 +42,8 @@ class RepositoriesTests @Autowired constructor(
 
   @BeforeEach
   fun beforeClass() {
-    whenever(authentication?.principal).thenReturn("test_id")
+    var dpsPrincipal: DpsPrincipal = DpsPrincipal("test_td", "test_id")
+    whenever(authentication?.principal).thenReturn(dpsPrincipal)
     whenever(securityContext?.authentication).thenReturn(authentication)
     SecurityContextHolder.setContext(securityContext)
     ciagRepository.deleteAll()

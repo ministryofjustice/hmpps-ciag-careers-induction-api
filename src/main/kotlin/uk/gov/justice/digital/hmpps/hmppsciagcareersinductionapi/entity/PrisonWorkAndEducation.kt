@@ -87,13 +87,13 @@ data class PrisonWorkAndEducation(
 
   @PrePersist
   fun prePersist() {
-    this.modifiedBy = CapturedSpringConfigValues.principal.toString()
+    this.modifiedBy = CapturedSpringConfigValues.principal.name
     this.modifiedDateTime = LocalDateTime.now()
   }
 
   @PreUpdate
   fun preUpdate() {
-    this.modifiedBy = CapturedSpringConfigValues.principal.toString()
+    this.modifiedBy = CapturedSpringConfigValues.principal.name
     this.modifiedDateTime = LocalDateTime.now()
   }
 }

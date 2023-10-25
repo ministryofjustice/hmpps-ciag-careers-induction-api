@@ -6,7 +6,6 @@ import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import org.springframework.http.MediaType
 import org.springframework.security.access.prepost.PreAuthorize
-import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
@@ -221,9 +220,7 @@ class CIAGResourceController(
     offenderId: String,
     @Validated @RequestBody
     requestDTO: CIAGProfileRequestDTO,
-    @AuthenticationPrincipal oauth2User: String,
   ): CIAGProfileDTO? {
-    requestDTO.modifiedBy = oauth2User
     ciagValidationService.validateInput(requestDTO)
     return ciagProfileService.createOrUpdateCIAGInductionForOffender(requestDTO)?.let {
       CIAGProfileDTO(
@@ -280,9 +277,7 @@ class CIAGResourceController(
     offenderId: String,
     @Valid @RequestBody
     requestDTO: CIAGProfileRequestDTO,
-    @AuthenticationPrincipal oauth2User: String,
   ): CIAGProfileDTO? {
-    requestDTO.modifiedBy = oauth2User
     return ciagProfileService.createOrUpdateCIAGInductionForOffender(requestDTO)?.let {
       CIAGProfileDTO(
         it,

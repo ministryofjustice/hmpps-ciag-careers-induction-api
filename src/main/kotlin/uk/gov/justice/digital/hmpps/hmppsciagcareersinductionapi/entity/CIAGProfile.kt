@@ -192,15 +192,15 @@ data class CIAGProfile(
 
   @PrePersist
   fun prePersist() {
-    this.createdBy = CapturedSpringConfigValues.principal.toString()
+    this.createdBy = CapturedSpringConfigValues.principal.name
     this.createdDateTime = LocalDateTime.now()
-    this.modifiedBy = CapturedSpringConfigValues.principal.toString()
+    this.modifiedBy = CapturedSpringConfigValues.principal.name
     this.modifiedDateTime = LocalDateTime.now()
   }
 
   @PreUpdate
   fun preUpdate() {
-    this.modifiedBy = CapturedSpringConfigValues.principal.toString()
+    this.modifiedBy = CapturedSpringConfigValues.principal.name
     this.modifiedDateTime = LocalDateTime.now()
   }
 }

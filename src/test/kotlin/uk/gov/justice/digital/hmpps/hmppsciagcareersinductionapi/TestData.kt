@@ -266,6 +266,27 @@ class TestData {
         prisonWorkAndEducation,
         "1.1",
       )
+    val ciagDTO_with_no_subsets =
+      CIAGProfileRequestDTO(
+        "A1234AB",
+        "sacintha",
+        "MDI",
+        "MOOR",
+        LocalDateTime.now(),
+        "sacintha",
+        LocalDateTime.now(),
+        true,
+        HopingToGetWork.NOT_SURE,
+        null,
+        null,
+        abilityToWorkImpactDetailList,
+        reasonToNotGetWork,
+        null,
+        null,
+        null,
+        null,
+        "1.1",
+      )
 
     val ciag =
       CIAGProfile(
@@ -287,6 +308,29 @@ class TestData {
         skillsAndInterests,
         educationAndQualification,
         prisonWorkAndEducation,
+        "1.1",
+      )
+
+    val ciag_with_no_subsets =
+      CIAGProfile(
+        "A1234AB",
+
+        "MDI",
+        "MOOR",
+        "sacintha",
+        LocalDateTime.now(),
+        "sacintha",
+        true,
+        LocalDateTime.now(),
+        HopingToGetWork.NOT_SURE,
+        null,
+        null,
+        abilityToWorkImpactDetailList,
+        reasonToNotGetWork,
+        null,
+        null,
+        null,
+        null,
         "1.1",
       )
 
