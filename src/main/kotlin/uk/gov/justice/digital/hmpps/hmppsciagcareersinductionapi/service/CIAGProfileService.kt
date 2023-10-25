@@ -41,7 +41,7 @@ class CIAGProfileService(
     ciagProfile.workExperience?.workInterests?.let { workInterestsRepository.save(it) }
     ciagProfile.workExperience?.let { previousWorkRepository.save(it) }
     ciagProfile = ciagProfileRepository.saveAndFlush(ciagProfile)
-    outboundEventsService.createAndPublishEventMessage(ciagProfile, eventType)
+
     return ciagProfile
   }
 
