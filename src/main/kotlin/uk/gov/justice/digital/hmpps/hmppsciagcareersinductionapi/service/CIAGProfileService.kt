@@ -3,19 +3,28 @@ package uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.service
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Service
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.jsonprofile.CIAGProfileDTO
+import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.jsonprofile.CIAGProfileListDTO
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.jsonprofile.CIAGProfileRequestDTO
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity.CIAGProfile
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.exceptions.NotFoundException
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.repository.CIAGProfileRepository
+import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.repository.EducationAndQualificationRepository
+import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.repository.PreviousWorkRepository
+import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.repository.PrisonWorkAndEducationRepository
+import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.repository.SkillsAndInterestsRepository
+import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.repository.WorkInterestsRepository
 
 @Service
 class CIAGProfileService(
   private val ciagProfileRepository: CIAGProfileRepository,
+  private val educationAndQualificationRepository: EducationAndQualificationRepository,
+  private val previousWorkRepository: PreviousWorkRepository,
+  private val prisonWorkAndEducationRepository: PrisonWorkAndEducationRepository,
+  private val skillsAndInterestsRepository: SkillsAndInterestsRepository,
+  private val workInterestsRepository: WorkInterestsRepository,
 ) {
 
   companion object {
-    const val TOPIC_ID = "domainevents"
-    const val EVENT_TYPE_KEY = "eventType"
     val principal by lazy {
       SecurityContextHolder.getContext().authentication.principal
     }
@@ -26,50 +35,11 @@ class CIAGProfileService(
 
   ): CIAGProfile? {
     var ciagProfile = CIAGProfile(ciagProfileDTO)
-    var ciagProfileSavedOptional = ciagProfileRepository.findById(ciagProfileDTO.offenderId)
-    ciagProfile = ciagProfileRepository.saveAndFlush(ciagProfile)
-
-    return ciagProfile
-  }
-
-  fun updateCIAGInductionForOffender(
-    ciagProfileDTO: CIAGProfileRequestDTO,
-
-  ): CIAGProfile? {
-    var ciagProfile = CIAGProfile(ciagProfileDTO)
-/*    var ciagProfileSavedOptional = ciagProfileRepository.findById(ciagProfileDTO.offenderId)
-    ciagProfile.createdDateTime = LocalDateTime.now()
-    ciagProfile.createdBy = ciagProfileDTO.modifiedBy
-    if (ciagProfileSavedOptional != null && ciagProfileSavedOptional.isPresent()) {
-      if (!ciagProfileSavedOptional.get().equals(ciagProfile)) {
-        var ciagProfileSaved = ciagProfileSavedOptional.get()
-        ciagProfile.modifiedDateTime = LocalDateTime.now()
-        ciagProfile.modifiedBy = ciagProfileDTO.modifiedBy
-        ciagProfile.createdDateTime = ciagProfileSaved.modifiedDateTime
-        ciagProfile.createdBy = ciagProfileSaved.createdBy
-
-        if (ciagProfileSaved.inPrisonInterests?.equals(ciagProfile.inPrisonInterests) == false) {
-          ciagProfile.inPrisonInterests?.modifiedBy = ciagProfileSaved.modifiedBy
-          ciagProfile.inPrisonInterests?.modifiedDateTime = LocalDateTime.now()
-        }
-
-        if (ciagProfileSaved.workExperience?.equals(ciagProfile.workExperience) == false) {
-          ciagProfile.workExperience?.modifiedBy = ciagProfileSaved.modifiedBy
-          ciagProfile.workExperience?.modifiedDateTime = LocalDateTime.now()
-        }
-
-        if (ciagProfileSaved.qualificationsAndTraining?.equals(ciagProfile.qualificationsAndTraining) == false) {
-          ciagProfile.qualificationsAndTraining?.modifiedBy = ciagProfileSaved.modifiedBy
-          ciagProfile.qualificationsAndTraining?.modifiedDateTime = LocalDateTime.now()
-        }
-        if (ciagProfileSaved.skillsAndInterests?.equals(ciagProfile.skillsAndInterests) == false) {
-          ciagProfile.skillsAndInterests?.modifiedBy = ciagProfileSaved.modifiedBy
-          ciagProfile.skillsAndInterests?.modifiedDateTime = LocalDateTime.now()
-        }
-      }
-    } else {
-      throw NotFoundException(ciagProfileDTO.offenderId)
-    }*/
+    ciagProfile.skillsAndInterests?.let { skillsAndInterestsRepository.save(it) }
+    ciagProfile.qualificationsAndTraining?.let { educationAndQualificationRepository.save(it) }
+    ciagProfile.inPrisonInterests?.let { prisonWorkAndEducationRepository.save(it) }
+    ciagProfile.workExperience?.workInterests?.let { workInterestsRepository.save(it) }
+    ciagProfile.workExperience?.let { previousWorkRepository.save(it) }
     ciagProfile = ciagProfileRepository.saveAndFlush(ciagProfile)
 
     return ciagProfile
@@ -87,14 +57,10 @@ class CIAGProfileService(
   }
   fun getAllCIAGProfileForGivenOffenderIds(
     offenderIdList: List<String>,
-  ): List<CIAGProfileDTO>? {
+  ): CIAGProfileListDTO {
     var ciagProfileMutableList = ciagProfileRepository.findAllCIAGProfilesByIdList(offenderIdList)
-    var ciagProfileDTOList = mutableListOf<CIAGProfileDTO>()
-    val ciagProfileIstIterator = ciagProfileMutableList?.iterator()
-    while (ciagProfileIstIterator?.hasNext() == true) {
-      var ciagProfile = ciagProfileIstIterator?.next()
-      ciagProfileDTOList?.add(ciagProfile!!)
-    }
+    var ciagProfileDTOList = CIAGProfileListDTO(ciagProfileMutableList)
+
     return ciagProfileDTOList
   }
   fun deleteCIAGProfile(

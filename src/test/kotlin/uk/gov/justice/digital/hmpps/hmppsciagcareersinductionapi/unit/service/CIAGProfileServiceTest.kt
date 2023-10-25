@@ -14,16 +14,33 @@ import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.TestData
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity.CIAGProfile
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.exceptions.NotFoundException
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.repository.CIAGProfileRepository
+import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.repository.EducationAndQualificationRepository
+import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.repository.PreviousWorkRepository
+import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.repository.PrisonWorkAndEducationRepository
+import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.repository.SkillsAndInterestsRepository
+import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.repository.WorkInterestsRepository
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.service.CIAGProfileService
-import java.util.*
+import java.util.Optional
 
 class CIAGProfileServiceTest {
   private val ciagProfileRepository: CIAGProfileRepository = mock()
+  private val educationAndQualificationRepository: EducationAndQualificationRepository = mock()
+  private val previousWorkRepository: PreviousWorkRepository = mock()
+  private val prisonWorkAndEducationRepository: PrisonWorkAndEducationRepository = mock()
+  private val skillsAndInterestsRepository: SkillsAndInterestsRepository = mock()
+  private val workInterestsRepository: WorkInterestsRepository = mock()
   private lateinit var profileService: CIAGProfileService
 
   @BeforeEach
   fun beforeEach() {
-    profileService = CIAGProfileService(ciagProfileRepository)
+    profileService = CIAGProfileService(
+      ciagProfileRepository,
+      educationAndQualificationRepository,
+      previousWorkRepository,
+      prisonWorkAndEducationRepository,
+      skillsAndInterestsRepository,
+      workInterestsRepository,
+    )
   }
 
   @Test
@@ -69,12 +86,12 @@ class CIAGProfileServiceTest {
 
   @Test
   fun `makes a call to the repository to get list of CIAG profile`() {
-    whenever(ciagProfileRepository.findAllCIAGProfilesByIdList((any()))).thenReturn(TestData.ciagProfileList)
+    whenever(ciagProfileRepository.findAllCIAGProfilesByIdList((any()))).thenReturn(TestData.ciagMainProfileList)
 
     val rProfileList = TestData.offenderIdList?.let { profileService.getAllCIAGProfileForGivenOffenderIds(it) }
-    assertThat(rProfileList?.size).isEqualTo(2)
-    assertThat(TestData.offenderIdList).contains(rProfileList?.get(0)?.offenderId)
-    assertThat(TestData.offenderIdList).contains(rProfileList?.get(1)?.offenderId)
+    assertThat(rProfileList?.ciagProfileList?.size).isEqualTo(2)
+    assertThat(TestData.offenderIdList).contains(rProfileList?.ciagProfileList?.get(0)?.offenderId)
+    assertThat(TestData.offenderIdList).contains(rProfileList?.ciagProfileList?.get(1)?.offenderId)
   }
 
   @Test

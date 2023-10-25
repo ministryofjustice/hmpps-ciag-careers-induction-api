@@ -1,0 +1,403 @@
+{
+  "offenderId": "A8279DJ",
+  "createdBy": "sacintha",
+  "createdDateTime": "2022-07-06T12:00:00",
+  "modifiedBy": "sacintha",
+  "desireToWork": true,
+  "modifiedDateTime": "2022-07-06T12:00:00",
+  "hopingToGetWork": "NOT_SURE",
+  "abilityToWorkOther": null,
+  "abilityToWork": [
+    "CARING_RESPONSIBILITIES",
+    "LIMITED_BY_OFFENSE",
+    "HEALTH_ISSUES",
+    "NO_RIGHT_TO_WORK",
+    "OTHER",
+    "NONE"
+  ],
+  "reasonToNotGetWork": [
+    "LIMIT_THEIR_ABILITY",
+    "FULL_TIME_CARER",
+    "LACKS_CONFIDENCE_OR_MOTIVATION",
+    "HEALTH",
+    "RETIRED",
+    "NO_RIGHT_TO_WORK",
+    "OTHER",
+    "NO_REASON"
+  ],
+  "workExperience": {
+    "hasWorkedBefore": false,
+    "modifiedBy": "Sacintha",
+    "modifiedDateTime": "2022-07-06T12:00:00",
+    "typeOfWorkExperience": [
+      "OUTDOOR",
+      "CONSTRUCTION",
+      "DRIVING",
+      "BEAUTY",
+      "HOSPITALITY",
+      "TECHNICAL",
+      "MANUFACTURING",
+      "OFFICE",
+      "RETAIL",
+      "SPORTS",
+      "WAREHOUSING",
+      "WASTE_MANAGEMENT",
+      "EDUCATION_TRAINING",
+      "CLEANING_AND_MAINTENANCE",
+      "OTHER"
+    ],
+    "typeOfWorkExperienceOther": "some work",
+    "workExperience": [
+      {
+        "typeOfWorkExperience": "OTHER",
+        "role": "jobtitle",
+        "details": "Respon"
+      },
+      {
+        "typeOfWorkExperience": "OUTDOOR",
+        "role": "jobtitle",
+        "details": "Respon"
+      },
+      {
+        "typeOfWorkExperience": "CONSTRUCTION",
+        "role": "jobtitle",
+        "details": "Respon"
+      },
+      {
+        "typeOfWorkExperience": "DRIVING",
+        "role": "jobtitle",
+        "details": "Respon"
+      },
+      {
+        "typeOfWorkExperience": "BEAUTY",
+        "role": "jobtitle",
+        "details": "Respon"
+      },
+      {
+        "typeOfWorkExperience": "HOSPITALITY",
+        "role": "jobtitle",
+        "details": "Respon"
+      },
+      {
+        "typeOfWorkExperience": "TECHNICAL",
+        "role": "jobtitle",
+        "details": "Respon"
+      },
+      {
+        "typeOfWorkExperience": "MANUFACTURING",
+        "role": "jobtitle",
+        "details": "Respon"
+      },
+      {
+        "typeOfWorkExperience": "BEAUTY",
+        "role": "jobtitle",
+        "details": "Respon"
+      },
+      {
+        "typeOfWorkExperience": "BEAUTY",
+        "role": "jobtitle",
+        "details": "Respon"
+      },
+      {
+        "typeOfWorkExperience": "OFFICE",
+        "role": "jobtitle",
+        "details": "Respon"
+      },
+      {
+        "typeOfWorkExperience": "RETAIL",
+        "role": "jobtitle",
+        "details": "Respon"
+      },
+      {
+        "typeOfWorkExperience": "SPORTS",
+        "role": "jobtitle",
+        "details": "Respon"
+      },
+      {
+        "typeOfWorkExperience": "WAREHOUSING",
+        "role": "jobtitle",
+        "details": "Respon"
+      },
+      {
+        "typeOfWorkExperience": "WASTE_MANAGEMENT",
+        "role": "jobtitle",
+        "details": "Respon"
+      },
+      {
+        "typeOfWorkExperience": "EDUCATION_TRAINING",
+        "role": "jobtitle",
+        "details": "Respon"
+      },
+      {
+        "typeOfWorkExperience": "CLEANING_AND_MAINTENANCE",
+        "role": "jobtitle",
+        "details": "Respon"
+      },
+      {
+        "typeOfWorkExperience": "BEAUTY",
+        "role": "jobtitle",
+        "details": "Respon"
+      }
+    ],
+    "workInterests": {
+      "modifiedBy": "Sacintha",
+      "modifiedDateTime": "2022-07-06T12:00:00",
+      "workInterests": [
+        "OUTDOOR",
+        "CONSTRUCTION",
+        "DRIVING",
+        "BEAUTY",
+        "HOSPITALITY",
+        "TECHNICAL",
+        "MANUFACTURING",
+        "OFFICE",
+        "RETAIL",
+        "SPORTS",
+        "WAREHOUSING",
+        "WASTE_MANAGEMENT",
+        "EDUCATION_TRAINING",
+        "CLEANING_AND_MAINTENANCE",
+        "OTHER"
+      ],
+      "particularJobInterests": [
+        {
+          "workInterest": "OTHER",
+          "role": "jobtitle",
+          "details": "Respon"
+        },
+        {
+          "workInterest": "OUTDOOR",
+          "role": "jobtitle",
+          "details": "Respon"
+        },
+        {
+          "workInterest": "CONSTRUCTION",
+          "role": "jobtitle",
+          "details": "Respon"
+        },
+        {
+          "workInterest": "DRIVING",
+          "role": "jobtitle",
+          "details": "Respon"
+        },
+        {
+          "workInterest": "BEAUTY",
+          "role": "jobtitle",
+          "details": "Respon"
+        },
+        {
+          "workInterest": "HOSPITALITY",
+          "role": "jobtitle",
+          "details": "Respon"
+        },
+        {
+          "workInterest": "TECHNICAL",
+          "role": "jobtitle",
+          "details": "Respon"
+        },
+        {
+          "workInterest": "MANUFACTURING",
+          "role": "jobtitle",
+          "details": "Respon"
+        },
+        {
+          "workInterest": "BEAUTY",
+          "role": "jobtitle",
+          "details": "Respon"
+        },
+        {
+          "workInterest": "BEAUTY",
+          "role": "jobtitle",
+          "details": "Respon"
+        },
+        {
+          "workInterest": "OFFICE",
+          "role": "jobtitle",
+          "details": "Respon"
+        },
+        {
+          "workInterest": "RETAIL",
+          "role": "jobtitle",
+          "details": "Respon"
+        },
+        {
+          "workInterest": "SPORTS",
+          "role": "jobtitle",
+          "details": "Respon"
+        },
+        {
+          "workInterest": "WAREHOUSING",
+          "role": "jobtitle",
+          "details": "Respon"
+        },
+        {
+          "workInterest": "WASTE_MANAGEMENT",
+          "role": "jobtitle",
+          "details": "Respon"
+        },
+        {
+          "workInterest": "EDUCATION_TRAINING",
+          "role": "jobtitle",
+          "details": "Respon"
+        },
+        {
+          "workInterest": "CLEANING_AND_MAINTENANCE",
+          "role": "jobtitle",
+          "details": "Respon"
+        },
+        {
+          "workInterest": "BEAUTY",
+          "role": "jobtitle",
+          "details": "Respon"
+        }
+      ]
+    }
+  },
+  "skillsAndInterests": {
+    "modifiedBy": "Sacintha",
+    "modifiedDateTime": "2022-07-06T12:00:00",
+    "skills": [
+      "COMMUNICATION",
+      "RESILIENCE",
+      "SELF_MANAGEMENT",
+      "TEAMWORK",
+      "THINKING_AND_PROBLEM_SOLVING",
+      "WILLINGNESS_TO_LEARN",
+      "OTHER",
+      "NONE"
+    ],
+    "personalInterests": [
+      "COMMUNITY",
+      "CRAFTS",
+      "CREATIVE",
+      "DIGITAL",
+      "KNOWLEDGE_BASED",
+      "MUSICAL",
+      "OUTDOOR",
+      "NATURE_AND_ANIMALS",
+      "SOCIAL",
+      "SOLO_ACTIVITIES",
+      "SOLO_SPORTS",
+      "TEAM_SPORTS",
+      "WELLNESS",
+      "OTHER",
+      "NONE"
+    ]
+  },
+  "qualificationsAndTraining": {
+    "modifiedBy": "Sacintha",
+    "modifiedDateTime": "2022-07-06T12:00:00",
+    "educationLevel": "FURTHER_EDUCATION_COLLEGE",
+    "qualifications": [
+      {
+        "subject": "Subject -1",
+        "grade": "grade any",
+        "level": "ENTRY_LEVEL_2"
+      },
+      {
+        "subject": "Subject -2",
+        "grade": "grade any",
+        "level": "ENTRY_LEVEL_3"
+      },
+      {
+        "subject": "Subject -3",
+        "grade": "grade any",
+        "level": "LEVEL_1"
+      },
+      {
+        "subject": "Subject -4",
+        "grade": "grade any",
+        "level": "LEVEL_2"
+      },
+      {
+        "subject": "Subject -5",
+        "grade": "grade any",
+        "level": "LEVEL_3"
+      },
+      {
+        "subject": "Subject -6",
+        "grade": "grade any",
+        "level": "LEVEL_4"
+      },
+      {
+        "subject": "Subject -7",
+        "grade": "grade any",
+        "level": "LEVEL_5"
+      },
+      {
+        "subject": "Subject -8",
+        "grade": "grade any",
+        "level": "LEVEL_6"
+      },
+      {
+        "subject": "Subject -9",
+        "grade": "grade any",
+        "level": "LEVEL_7"
+      },
+      {
+        "subject": "Subject -10",
+        "grade": "grade any",
+        "level": "LEVEL_8"
+      },
+      {
+        "subject": "Subject",
+        "grade": "grade 2",
+        "level": "LEVEL_6"
+      },
+      {
+        "subject": "Subject",
+        "grade": "grade 2",
+        "level": "LEVEL_6"
+      }
+    ],
+    "additionalTraining": [
+      "CSCS_CARD",
+      "FIRST_AID_CERTIFICATE",
+      "FOOD_HYGIENE_CERTIFICATE",
+      "FULL_UK_DRIVING_LICENCE",
+      "HEALTH_AND_SAFETY",
+      "HGV_LICENCE",
+      "MACHINERY_TICKETS",
+      "MANUAL_HANDLING",
+      "TRADE_COURSE",
+      "OTHER",
+      "NONE"
+    ]
+  },
+  "inPrisonInterests": {
+    "modifiedBy": "GDUTTON_GEN",
+    "modifiedDateTime": "2023-08-24T09:19:12.375",
+
+    "inPrisonWork": [
+      "CLEANING_AND_HYGIENE",
+      "COMPUTERS_OR_DESK_BASED",
+      "GARDENING_AND_OUTDOORS",
+      "KITCHENS_AND_COOKING",
+      "MAINTENANCE",
+      "PRISON_LAUNDRY",
+      "PRISON_LIBRARY",
+      "TEXTILES_AND_SEWING",
+      "WELDING_AND_METALWORK",
+      "WOODWORK_AND_JOINERY",
+      "OTHER"
+    ],
+    "inPrisonWorkOther": "",
+    "inPrisonEducation": [
+      "BARBERING_AND_HAIRDRESSING",
+      "CATERING",
+      "COMMUNICATION_SKILLS",
+      "ENGLISH_LANGUAGE_SKILLS",
+      "FORKLIFT_DRIVING",
+      "INTERVIEW_SKILLS",
+      "MACHINERY_TICKETS",
+      "NUMERACY_SKILLS",
+      "RUNNING_A_BUSINESS",
+      "SOCIAL_AND_LIFE_SKILLS",
+      "WELDING_AND_METALWORK",
+      "WOODWORK_AND_JOINERY",
+      "OTHER"
+    ],
+    "inPrisonEducationOther": ""
+  },
+  "schemaVersion": "1.1"
+}

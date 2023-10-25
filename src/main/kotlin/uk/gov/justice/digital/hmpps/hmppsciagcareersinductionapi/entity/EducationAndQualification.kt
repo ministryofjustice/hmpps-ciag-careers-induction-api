@@ -37,13 +37,13 @@ data class EducationAndQualification(
   @Schema(description = "This is the Highest education level of the inmate.", name = "educationLevel", required = false)
   var educationLevel: EducationLevels?,
 
-  @ElementCollection(fetch = FetchType.LAZY)
+  @ElementCollection(fetch = FetchType.EAGER)
   @CollectionTable(name = "ACHIEVED_QUALIFICATION", joinColumns = [JoinColumn(name = "work_interests_id")])
   @Column(name = "QUALIFICATION")
   @Schema(description = "This is the qualification list of the inmate.", name = "qualifications", required = false)
   var qualifications: MutableSet<AchievedQualification>?,
 
-  @ElementCollection(fetch = FetchType.LAZY)
+  @ElementCollection(fetch = FetchType.EAGER)
   @CollectionTable(name = "EXTRA_QUALIFICATION", joinColumns = [JoinColumn(name = "work_interests_id")])
   @Column(name = "QUALIFICATION")
   @Schema(description = "This is the additional training list of the inmate.", name = "additionalTraining", required = false)

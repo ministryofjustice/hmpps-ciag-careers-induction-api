@@ -11,6 +11,7 @@ import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.Qua
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.ReasonToNotGetWork
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.Skills
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.WorkType
+import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.jsonprofile.CIAGMainProfileDTO
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.jsonprofile.CIAGProfileDTO
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.jsonprofile.CIAGProfileRequestDTO
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity.AchievedQualification
@@ -38,6 +39,11 @@ class TestData {
     val offenderId_A1234AD = "A1234AC"
     val createValidProfile_A1234AB =
       File("src/test/resources/testdata/CreateProfile_correct_A1234AB.json")
+        .inputStream()
+        .readBytes()
+        .toString(Charsets.UTF_8)
+    val createValidProfile_unitTest_Full_CIAG_profile =
+      File("src/test/resources/testdata/unitTest_Full_CIAG_profile.json")
         .inputStream()
         .readBytes()
         .toString(Charsets.UTF_8)
@@ -415,6 +421,35 @@ class TestData {
         prisonWorkAndEducation,
         "1.1",
       )
+
+    val ciagMainProfileDTO =
+      CIAGMainProfileDTO(
+        "A1234AB",
+        "sacintha",
+
+        LocalDateTime.now(),
+        "sacintha",
+
+        LocalDateTime.now(),
+        true,
+        HopingToGetWork.NOT_SURE,
+
+      )
+
+    val ciagMainDTOSecond =
+      CIAGMainProfileDTO(
+        "A1234AC",
+        "sacintha",
+        LocalDateTime.now(),
+        "sacintha",
+
+        LocalDateTime.now(),
+        true,
+        HopingToGetWork.NOT_SURE,
+
+      )
+
+    val ciagMainProfileList = mutableListOf<CIAGMainProfileDTO>(ciagMainProfileDTO, ciagMainDTOSecond)
     val ciagProfileList = mutableListOf<CIAGProfileDTO>(ciagProfileDTO, ciagDTOSecond)
   }
 }

@@ -33,7 +33,7 @@ data class WorkInterests(
   @GeneratedValue(strategy = GenerationType.SEQUENCE)
   @Column(name = "ID", nullable = false)
   val id: Long?,
-  @ElementCollection(fetch = FetchType.LAZY)
+  @ElementCollection(fetch = FetchType.EAGER)
   @CollectionTable(name = "WORK_INTERESTS", joinColumns = [JoinColumn(name = "WORK_INTERESTS_ID")])
   @Column(name = "WORK_INTERESTS")
   @Size(min = 1)
@@ -43,7 +43,7 @@ data class WorkInterests(
   @Schema(description = "This is the work interest which is peculiar to this inmate  .This field is mandatory when  \"workInterests\" has a Value set to \"OTHER\" ", name = "workInterestsOther", required = false)
   var workInterestsOther: String?,
 
-  @ElementCollection(fetch = FetchType.LAZY)
+  @ElementCollection(fetch = FetchType.EAGER)
   @CollectionTable(name = "PARTICULAR_WORK_INTERESTS", joinColumns = [JoinColumn(name = "WORK_INTERESTS_ID")])
   @Column(name = "PARTICULAR_WORK_INTEREST")
   @Schema(description = "This is the list of detailed interests of the inmate.", name = "particularJobInterests")

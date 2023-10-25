@@ -120,7 +120,7 @@ class CIAGResourceController(
     @Valid @RequestBody
     offenderIdList: CIAGProfileOffenderIdListRequestDTO,
   ): CIAGProfileListDTO {
-    return CIAGProfileListDTO(ciagProfileService.getAllCIAGProfileForGivenOffenderIds(offenderIdList.offenderIds))
+    return ciagProfileService.getAllCIAGProfileForGivenOffenderIds(offenderIdList.offenderIds)
   }
 
   @PreAuthorize("hasAnyRole('ROLE_EDUCATION_WORK_PLAN_EDITOR')")
@@ -283,7 +283,7 @@ class CIAGResourceController(
     @AuthenticationPrincipal oauth2User: String,
   ): CIAGProfileDTO? {
     requestDTO.modifiedBy = oauth2User
-    return ciagProfileService.updateCIAGInductionForOffender(requestDTO)?.let {
+    return ciagProfileService.createOrUpdateCIAGInductionForOffender(requestDTO)?.let {
       CIAGProfileDTO(
         it,
       )

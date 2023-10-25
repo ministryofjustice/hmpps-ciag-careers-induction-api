@@ -34,7 +34,7 @@ data class SkillsAndInterests(
   @GeneratedValue(strategy = GenerationType.SEQUENCE)
   @Column(name = "id", nullable = false)
   val id: Long?,
-  @ElementCollection(fetch = FetchType.LAZY)
+  @ElementCollection(fetch = FetchType.EAGER)
   @CollectionTable(name = "SKILLS_WORK_INTERESTS", joinColumns = [JoinColumn(name = "WORK_INTERESTS_ID")])
   @Column(name = "SKILLS")
   @Size(min = 1)
@@ -44,7 +44,7 @@ data class SkillsAndInterests(
   @Schema(description = "This is the skill which is peculiar to this inmate  .This field is mandatory when  \"skills\" has a Value set to \"OTHER\" ", name = "skillsOther", required = false)
   var skillsOther: String?,
 
-  @ElementCollection(fetch = FetchType.LAZY)
+  @ElementCollection(fetch = FetchType.EAGER)
   @CollectionTable(name = "PERSONAL_WORK_INTERESTS", joinColumns = [JoinColumn(name = "WORK_INTERESTS_ID")])
   @Column(name = "PERSONAL_WORK_INTEREST")
   @Size(min = 1)

@@ -39,7 +39,7 @@ data class PreviousWork(
   @Column(name = "id", nullable = false)
   val id: Long?,
 
-  @ElementCollection(fetch = FetchType.LAZY)
+  @ElementCollection(fetch = FetchType.EAGER)
   @CollectionTable(name = "WORK_EXPERIENCE", joinColumns = [JoinColumn(name = "PREVIOUS_WORK_ID")])
   @Column(name = "WORK_EXPERIENCE")
   @Size(min = 1)
@@ -50,7 +50,7 @@ data class PreviousWork(
   @Schema(description = "This is the work experience which is peculiar to this inmate  .This field is mandatory when  \"typeOfWorkExperience\" has a Value set to \"OTHER\" ", name = "typeOfWorkExperienceOther", required = false)
   var typeOfWorkExperienceOther: String?,
 
-  @ElementCollection(fetch = FetchType.LAZY)
+  @ElementCollection(fetch = FetchType.EAGER)
   @CollectionTable(name = "WORK_EXPERIENCE_DETAIL", joinColumns = [JoinColumn(name = "PREVIOUS_WORK_ID")])
   @Column(name = "WORK_EXPERIENCE_DETAIL")
   @Size(min = 1)
