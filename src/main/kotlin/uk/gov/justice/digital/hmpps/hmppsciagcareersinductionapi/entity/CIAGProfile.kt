@@ -8,7 +8,7 @@ import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.config.Captured
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.AbilityToWorkImpactedBy
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.HopingToGetWork
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.ReasonToNotGetWork
-import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.jsonprofile.CIAGProfileDTO
+import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.jsonprofile.CIAGMainProfileDTO
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.jsonprofile.CIAGProfileRequestDTO
 import java.time.LocalDateTime
 import javax.persistence.CascadeType
@@ -34,13 +34,13 @@ import javax.validation.constraints.Size
   query = "SELECT c.offender_id AS offenderId, c.created_date_time AS createdDateTime, c.created_by AS createdBy," +
     "c.modified_by AS modifiedBy,c.DESIRE_TO_WORK AS desireToWork,c.modified_date_time AS modifiedDateTime, " +
     "c.HOPING_TO_GET_WORK AS hopingToGetWork FROM CIAG_PROFILE c where  c.offender_id in :offenderIdList",
-  resultSetMapping = "Mapping.CIAGProfileDTO",
+  resultSetMapping = "Mapping.CIAGMainProfileDTO",
 )
 @SqlResultSetMapping(
-  name = "Mapping.CIAGProfileDTO",
+  name = "Mapping.CIAGMainProfileDTO",
   classes = [
     ConstructorResult(
-      targetClass = CIAGProfileDTO::class,
+      targetClass = CIAGMainProfileDTO::class,
       columns = arrayOf(
         ColumnResult(name = "offenderId"),
         ColumnResult(name = "createdDateTime", type = LocalDateTime::class),
@@ -88,13 +88,13 @@ data class CIAGProfile(
   @Column(name = "OTHER_ABILITY_TO_WORK_IMPACT")
   var abilityToWorkOther: String?,
 
-  @ElementCollection(fetch = FetchType.LAZY)
+  @ElementCollection(fetch = FetchType.EAGER)
   @CollectionTable(name = "ABILITY_TO_WORK_IMPACT", joinColumns = [JoinColumn(name = "OFFENDER_ID")])
   @Column(name = "WORK_IMPACT")
   @Size(min = 1)
   var abilityToWork: MutableSet<AbilityToWorkImpactedBy>?,
 
-  @ElementCollection(fetch = FetchType.LAZY)
+  @ElementCollection(fetch = FetchType.EAGER)
   @CollectionTable(name = "REASON_TO_NOT_WORK", joinColumns = [JoinColumn(name = "OFFENDER_ID")])
   @Column(name = "REASON")
   @Size(min = 1)

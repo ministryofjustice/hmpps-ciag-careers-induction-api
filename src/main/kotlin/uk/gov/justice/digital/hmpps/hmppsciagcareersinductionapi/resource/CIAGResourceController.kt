@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.config.DpsPrincipal
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.config.ErrorResponse
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.jsonprofile.CIAGProfileDTO
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.jsonprofile.CIAGProfileListDTO
@@ -121,7 +120,7 @@ class CIAGResourceController(
     @Valid @RequestBody
     offenderIdList: CIAGProfileOffenderIdListRequestDTO,
   ): CIAGProfileListDTO {
-    return CIAGProfileListDTO(ciagProfileService.getAllCIAGProfileForGivenOffenderIds(offenderIdList.offenderIds))
+    return ciagProfileService.getAllCIAGProfileForGivenOffenderIds(offenderIdList.offenderIds)
   }
 
   @PreAuthorize("hasAnyRole('ROLE_EDUCATION_WORK_PLAN_EDITOR')")
@@ -222,9 +221,9 @@ class CIAGResourceController(
     offenderId: String,
     @Validated @RequestBody
     requestDTO: CIAGProfileRequestDTO,
-    @AuthenticationPrincipal oauth2User: DpsPrincipal,
+    @AuthenticationPrincipal oauth2User: String,
   ): CIAGProfileDTO? {
-    requestDTO.modifiedBy = oauth2User.name
+    requestDTO.modifiedBy = oauth2User
     ciagValidationService.validateInput(requestDTO)
     return ciagProfileService.createOrUpdateCIAGInductionForOffender(requestDTO)?.let {
       CIAGProfileDTO(
@@ -281,10 +280,10 @@ class CIAGResourceController(
     offenderId: String,
     @Valid @RequestBody
     requestDTO: CIAGProfileRequestDTO,
-    @AuthenticationPrincipal oauth2User: DpsPrincipal,
+    @AuthenticationPrincipal oauth2User: String,
   ): CIAGProfileDTO? {
-    requestDTO.modifiedBy = oauth2User.name
-    return ciagProfileService.updateCIAGInductionForOffender(requestDTO)?.let {
+    requestDTO.modifiedBy = oauth2User
+    return ciagProfileService.createOrUpdateCIAGInductionForOffender(requestDTO)?.let {
       CIAGProfileDTO(
         it,
       )

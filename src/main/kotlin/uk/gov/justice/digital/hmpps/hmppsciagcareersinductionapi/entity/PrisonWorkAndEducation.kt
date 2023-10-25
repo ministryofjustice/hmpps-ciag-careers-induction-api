@@ -36,7 +36,7 @@ data class PrisonWorkAndEducation(
   @GeneratedValue(strategy = GenerationType.SEQUENCE)
   @Column(name = "id", nullable = false)
   val id: Long?,
-  @ElementCollection(fetch = FetchType.LAZY)
+  @ElementCollection(fetch = FetchType.EAGER)
   @CollectionTable(name = "PRISON_WORK", joinColumns = [JoinColumn(name = "PRISON_WORK_EDUCATION_ID")])
   @Column(name = "WORK")
   @Size(min = 1)
@@ -46,7 +46,7 @@ data class PrisonWorkAndEducation(
   @Schema(description = "This is the prison work which is peculiar to this inmate  .This field is mandatory when  \"inPrisonWork\" has a Value set to \"OTHER\" ", name = "inPrisonWorkOther", required = false)
   var inPrisonWorkOther: String?,
 
-  @ElementCollection(fetch = FetchType.LAZY)
+  @ElementCollection(fetch = FetchType.EAGER)
   @CollectionTable(name = "PRISON_EDUCATION", joinColumns = [JoinColumn(name = "PRISON_WORK_EDUCATION_ID")])
   @Column(name = "EDUCATION")
   @Size(min = 1)
