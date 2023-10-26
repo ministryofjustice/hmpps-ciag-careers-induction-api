@@ -20,7 +20,7 @@ class OutboundEventsService(
         ZoneOffset.UTC,
       )!!,
     )
-    outboundEvent?.let { outboundEventsPublisher?.publishToTopic(it) }
+    outboundEventsPublisher?.publishToTopic(outboundEvent)
   }
   fun createValidCiagInductionEvent(
     reference: String,
