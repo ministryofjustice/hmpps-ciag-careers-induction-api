@@ -1,8 +1,7 @@
 package uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.messaging
 
-import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Service
-import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.config.DpsPrincipal
+import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.config.CapturedSpringConfigValues
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity.CIAGProfile
 import java.time.Instant
 import java.time.ZoneOffset
@@ -12,9 +11,6 @@ class OutboundEventsService(
   var outboundEventsPublisher: OutboundEventsPublisher?,
 ) {
 
-  val principal: DpsPrincipal by lazy {
-    SecurityContextHolder.getContext().authentication?.principal as DpsPrincipal
-  }
   fun createAndPublishEventMessage(ciagProfile: CIAGProfile, eventType: EventType) {
     val outboundEvent = createValidCiagInductionEvent(
       ciagProfile.offenderId,
@@ -38,8 +34,8 @@ class OutboundEventsService(
       additionalInformation = AdditionalInformation(
         reference = reference,
         prisonId = prisonName,
-        userId = principal.name,
-        userDisplayName = principal.displayName,
+        userId = CapturedSpringConfigValues.getDPSPrincipal().name,
+        userDisplayName = CapturedSpringConfigValues.getDPSPrincipal().displayName,
       ),
       occurredAt = instant,
       version = 1,
