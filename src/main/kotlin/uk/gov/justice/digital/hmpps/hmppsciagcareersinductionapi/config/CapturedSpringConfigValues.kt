@@ -14,9 +14,6 @@ import org.springframework.security.core.context.SecurityContextHolder
 @Configuration
 class CapturedSpringConfigValues {
   companion object {
-    val principal by lazy {
-      SecurityContextHolder.getContext().authentication.principal as DpsPrincipal
-    }
     var OBJECT_MAPPER: ObjectMapper = this.configObjectMapper()
     fun getDPSPrincipal(): DpsPrincipal {
       return SecurityContextHolder.getContext().authentication.principal as DpsPrincipal
