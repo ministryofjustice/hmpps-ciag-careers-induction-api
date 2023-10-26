@@ -72,7 +72,7 @@ data class CIAGProfileDTO(
     offenderId = profileEntity.offenderId,
     prisonId = profileEntity.prisonId,
     prisonName = profileEntity.prisonName,
-    createdBy = profileEntity.createdBy!!,
+    createdBy = profileEntity.createdBy.toString(),
     createdDateTime = profileEntity.createdDateTime!!,
     modifiedBy = profileEntity.modifiedBy!!,
     desireToWork = profileEntity.desireToWork,

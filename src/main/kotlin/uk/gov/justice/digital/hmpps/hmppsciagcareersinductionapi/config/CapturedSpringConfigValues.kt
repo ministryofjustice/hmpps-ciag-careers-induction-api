@@ -18,6 +18,9 @@ class CapturedSpringConfigValues {
       SecurityContextHolder.getContext().authentication.principal as DpsPrincipal
     }
     var OBJECT_MAPPER: ObjectMapper = this.configObjectMapper()
+    fun getDPSPrincipal(): DpsPrincipal {
+      return SecurityContextHolder.getContext().authentication.principal as DpsPrincipal
+    }
     fun configObjectMapper(): ObjectMapper {
       val mapper = ObjectMapper()
       mapper.registerModule(JavaTimeModule())
