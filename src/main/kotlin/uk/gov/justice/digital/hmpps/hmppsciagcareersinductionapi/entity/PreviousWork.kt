@@ -96,13 +96,13 @@ data class PreviousWork(
 
   @PrePersist
   fun prePersist() {
-    this.modifiedBy = CapturedSpringConfigValues.principal.name
+    this.modifiedBy = CapturedSpringConfigValues.getDPSPrincipal().name
     this.modifiedDateTime = LocalDateTime.now()
   }
 
   @PreUpdate
   fun preUpdate() {
-    this.modifiedBy = CapturedSpringConfigValues.principal.name
+    this.modifiedBy = CapturedSpringConfigValues.getDPSPrincipal().name
     this.modifiedDateTime = LocalDateTime.now()
   }
 }
