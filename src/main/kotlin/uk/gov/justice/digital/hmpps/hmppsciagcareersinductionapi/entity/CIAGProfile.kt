@@ -65,19 +65,19 @@ data class CIAGProfile(
   @Column(name = "PRISON_NAME")
   var prisonName: String?,
   @CreatedBy
-  var createdBy: String,
+  var createdBy: String?,
 
   @CreatedDate
-  var createdDateTime: LocalDateTime,
+  var createdDateTime: LocalDateTime?,
 
   @LastModifiedBy
-  var modifiedBy: String,
+  var modifiedBy: String?,
 
   @Column(name = "DESIRE_TO_WORK")
   var desireToWork: Boolean,
 
   @LastModifiedDate
-  var modifiedDateTime: LocalDateTime,
+  var modifiedDateTime: LocalDateTime?,
 
   @Column(name = "HOPING_TO_GET_WORK")
   var hopingToGetWork: HopingToGetWork,
@@ -124,13 +124,13 @@ data class CIAGProfile(
     ciagProfileRequestDTO: CIAGProfileRequestDTO,
   ) : this(
     offenderId = ciagProfileRequestDTO.offenderId!!,
-    createdBy = ciagProfileRequestDTO.createdBy!!,
-    createdDateTime = ciagProfileRequestDTO.createdDateTime!!,
-    modifiedBy = ciagProfileRequestDTO.modifiedBy!!,
+    createdBy = ciagProfileRequestDTO.createdBy,
+    createdDateTime = ciagProfileRequestDTO.createdDateTime,
+    modifiedBy = ciagProfileRequestDTO.modifiedBy,
     prisonId = ciagProfileRequestDTO.prisonId,
     prisonName = ciagProfileRequestDTO.prisonName,
     desireToWork = ciagProfileRequestDTO.desireToWork!!,
-    modifiedDateTime = ciagProfileRequestDTO.modifiedDateTime!!,
+    modifiedDateTime = ciagProfileRequestDTO.modifiedDateTime,
     hopingToGetWork = ciagProfileRequestDTO.hopingToGetWork!!,
     reasonToNotGetWorkOther = ciagProfileRequestDTO.reasonToNotGetWorkOther,
     abilityToWorkOther = ciagProfileRequestDTO.abilityToWorkOther,

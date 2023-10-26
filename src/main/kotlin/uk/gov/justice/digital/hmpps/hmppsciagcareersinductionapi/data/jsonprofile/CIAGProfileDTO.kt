@@ -67,46 +67,16 @@ data class CIAGProfileDTO(
   var schemaVersion: String? = null,
 
 ) {
-  constructor(
-    offenderId: String,
-    createdDateTime: LocalDateTime,
-    createdBy: String,
 
-    modifiedBy: String,
-
-    modifiedDateTime: LocalDateTime,
-    desireToWork: Boolean,
-    hopingToGetWork: Int,
-  ) : this(
-    offenderId = offenderId!!,
-    createdBy = createdBy!!,
-    createdDateTime = createdDateTime!!,
-    modifiedBy = modifiedBy!!,
-    desireToWork = desireToWork!!,
-    modifiedDateTime = modifiedDateTime!!,
-    hopingToGetWork = HopingToGetWork.fromInt(hopingToGetWork)!!,
-    prisonId = null,
-    prisonName = null,
-    reasonToNotGetWorkOther = null,
-    abilityToWorkOther = null,
-    abilityToWork = null,
-    reasonToNotGetWork = null,
-    workExperience = null,
-    skillsAndInterests = null,
-    qualificationsAndTraining = null,
-    inPrisonInterests = null,
-    schemaVersion = null,
-  ) {
-  }
   constructor(profileEntity: CIAGProfile) : this(
     offenderId = profileEntity.offenderId,
     prisonId = profileEntity.prisonId,
     prisonName = profileEntity.prisonName,
-    createdBy = profileEntity.createdBy,
-    createdDateTime = profileEntity.createdDateTime,
-    modifiedBy = profileEntity.modifiedBy,
+    createdBy = profileEntity.createdBy!!,
+    createdDateTime = profileEntity.createdDateTime!!,
+    modifiedBy = profileEntity.modifiedBy!!,
     desireToWork = profileEntity.desireToWork,
-    modifiedDateTime = profileEntity.modifiedDateTime,
+    modifiedDateTime = profileEntity.modifiedDateTime!!,
     hopingToGetWork = profileEntity.hopingToGetWork,
     reasonToNotGetWorkOther = profileEntity.reasonToNotGetWorkOther,
     abilityToWorkOther = profileEntity.abilityToWorkOther,

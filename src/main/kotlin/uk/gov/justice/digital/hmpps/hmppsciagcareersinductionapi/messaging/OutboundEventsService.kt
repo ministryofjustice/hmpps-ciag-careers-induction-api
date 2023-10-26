@@ -20,9 +20,9 @@ class OutboundEventsService(
       ciagProfile.offenderId,
       ciagProfile.prisonId,
       eventType,
-      ciagProfile.modifiedDateTime.toInstant(
+      ciagProfile.modifiedDateTime?.toInstant(
         ZoneOffset.UTC,
-      ),
+      )!!,
     )
     outboundEvent?.let { outboundEventsPublisher?.publishToTopic(it) }
   }

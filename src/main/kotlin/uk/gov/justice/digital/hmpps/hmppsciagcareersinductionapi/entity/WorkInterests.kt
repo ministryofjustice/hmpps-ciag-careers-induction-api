@@ -24,11 +24,11 @@ import javax.validation.constraints.Size
 data class WorkInterests(
   @LastModifiedBy
   @Schema(description = "This is the person who modifies the Induction.Even though it is passed from front end it wil be automatically set to the right value at the time of record modification ", name = "modifiedBy", required = true)
-  var modifiedBy: String,
+  var modifiedBy: String?,
 
   @LastModifiedDate
   @Schema(description = "This is the modified date and time of Induction record .Even though it is passed from front end it wil be automatically set to the right value at the time of record modification ", name = "modifiedDateTime", required = true)
-  var modifiedDateTime: LocalDateTime,
+  var modifiedDateTime: LocalDateTime?,
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE)
   @Column(name = "ID", nullable = false)

@@ -334,72 +334,6 @@ class TestData {
         "1.1",
       )
 
-    val ciagEducation =
-      CIAGProfile(
-        "A1234AB",
-        "sacintha",
-        "MDI",
-        "MOOR",
-        LocalDateTime.now(),
-        "sacintha",
-        true,
-        LocalDateTime.now(),
-        HopingToGetWork.NOT_SURE,
-        null,
-        null,
-        abilityToWorkImpactDetailList,
-        reasonToNotGetWork,
-        null,
-        null,
-        educationAndQualification,
-        null,
-        "1.1",
-      )
-
-    val ciagPreviousWork =
-      CIAGProfile(
-        "A1234AB",
-        "sacintha",
-        "MDI",
-        "MOOR",
-        LocalDateTime.now(),
-        "sacintha",
-        true,
-        LocalDateTime.now(),
-        HopingToGetWork.NOT_SURE,
-        null,
-        null,
-        abilityToWorkImpactDetailList,
-        reasonToNotGetWork,
-        previousWork,
-        null,
-        null,
-        null,
-        "1.1",
-      )
-
-    val ciagPrisonWork =
-      CIAGProfile(
-        "A1234AB",
-        "sacintha",
-        "MDI",
-        "MOOR",
-        LocalDateTime.now(),
-        "sacintha",
-        true,
-        LocalDateTime.now(),
-        HopingToGetWork.NOT_SURE,
-        null,
-        null,
-        abilityToWorkImpactDetailList,
-        reasonToNotGetWork,
-        null,
-        null,
-        null,
-        prisonWorkAndEducation,
-        "1.1",
-      )
-
     val ciagSecond =
       CIAGProfile(
         "A1234AC",
@@ -495,6 +429,5 @@ class TestData {
       )
 
     val ciagMainProfileList = mutableListOf<CIAGMainProfileDTO>(ciagMainProfileDTO, ciagMainDTOSecond)
-    val ciagProfileList = mutableListOf<CIAGProfileDTO>(ciagProfileDTO, ciagDTOSecond)
   }
 }
