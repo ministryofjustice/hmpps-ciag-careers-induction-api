@@ -1,8 +1,8 @@
 package uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity
-import com.fasterxml.jackson.annotation.JsonIgnore
 import io.swagger.v3.oas.annotations.media.Schema
 import org.springframework.data.annotation.LastModifiedBy
 import org.springframework.data.annotation.LastModifiedDate
+import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.config.CapturedSpringConfigValues
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.EducationLevels
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.OtherQualification
 import java.time.LocalDateTime
@@ -15,7 +15,8 @@ import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
 import javax.persistence.Id
 import javax.persistence.JoinColumn
-import javax.persistence.OneToOne
+import javax.persistence.PrePersist
+import javax.persistence.PreUpdate
 import javax.persistence.Table
 
 @Entity
@@ -23,11 +24,11 @@ import javax.persistence.Table
 data class EducationAndQualification(
   @LastModifiedBy
   @Schema(description = "This is the person who modifies the Induction.Even though it is passed from front end it wil be automatically set to the right value at the time of record modification ", name = "modifiedBy", required = true)
-  var modifiedBy: String,
+  var modifiedBy: String?,
 
   @LastModifiedDate
   @Schema(description = "This is the modified date and time of Induction record .Even though it is passed from front end it wil be automatically set to the right value at the time of record modification ", name = "modifiedDateTime", required = true)
-  var modifiedDateTime: LocalDateTime,
+  var modifiedDateTime: LocalDateTime?,
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE)
   @Column(name = "id", nullable = false)
@@ -52,13 +53,10 @@ data class EducationAndQualification(
   @Schema(description = "This is the additional which is peculiar to this inmate  .This field is mandatory when  \"additionalTraining\" has a Value set to \"OTHER\" ", name = "additionalTrainingOther", required = false)
   var additionalTrainingOther: String?,
 
-  @OneToOne(mappedBy = "qualificationsAndTraining")
-  @JsonIgnore
-  var profile: CIAGProfile?,
 ) {
 
   override fun toString(): String {
-    return "EducationAndQualification(modifiedBy='$modifiedBy', modifiedDateTime=$modifiedDateTime, id=$id, educationLevel=$educationLevel, qualifications=$qualifications, additionalTraining=$additionalTraining, additionalTrainingOther=$additionalTrainingOther, profile=$profile)"
+    return "EducationAndQualification(modifiedBy='$modifiedBy', modifiedDateTime=$modifiedDateTime, id=$id, educationLevel=$educationLevel, qualifications=$qualifications, additionalTraining=$additionalTraining, additionalTrainingOther=$additionalTrainingOther)"
   }
 
   override fun equals(other: Any?): Boolean {
@@ -83,5 +81,17 @@ data class EducationAndQualification(
     result = 31 * result + (additionalTraining?.hashCode() ?: 0)
     result = 31 * result + (additionalTrainingOther?.hashCode() ?: 0)
     return result
+  }
+
+  @PrePersist
+  fun prePersist() {
+    this.modifiedBy = CapturedSpringConfigValues.principal.name
+    this.modifiedDateTime = LocalDateTime.now()
+  }
+
+  @PreUpdate
+  fun preUpdate() {
+    this.modifiedBy = CapturedSpringConfigValues.principal.name
+    this.modifiedDateTime = LocalDateTime.now()
   }
 }

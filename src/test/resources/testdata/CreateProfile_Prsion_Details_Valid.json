@@ -16,7 +16,7 @@
   "qualificationsAndTraining": {
     "modifiedBy": "GDUTTON_GEN",
     "modifiedDateTime": "2023-08-24T09:19:12.375",
-    "id": 27,
+
     "educationLevel": null,
     "qualifications": [],
     "additionalTraining": ["HEALTH_AND_SAFETY"],
@@ -25,7 +25,7 @@
   "inPrisonInterests": {
     "modifiedBy": "GDUTTON_GEN",
     "modifiedDateTime": "2023-08-24T09:19:12.375",
-    "id": 26,
+
     "inPrisonWork": ["KITCHENS_AND_COOKING"],
     "inPrisonWorkOther": "",
     "inPrisonEducation": ["ENGLISH_LANGUAGE_SKILLS"],

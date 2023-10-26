@@ -6,7 +6,6 @@ import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import org.springframework.http.MediaType
 import org.springframework.security.access.prepost.PreAuthorize
-import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.config.DpsPrincipal
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.config.ErrorResponse
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.jsonprofile.CIAGProfileDTO
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.jsonprofile.CIAGProfileListDTO
@@ -121,7 +119,7 @@ class CIAGResourceController(
     @Valid @RequestBody
     offenderIdList: CIAGProfileOffenderIdListRequestDTO,
   ): CIAGProfileListDTO {
-    return CIAGProfileListDTO(ciagProfileService.getAllCIAGProfileForGivenOffenderIds(offenderIdList.offenderIds))
+    return ciagProfileService.getAllCIAGProfileForGivenOffenderIds(offenderIdList.offenderIds)
   }
 
   @PreAuthorize("hasAnyRole('ROLE_EDUCATION_WORK_PLAN_EDITOR')")
@@ -222,9 +220,7 @@ class CIAGResourceController(
     offenderId: String,
     @Validated @RequestBody
     requestDTO: CIAGProfileRequestDTO,
-    @AuthenticationPrincipal oauth2User: DpsPrincipal,
   ): CIAGProfileDTO? {
-    requestDTO.modifiedBy = oauth2User.name
     ciagValidationService.validateInput(requestDTO)
     return ciagProfileService.createOrUpdateCIAGInductionForOffender(requestDTO)?.let {
       CIAGProfileDTO(
@@ -281,10 +277,8 @@ class CIAGResourceController(
     offenderId: String,
     @Valid @RequestBody
     requestDTO: CIAGProfileRequestDTO,
-    @AuthenticationPrincipal oauth2User: DpsPrincipal,
   ): CIAGProfileDTO? {
-    requestDTO.modifiedBy = oauth2User.name
-    return ciagProfileService.updateCIAGInductionForOffender(requestDTO)?.let {
+    return ciagProfileService.createOrUpdateCIAGInductionForOffender(requestDTO)?.let {
       CIAGProfileDTO(
         it,
       )

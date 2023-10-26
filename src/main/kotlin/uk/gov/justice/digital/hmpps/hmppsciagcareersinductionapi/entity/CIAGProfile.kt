@@ -4,10 +4,11 @@ import org.springframework.data.annotation.CreatedBy
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.LastModifiedBy
 import org.springframework.data.annotation.LastModifiedDate
+import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.config.CapturedSpringConfigValues
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.AbilityToWorkImpactedBy
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.HopingToGetWork
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.ReasonToNotGetWork
-import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.jsonprofile.CIAGProfileDTO
+import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.jsonprofile.CIAGMainProfileDTO
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.jsonprofile.CIAGProfileRequestDTO
 import java.time.LocalDateTime
 import javax.persistence.CascadeType
@@ -22,6 +23,8 @@ import javax.persistence.Id
 import javax.persistence.JoinColumn
 import javax.persistence.NamedNativeQuery
 import javax.persistence.OneToOne
+import javax.persistence.PrePersist
+import javax.persistence.PreUpdate
 import javax.persistence.SqlResultSetMapping
 import javax.persistence.Table
 import javax.validation.constraints.Size
@@ -31,13 +34,13 @@ import javax.validation.constraints.Size
   query = "SELECT c.offender_id AS offenderId, c.created_date_time AS createdDateTime, c.created_by AS createdBy," +
     "c.modified_by AS modifiedBy,c.DESIRE_TO_WORK AS desireToWork,c.modified_date_time AS modifiedDateTime, " +
     "c.HOPING_TO_GET_WORK AS hopingToGetWork FROM CIAG_PROFILE c where  c.offender_id in :offenderIdList",
-  resultSetMapping = "Mapping.CIAGProfileDTO",
+  resultSetMapping = "Mapping.CIAGMainProfileDTO",
 )
 @SqlResultSetMapping(
-  name = "Mapping.CIAGProfileDTO",
+  name = "Mapping.CIAGMainProfileDTO",
   classes = [
     ConstructorResult(
-      targetClass = CIAGProfileDTO::class,
+      targetClass = CIAGMainProfileDTO::class,
       columns = arrayOf(
         ColumnResult(name = "offenderId"),
         ColumnResult(name = "createdDateTime", type = LocalDateTime::class),
@@ -62,19 +65,19 @@ data class CIAGProfile(
   @Column(name = "PRISON_NAME")
   var prisonName: String?,
   @CreatedBy
-  var createdBy: String,
+  var createdBy: String?,
 
   @CreatedDate
-  var createdDateTime: LocalDateTime,
+  var createdDateTime: LocalDateTime?,
 
   @LastModifiedBy
-  var modifiedBy: String,
+  var modifiedBy: String?,
 
   @Column(name = "DESIRE_TO_WORK")
   var desireToWork: Boolean,
 
   @LastModifiedDate
-  var modifiedDateTime: LocalDateTime,
+  var modifiedDateTime: LocalDateTime?,
 
   @Column(name = "HOPING_TO_GET_WORK")
   var hopingToGetWork: HopingToGetWork,
@@ -97,19 +100,19 @@ data class CIAGProfile(
   @Size(min = 1)
   var reasonToNotGetWork: MutableSet<ReasonToNotGetWork>?,
 
-  @OneToOne(cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.LAZY)
+  @OneToOne(cascade = [CascadeType.REMOVE], orphanRemoval = true, fetch = FetchType.LAZY)
   @JoinColumn(name = "PREVIOUS_WORK_ID")
   var workExperience: PreviousWork?,
 
-  @OneToOne(cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.LAZY)
+  @OneToOne(cascade = [CascadeType.REMOVE], orphanRemoval = true, fetch = FetchType.LAZY)
   @JoinColumn(name = "SKILLS_AND_INTERESTS_ID")
   var skillsAndInterests: SkillsAndInterests?,
 
-  @OneToOne(cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.LAZY)
+  @OneToOne(cascade = [CascadeType.REMOVE], orphanRemoval = true, fetch = FetchType.LAZY)
   @JoinColumn(name = "EDUCATION_AND_QUALIFICATION_ID")
   var qualificationsAndTraining: EducationAndQualification?,
 
-  @OneToOne(cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.LAZY)
+  @OneToOne(cascade = [CascadeType.REMOVE], orphanRemoval = true, fetch = FetchType.LAZY)
   @JoinColumn(name = "PRISON_WORK_AND_EDUCATION_ID")
   var inPrisonInterests: PrisonWorkAndEducation?,
 
@@ -121,13 +124,13 @@ data class CIAGProfile(
     ciagProfileRequestDTO: CIAGProfileRequestDTO,
   ) : this(
     offenderId = ciagProfileRequestDTO.offenderId!!,
-    createdBy = ciagProfileRequestDTO.createdBy!!,
-    createdDateTime = ciagProfileRequestDTO.createdDateTime!!,
-    modifiedBy = ciagProfileRequestDTO.modifiedBy!!,
+    createdBy = ciagProfileRequestDTO.createdBy,
+    createdDateTime = ciagProfileRequestDTO.createdDateTime,
+    modifiedBy = ciagProfileRequestDTO.modifiedBy,
     prisonId = ciagProfileRequestDTO.prisonId,
     prisonName = ciagProfileRequestDTO.prisonName,
     desireToWork = ciagProfileRequestDTO.desireToWork!!,
-    modifiedDateTime = ciagProfileRequestDTO.modifiedDateTime!!,
+    modifiedDateTime = ciagProfileRequestDTO.modifiedDateTime,
     hopingToGetWork = ciagProfileRequestDTO.hopingToGetWork!!,
     reasonToNotGetWorkOther = ciagProfileRequestDTO.reasonToNotGetWorkOther,
     abilityToWorkOther = ciagProfileRequestDTO.abilityToWorkOther,
@@ -185,5 +188,19 @@ data class CIAGProfile(
 
   override fun toString(): String {
     return "CIAGProfile(offenderId='$offenderId', createdBy='$createdBy', createdDateTime=$createdDateTime, modifiedBy='$modifiedBy', desireToWork=$desireToWork, modifiedDateTime=$modifiedDateTime, hopingToGetWork=$hopingToGetWork, reasonToNotGetWorkOther=$reasonToNotGetWorkOther, abilityToWorkOther=$abilityToWorkOther, abilityToWork=$abilityToWork, reasonToNotGetWork=$reasonToNotGetWork, prisonName=$prisonName, prisonId=$prisonId, workExperience=$workExperience,  skillsAndInterests=$skillsAndInterests, qualificationsAndTraining=$qualificationsAndTraining, inPrisonInterests=$inPrisonInterests, schemaVersion='$schemaVersion')"
+  }
+
+  @PrePersist
+  fun prePersist() {
+    this.createdBy = CapturedSpringConfigValues.principal.name
+    this.createdDateTime = LocalDateTime.now()
+    this.modifiedBy = CapturedSpringConfigValues.principal.name
+    this.modifiedDateTime = LocalDateTime.now()
+  }
+
+  @PreUpdate
+  fun preUpdate() {
+    this.modifiedBy = CapturedSpringConfigValues.principal.name
+    this.modifiedDateTime = LocalDateTime.now()
   }
 }

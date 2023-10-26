@@ -11,6 +11,7 @@ import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.Qua
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.ReasonToNotGetWork
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.Skills
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.common.WorkType
+import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.jsonprofile.CIAGMainProfileDTO
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.jsonprofile.CIAGProfileDTO
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.jsonprofile.CIAGProfileRequestDTO
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity.AchievedQualification
@@ -38,6 +39,11 @@ class TestData {
     val offenderId_A1234AD = "A1234AC"
     val createValidProfile_A1234AB =
       File("src/test/resources/testdata/CreateProfile_correct_A1234AB.json")
+        .inputStream()
+        .readBytes()
+        .toString(Charsets.UTF_8)
+    val createValidProfile_unitTest_Full_CIAG_profile =
+      File("src/test/resources/testdata/unitTest_Full_CIAG_profile.json")
         .inputStream()
         .readBytes()
         .toString(Charsets.UTF_8)
@@ -191,7 +197,6 @@ class TestData {
         mutableSetOf(
           WorkInterestDetail(WorkType.BEAUTY, "tired"),
         ),
-        null,
       )
 
     var previousWork =
@@ -204,7 +209,6 @@ class TestData {
         null,
         previousWorkDetailSet,
         workInterests,
-        null,
       )
     var skillsAndInterests =
       SkillsAndInterests(
@@ -214,7 +218,6 @@ class TestData {
         mutableSetOf(Skills.COMMUNICATION),
         null,
         mutableSetOf(PersonalInterests.COMMUNITY),
-        null,
         null,
       )
     var acchievedQualification =
@@ -230,7 +233,6 @@ class TestData {
         acchievedQualificationSet,
         mutableSetOf(OtherQualification.CSCS_CARD),
         null,
-        null,
       )
     var prisonWorkAndEducation =
       PrisonWorkAndEducation(
@@ -240,7 +242,6 @@ class TestData {
         mutableSetOf(PrisonWork.PRISON_LAUNDRY),
         null,
         mutableSetOf(PrisonTraining.BARBERING_AND_HAIRDRESSING),
-        null,
         null,
       )
 
@@ -263,6 +264,27 @@ class TestData {
         skillsAndInterests,
         educationAndQualification,
         prisonWorkAndEducation,
+        "1.1",
+      )
+    val ciagDTO_with_no_subsets =
+      CIAGProfileRequestDTO(
+        "A1234AB",
+        "sacintha",
+        "MDI",
+        "MOOR",
+        LocalDateTime.now(),
+        "sacintha",
+        LocalDateTime.now(),
+        true,
+        HopingToGetWork.NOT_SURE,
+        null,
+        null,
+        abilityToWorkImpactDetailList,
+        reasonToNotGetWork,
+        null,
+        null,
+        null,
+        null,
         "1.1",
       )
 
@@ -289,56 +311,13 @@ class TestData {
         "1.1",
       )
 
-    val ciagEducation =
+    val ciag_with_no_subsets =
       CIAGProfile(
         "A1234AB",
-        "sacintha",
-        "MDI",
-        "MOOR",
-        LocalDateTime.now(),
-        "sacintha",
-        true,
-        LocalDateTime.now(),
-        HopingToGetWork.NOT_SURE,
-        null,
-        null,
-        abilityToWorkImpactDetailList,
-        reasonToNotGetWork,
-        null,
-        null,
-        educationAndQualification,
-        null,
-        "1.1",
-      )
 
-    val ciagPreviousWork =
-      CIAGProfile(
-        "A1234AB",
-        "sacintha",
         "MDI",
         "MOOR",
-        LocalDateTime.now(),
         "sacintha",
-        true,
-        LocalDateTime.now(),
-        HopingToGetWork.NOT_SURE,
-        null,
-        null,
-        abilityToWorkImpactDetailList,
-        reasonToNotGetWork,
-        previousWork,
-        null,
-        null,
-        null,
-        "1.1",
-      )
-
-    val ciagPrisonWork =
-      CIAGProfile(
-        "A1234AB",
-        "sacintha",
-        "MDI",
-        "MOOR",
         LocalDateTime.now(),
         "sacintha",
         true,
@@ -351,7 +330,7 @@ class TestData {
         null,
         null,
         null,
-        prisonWorkAndEducation,
+        null,
         "1.1",
       )
 
@@ -421,6 +400,34 @@ class TestData {
         prisonWorkAndEducation,
         "1.1",
       )
-    val ciagProfileList = mutableListOf<CIAGProfileDTO>(ciagProfileDTO, ciagDTOSecond)
+
+    val ciagMainProfileDTO =
+      CIAGMainProfileDTO(
+        "A1234AB",
+        "sacintha",
+
+        LocalDateTime.now(),
+        "sacintha",
+
+        LocalDateTime.now(),
+        true,
+        HopingToGetWork.NOT_SURE,
+
+      )
+
+    val ciagMainDTOSecond =
+      CIAGMainProfileDTO(
+        "A1234AC",
+        "sacintha",
+        LocalDateTime.now(),
+        "sacintha",
+
+        LocalDateTime.now(),
+        true,
+        HopingToGetWork.NOT_SURE,
+
+      )
+
+    val ciagMainProfileList = mutableListOf<CIAGMainProfileDTO>(ciagMainProfileDTO, ciagMainDTOSecond)
   }
 }
