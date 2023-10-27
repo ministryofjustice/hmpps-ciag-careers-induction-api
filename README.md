@@ -2,48 +2,82 @@
 [![repo standards badge](https://img.shields.io/badge/dynamic/json?color=blue&style=flat&logo=github&label=MoJ%20Compliant&query=%24.result&url=https%3A%2F%2Foperations-engineering-reports.cloud-platform.service.justice.gov.uk%2Fapi%2Fv1%2Fcompliant_public_repositories%2Fhmpps-ciag-careers-induction-api)](https://operations-engineering-reports.cloud-platform.service.justice.gov.uk/public-github-repositories.html#hmpps-ciag-careers-induction-api "Link to report")
 [![CircleCI](https://circleci.com/gh/ministryofjustice/hmpps-ciag-careers-induction-api/tree/main.svg?style=svg)](https://circleci.com/gh/ministryofjustice/hmpps-ciag-careers-induction-api)
 [![Docker Repository on Quay](https://quay.io/repository/hmpps/hmpps-ciag-careers-induction-api/status "Docker Repository on Quay")](https://quay.io/repository/hmpps/hmpps-ciag-careers-induction-api)
-[![API docs](https://img.shields.io/badge/API_docs_-view-85EA2D.svg?logo=swagger)](https://hmpps-ciag-careers-induction-api-dev.hmpps.service.justice.gov.uk/webjars/swagger-ui/index.html?configUrl=/v3/api-docs)
+[![API docs](https://ciag-induction-api-dev.hmpps.service.justice.gov.uk/swagger-ui/index.html#/)](https://hmpps-ciag-careers-induction-api-dev.hmpps.service.justice.gov.uk/webjars/swagger-ui/index.html?configUrl=/v3/api-docs)
 
-This is a skeleton project from which to create new kotlin projects from.
 
 # Instructions
+## Configuring the project
 
-If this is a HMPPS project then the project will be created as part of bootstrapping - 
-see https://github.com/ministryofjustice/dps-project-bootstrap.
+### Ktlint formatting
+Ktlint is used to format the source code and a task runs in the Circle build to check the formatting.
 
-## Creating a CloudPlatform namespace
+You should run the following commands to make sure that the source code is formatted locally before it breaks the Circle build.
 
-When deploying to a new namespace, you may wish to use this template kotlin project namespace as the basis for your new namespace:
+#### Apply ktlint formatting rules to Intellij
+`./gradlew ktlintApplyToIdea`
 
-<https://github.com/ministryofjustice/cloud-platform-environments/tree/main/namespaces/live.cloud-platform.service.justice.gov.uk/hmpps-ciag-careers-induction-api>
+Or to apply to all Intellij projects:
 
-Copy this folder, update all the existing namespace references, and submit a PR to the CloudPlatform team. Further instructions from the CloudPlatform team can be found here: <https://user-guide.cloud-platform.service.justice.gov.uk/#cloud-platform-user-guide>
+`./gradlew ktlintApplyToIdeaGlobally`
 
-## Renaming from Hmpps Ciag Careers Induction Api - github Actions
+#### Run ktlint formatter on git commit
+`./gradlew addKtlintFormatGitPreCommitHook`
 
-Once the new repository is deployed. Navigate to the repository in github, and select the `Actions` tab.
-Click the link to `Enable Actions on this repository`.
+## Running the app
+The easiest (and slowest) way to run the app is to use docker compose to create the service and all dependencies.
 
-Find the Action workflow named: `rename-project-create-pr` and click `Run workflow`.  This workflow will
-execute the `rename-project.bash` and create Pull Request for you to review.  Review the PR and merge.
+`docker-compose pull`
 
-Note: ideally this workflow would run automatically however due to a recent change github Actions are not
-enabled by default on newly created repos. There is no way to enable Actions other then to click the button in the UI.
-If this situation changes we will update this project so that the workflow is triggered during the bootstrap project.
-Further reading: <https://github.community/t/workflow-isnt-enabled-in-repos-generated-from-template/136421>
+`docker-compose up`
 
-## Manually renaming from Hmpps Ciag Careers Induction Api
+* See `http://localhost:8081/health` to check the app is running.
+* See `http://localhost:8081/swagger-ui/index.html?configUrl=/v3/api-docs` to explore the OpenAPI spec document.
 
-Run the `rename-project.bash` and create a PR.
+## Environment variables
+The following environment variables are required in order for the app to start:
 
-The `rename-project.bash` script takes a single argument - the name of the project and calculates from it:
-* The main class name (project name converted to pascal case) 
-* The project description (class name with spaces between the words)
-* The main package name (project name with hyphens removed)
+### General
 
-It then performs a search and replace and directory renames so the project is ready to be used.
+| Name           | Description                                |
+|----------------|--------------------------------------------|
+| SERVER_PORT    | The port that the application will run on  |
+| HMPPS_AUTH_URL | The URL for OAuth 2.0 authorisation server |
 
+### Database
 
-TODO
-have to upgrade
+| Name      | Description                       |
+|-----------|-----------------------------------|
+| DB_SERVER | The host of the DB server         |
+| DB_NAME   | The name of the database instance |        
+| DB_USER   | The application's DB username     |
+| DB_PASS   | The DB user's password            |
+
+### Application Insights
+
+| Name                                   | Description                              |
+|----------------------------------------|------------------------------------------|
+| APPINSIGHTS_INSTRUMENTATIONKEY         | The instrumentation key for App Insights |
+| APPLICATIONINSIGHTS_CONNECTION_STRING  | The connection string for App Insights   |
+| APPLICATIONINSIGHTS_CONFIGURATION_FILE | A configuration file for App Insights    |
+
+### SQS/SNS Topics and Queues
+
+| Name                                             | Description                                                               |
+|--------------------------------------------------|---------------------------------------------------------------------------|
+| HMPPS_SQS_USE_WEB_TOKEN                          | Set to `true` if the `DefaultAWSCredentialsProviderChain` should be used. |
+| HMPPS_SQS_TOPICS_DOMAINEVENTS_ARN                | The AWS ARN for the shared domain-events topic.                           |
+
+## Monitoring, tracing and event reporting
+The API is instrumented with the opentelemetry and Application Insights java agent. Useful data can be found and reported
+on via the Azure Application Insights console, all under the `cloud_RoleName` property of `hmpps-ciag-careers-induction-api`
+
+## To run locally 
+Bring the docker images up using the below command
 `docker-compose up --scale   hmpps-ciag-careers-induction-api=0`
+
+set localstack as active profile
+
+set the environment variable to
+API_BASE_URL_OAUTH = https://sign-in-dev.hmpps.service.justice.gov.uk/auth
+
+The configuration file can be retrieved from .run/HmppsCiagCareersInductionApi.run.xml

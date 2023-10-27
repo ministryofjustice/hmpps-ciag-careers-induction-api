@@ -280,12 +280,12 @@
       {
         "subject": "Subject -1",
         "grade": "grade any",
-        "level": "ENTRY_LEVEL_2"
+        "level": "ENTRY_LEVEL"
       },
       {
         "subject": "Subject -2",
         "grade": "grade any",
-        "level": "ENTRY_LEVEL_3"
+        "level": "ENTRY_LEVEL"
       },
       {
         "subject": "Subject -3",
