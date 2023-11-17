@@ -21,6 +21,7 @@ import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.repository.Pris
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.repository.SkillsAndInterestsRepository
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.repository.WorkInterestsRepository
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.service.CIAGProfileService
+import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.telemetry.TelemetryService
 import java.util.Optional
 
 class CIAGProfileServiceTest {
@@ -31,6 +32,7 @@ class CIAGProfileServiceTest {
   private val skillsAndInterestsRepository: SkillsAndInterestsRepository = mock()
   private val workInterestsRepository: WorkInterestsRepository = mock()
   private val outboundEventsService: OutboundEventsService = mock()
+  private val telemetryService: TelemetryService = mock()
 
   private lateinit var profileService: CIAGProfileService
 
@@ -44,6 +46,7 @@ class CIAGProfileServiceTest {
       skillsAndInterestsRepository,
       workInterestsRepository,
       outboundEventsService,
+      telemetryService,
     )
   }
 

@@ -14,6 +14,7 @@ import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.repository.Prev
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.repository.PrisonWorkAndEducationRepository
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.repository.SkillsAndInterestsRepository
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.repository.WorkInterestsRepository
+import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.telemetry.TelemetryService
 
 @Service
 class CIAGProfileService(
@@ -24,6 +25,7 @@ class CIAGProfileService(
   private val skillsAndInterestsRepository: SkillsAndInterestsRepository,
   private val workInterestsRepository: WorkInterestsRepository,
   private val outboundEventsService: OutboundEventsService,
+  private val telemetryService: TelemetryService,
 ) {
 
   fun createOrUpdateCIAGInductionForOffender(
@@ -42,6 +44,7 @@ class CIAGProfileService(
     ciagProfile.workExperience?.let { previousWorkRepository.save(it) }
     ciagProfile = ciagProfileRepository.saveAndFlush(ciagProfile)
     outboundEventsService.createAndPublishEventMessage(ciagProfile, eventType)
+    telemetryService.createAndPublishTelemetryEventMessage(ciagProfile, eventType)
     return ciagProfile
   }
 
