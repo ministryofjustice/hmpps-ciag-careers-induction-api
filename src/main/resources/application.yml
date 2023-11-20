@@ -5,7 +5,7 @@ info.app:
 azure:
   application-insights:
     web:
-      enabled: false
+      enabled: true
 
 spring:
   application:
