@@ -3,7 +3,6 @@ plugins {
   kotlin("plugin.spring") version "1.9.20"
   kotlin("plugin.jpa") version "1.9.20"
   kotlin("plugin.lombok") version "1.9.20"
-  id ("org.gradle.toolchains.foojay-resolver-convention") version "0.7"
   id("jacoco")
 }
 
@@ -114,13 +113,16 @@ tasks {
       jvmTarget = "21"
     }
   }
+  withType<JavaCompile> {
+    sourceCompatibility = "21"
+  }
 }
 
 repositories {
   mavenCentral()
 }
 
-kotlin {
+/*kotlin {
   jvmToolchain {
     this.languageVersion.set(JavaLanguageVersion.of("21"))
   }
@@ -128,7 +130,7 @@ kotlin {
 
 java {
   toolchain.languageVersion.set(JavaLanguageVersion.of(21))
-}
+}*/
 
 dependencyCheck {
   suppressionFiles.add("$rootDir/dependencyCheck/suppression.xml")
