@@ -111,7 +111,7 @@ tasks {
   withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
     kotlinOptions {
       freeCompilerArgs = listOf("-Xjvm-default=all")
-      jvmTarget = "21"
+      jvmTarget = "20"
     }
   }
 }
@@ -122,12 +122,12 @@ repositories {
 
 kotlin {
   jvmToolchain {
-    this.languageVersion.set(JavaLanguageVersion.of("21"))
+    this.languageVersion.set(JavaLanguageVersion.of("20"))
   }
 }
 
 java {
-  toolchain.languageVersion.set(JavaLanguageVersion.of(21))
+  toolchain.languageVersion.set(JavaLanguageVersion.of(20))
 }
 
 dependencyCheck {
