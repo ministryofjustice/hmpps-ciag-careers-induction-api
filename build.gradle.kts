@@ -22,8 +22,15 @@ configurations {
 
 ext["springdoc.openapi.version"] = "2.2.0"
 sourceSets {
+  main {
+    java {
+      setSrcDirs(listOf("src/main"))
+    }
+  }
   test {
-    java.srcDir("$projectDir/src/test/kotlin")
+    java {
+      setSrcDirs(listOf("src/test"))
+    }
   }
 }
 dependencies {
