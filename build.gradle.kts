@@ -27,11 +27,6 @@ sourceSets {
       setSrcDirs(listOf("src/main"))
     }
   }
-  test {
-    java {
-      setSrcDirs(listOf("src/test"))
-    }
-  }
 }
 dependencies {
   annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
@@ -100,14 +95,6 @@ tasks {
     maxHeapSize = "2048m"
   }
 
-  register<Test>("testIntegration") {
-    useJUnitPlatform {
-      include("**/*IntTest*")
-    }
-    minHeapSize = "128m"
-    maxHeapSize = "2048m"
-  }
-
   withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
     kotlinOptions {
       freeCompilerArgs = listOf("-Xjvm-default=all")
@@ -123,22 +110,15 @@ testing {
   suites {
     val test by getting(JvmTestSuite::class) {
       useJUnitJupiter()
-      dependencies {
-        implementation(project())
-      }
-    }
-
-    register<JvmTestSuite>("testIntegration") {
-      dependencies {
-        implementation(project())
-      }
-
-      targets {
-        all {
-          testTask.configure {
-            shouldRunAfter(test)
+      sourceSets {
+        test {
+          java {
+            setSrcDirs(listOf("src/test"))
           }
         }
+      }
+      dependencies {
+        implementation(project())
       }
     }
   }
