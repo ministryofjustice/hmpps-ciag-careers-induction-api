@@ -119,6 +119,31 @@ tasks {
   }
 }
 
+testing {
+  suites {
+    val test by getting(JvmTestSuite::class) {
+      useJUnitJupiter()
+      dependencies {
+        implementation(project())
+      }
+    }
+
+    register<JvmTestSuite>("testIntegration") {
+      dependencies {
+        implementation(project())
+      }
+
+      targets {
+        all {
+          testTask.configure {
+            shouldRunAfter(test)
+          }
+        }
+      }
+    }
+  }
+}
+
 repositories {
   mavenCentral()
 }
