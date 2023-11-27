@@ -4,6 +4,7 @@ plugins {
   kotlin("plugin.jpa") version "1.9.20"
   kotlin("plugin.lombok") version "1.9.20"
   id("jacoco")
+  id("jvm-test-suite")
 }
 
 configurations {
