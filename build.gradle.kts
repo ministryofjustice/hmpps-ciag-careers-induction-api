@@ -21,7 +21,11 @@ configurations {
 }
 
 ext["springdoc.openapi.version"] = "2.2.0"
-
+sourceSets {
+  test {
+    java.srcDir("$projectDir/src/test/kotlin")
+  }
+}
 dependencies {
   annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
   annotationProcessor("org.projectlombok:lombok:1.18.30")
