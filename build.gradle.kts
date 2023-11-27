@@ -22,33 +22,6 @@ configurations {
 
 ext["springdoc.openapi.version"] = "2.2.0"
 
-val integrationTest = task<Test>("integrationTest") {
-  description = "Integration tests"
-  group = "verification"
-  shouldRunAfter("test")
-}
-
-tasks.named<Test>("integrationTest") {
-  useJUnitPlatform()
-  filter {
-    includeTestsMatching("*.Int.*")
-  }
-}
-
-tasks.named<Test>("test") {
-  filter {
-    excludeTestsMatching("*.Int.*")
-  }
-}
-
-tasks.named("check") {
-  setDependsOn(
-    dependsOn.filterNot {
-      it is TaskProvider<*> && it.name == "detekt"
-    }
-  )
-}
-
 dependencies {
   annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
   annotationProcessor("org.projectlombok:lombok:1.18.30")
@@ -133,6 +106,15 @@ java {
   toolchain.languageVersion.set(JavaLanguageVersion.of(21))
 }*/
 
+tasks.named<Test>("test") {
+  useJUnitPlatform()
+
+  maxHeapSize = "1G"
+
+  testLogging {
+    events("passed")
+  }
+}
 dependencyCheck {
   suppressionFiles.add("$rootDir/dependencyCheck/suppression.xml")
 }
