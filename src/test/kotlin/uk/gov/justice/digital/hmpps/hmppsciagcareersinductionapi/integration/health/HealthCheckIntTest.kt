@@ -10,7 +10,7 @@ import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.integration.Int
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-class HealthCheckTest : IntegrationTestBase() {
+class HealthCheckIntTest : IntegrationTestBase() {
 
   @Test
   fun `Health page reports ok`() {

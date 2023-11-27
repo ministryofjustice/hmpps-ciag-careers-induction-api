@@ -92,6 +92,22 @@ dependencies {
 }
 
 tasks {
+  test {
+    useJUnitPlatform {
+      exclude("**/*IntTest*")
+    }
+    minHeapSize = "128m"
+    maxHeapSize = "2048m"
+  }
+
+  register<Test>("testIntegration") {
+    useJUnitPlatform {
+      include("**/*IntTest*")
+    }
+    minHeapSize = "128m"
+    maxHeapSize = "2048m"
+  }
+
   withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
     kotlinOptions {
       freeCompilerArgs = listOf("-Xjvm-default=all")
@@ -117,15 +133,6 @@ java {
   toolchain.languageVersion.set(JavaLanguageVersion.of(21))
 }*/
 
-tasks.named<Test>("test") {
-  useJUnitPlatform()
-
-  maxHeapSize = "1G"
-
-  testLogging {
-    events("passed")
-  }
-}
 dependencyCheck {
   suppressionFiles.add("$rootDir/dependencyCheck/suppression.xml")
 }
