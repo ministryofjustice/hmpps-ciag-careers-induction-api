@@ -1,51 +1,63 @@
 plugins {
-  id("uk.gov.justice.hmpps.gradle-spring-boot") version "4.8.4"
-  kotlin("plugin.spring") version "1.8.10"
-  kotlin("plugin.jpa") version "1.8.10"
-  id("jacoco")
+  id("uk.gov.justice.hmpps.gradle-spring-boot") version "5.4.1"
+  id("org.openapi.generator") version "7.0.1"
+  kotlin("plugin.spring") version "1.8.22"
+  kotlin("plugin.jpa") version "1.8.22"
+  kotlin("plugin.lombok") version "1.8.22"
 }
 
 configurations {
-  testImplementation { exclude(group = "org.junit.vintage") }
-}
-
-val integrationTest = task<Test>("integrationTest") {
-  description = "Integration tests"
-  group = "verification"
-  shouldRunAfter("test")
-}
-
-tasks.named<Test>("integrationTest") {
-  useJUnitPlatform()
-  filter {
-    includeTestsMatching("*.Int.*")
+  implementation {
+    exclude(module = "commons-logging")
+    exclude(module = "log4j")
+    exclude(module = "c3p0")
+    exclude(module = "logback-classic")
+  }
+  testImplementation {
+    exclude(group = "org.junit.vintage")
+    exclude(module = "logback-classic")
   }
 }
 
-tasks.named<Test>("test") {
-  filter {
-    excludeTestsMatching("*.Int.*")
-  }
-}
-
-tasks.named("check") {
-  setDependsOn(
-    dependsOn.filterNot {
-      it is TaskProvider<*> && it.name == "detekt"
+ext["springdoc.openapi.version"] = "2.2.0"
+sourceSets {
+  main {
+    java {
+      setSrcDirs(listOf("src/main"))
     }
-  )
+  }
 }
-
 dependencies {
   annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
+  annotationProcessor("org.projectlombok:lombok:1.18.30")
+  testAnnotationProcessor("org.projectlombok:lombok:1.18.30")
   implementation("org.springframework.boot:spring-boot-starter-validation")
   // Spring boot dependencies
   implementation("org.springframework.boot:spring-boot-starter-security")
   implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
   implementation("org.springframework.boot:spring-boot-starter-data-jpa")
   implementation("org.springframework.boot:spring-boot-starter-actuator")
+  implementation("javax.xml.bind:jaxb-api:2.3.1")
+
+  implementation("commons-codec:commons-codec:1.16.0")
+  implementation("org.ehcache:ehcache:3.10.8")
+  implementation("com.zaxxer:HikariCP:5.1.0")
+
+  implementation("io.swagger:swagger-annotations:1.6.12")
+
+  implementation("org.apache.commons:commons-lang3:3.13.0")
+  implementation("commons-io:commons-io:2.15.0")
+  implementation("com.google.guava:guava:32.1.3-jre")
+  implementation("org.apache.commons:commons-text:1.11.0")
+  implementation("com.oracle.database.jdbc:ojdbc10:19.21.0.0")
+  implementation("org.hibernate.orm:hibernate-community-dialects")
+  implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:${property("springdoc.openapi.version")}")
+
+  compileOnly("org.projectlombok:lombok:1.18.30")
+  testImplementation("jakarta.servlet:jakarta.servlet-api:6.0.0")
+
   implementation("org.apache.commons:commons-collections4:4.0")
-  implementation("uk.gov.justice.service.hmpps:hmpps-sqs-spring-boot-starter:1.3.1")
+  implementation("uk.gov.justice.service.hmpps:hmpps-sqs-spring-boot-starter:2.0.1")
 
   // Enable kotlin reflect
   implementation("org.jetbrains.kotlin:kotlin-reflect:1.6.20")
@@ -57,12 +69,6 @@ dependencies {
   runtimeOnly("org.postgresql:postgresql:42.4.0")
 
   implementation("io.arrow-kt:arrow-core:1.1.2")
-  implementation("com.vladmihalcea:hibernate-types-52:2.16.2")
-
-  // OpenAPI
-  implementation("org.springdoc:springdoc-openapi-ui:1.6.9")
-  implementation("org.springdoc:springdoc-openapi-data-rest:1.6.9")
-  implementation("org.springdoc:springdoc-openapi-kotlin:1.6.9")
 
   implementation("com.google.code.gson:gson:2.9.0")
 
@@ -76,25 +82,35 @@ dependencies {
   testImplementation("org.junit.jupiter:junit-jupiter:5.8.2")
   testImplementation("org.testcontainers:localstack:1.18.1")
   testImplementation("com.h2database:h2")
+  implementation(kotlin("stdlib"))
 }
+
+tasks {
+
+  withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+    kotlinOptions {
+      freeCompilerArgs = listOf("-Xjvm-default=all")
+      jvmTarget = "19"
+    }
+  }
+  withType<JavaCompile> {
+    sourceCompatibility = "19"
+  }
+}
+
 repositories {
   mavenCentral()
 }
 
-jacoco {
-  // You may modify the Jacoco version here
-  toolVersion = "0.8.8"
-}
-
-kotlin {
+/*kotlin {
   jvmToolchain {
-    this.languageVersion.set(JavaLanguageVersion.of("18"))
+    this.languageVersion.set(JavaLanguageVersion.of("19"))
   }
 }
 
 java {
-  toolchain.languageVersion.set(JavaLanguageVersion.of(18))
-}
+  toolchain.languageVersion.set(JavaLanguageVersion.of(19))
+}*/
 
 dependencyCheck {
   suppressionFiles.add("$rootDir/dependencyCheck/suppression.xml")

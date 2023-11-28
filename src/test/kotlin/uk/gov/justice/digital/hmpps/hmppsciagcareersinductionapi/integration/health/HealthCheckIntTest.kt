@@ -1,16 +1,16 @@
 package uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.integration.health
 
-import com.vladmihalcea.hibernate.type.json.internal.JacksonUtil
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpMethod
+import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.config.CapturedSpringConfigValues
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.integration.IntegrationTestBase
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-class HealthCheckTest : IntegrationTestBase() {
+class HealthCheckIntTest : IntegrationTestBase() {
 
   @Test
   fun `Health page reports ok`() {
@@ -26,7 +26,7 @@ class HealthCheckTest : IntegrationTestBase() {
     assert(result != null)
     assert(result.hasBody())
     assert(result.statusCode.is2xxSuccessful)
-    var stringcompanion = JacksonUtil.toJsonNode(result.body.toString())
+    var stringcompanion = CapturedSpringConfigValues.OBJECT_MAPPER.readTree(result.body.toString())
     var version = stringcompanion.get("components").get("healthInfo").get("details").get("version")
     assertThat(version.asText().toString()).startsWith(LocalDateTime.now().format(DateTimeFormatter.ISO_DATE))
   }
@@ -37,7 +37,7 @@ class HealthCheckTest : IntegrationTestBase() {
     assert(result != null)
     assert(result.hasBody())
     assert(result.statusCode.is2xxSuccessful)
-    var stringcompanion = JacksonUtil.toJsonNode(result.body.toString())
+    var stringcompanion = CapturedSpringConfigValues.OBJECT_MAPPER.readTree(result.body.toString())
     var status = stringcompanion.get("status")
     assertThat(status.asText().toString()).isEqualTo("UP")
   }
@@ -48,7 +48,7 @@ class HealthCheckTest : IntegrationTestBase() {
     assert(result != null)
     assert(result.hasBody())
     assert(result.statusCode.is2xxSuccessful)
-    var stringcompanion = JacksonUtil.toJsonNode(result.body.toString())
+    var stringcompanion = CapturedSpringConfigValues.OBJECT_MAPPER.readTree(result.body.toString())
     var status = stringcompanion.get("status")
     assertThat(status.asText().toString()).isEqualTo("UP")
   }
@@ -59,7 +59,7 @@ class HealthCheckTest : IntegrationTestBase() {
     assert(result != null)
     assert(result.hasBody())
     assert(result.statusCode.is2xxSuccessful)
-    var stringcompanion = JacksonUtil.toJsonNode(result.body.toString())
+    var stringcompanion = CapturedSpringConfigValues.OBJECT_MAPPER.readTree(result.body.toString())
     var status = stringcompanion.get("status")
     assertThat(status.asText().toString()).isEqualTo("UP")
   }

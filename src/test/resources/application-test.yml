@@ -20,7 +20,7 @@ spring:
       ddl-auto: none
 
   datasource:
-    url: 'jdbc:h2:mem:ciag-careers;MODE=PostgreSQL;'
+    url: 'jdbc:h2:mem:ciag-careers;'
     username: create_vary
     password: dummy
 
