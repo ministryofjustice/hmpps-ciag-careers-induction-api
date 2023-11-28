@@ -5,7 +5,7 @@ info.app:
 azure:
   application-insights:
     web:
-      enabled: false
+      enabled: true
 
 spring:
   application:
@@ -65,6 +65,7 @@ spring:
   flyway:
     initOnMigrate: true
     baselineOnMigrate: true
+    validateMigrationNaming: true
     enabled: true
     url: ${spring.datasource.url}
     user: ${DATABASE_USERNAME}

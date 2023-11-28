@@ -1,11 +1,11 @@
 package uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.repository.impl
 
+import jakarta.persistence.EntityManager
+import jakarta.persistence.PersistenceContext
 import org.springframework.data.repository.query.Param
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.data.jsonprofile.CIAGMainProfileDTO
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.entity.CIAGProfile
 import uk.gov.justice.digital.hmpps.hmppsciagcareersinductionapi.repository.CustomRepository
-import javax.persistence.EntityManager
-import javax.persistence.PersistenceContext
 
 class CustomRepositoryImpl : CustomRepository {
   @PersistenceContext
@@ -16,7 +16,7 @@ class CustomRepositoryImpl : CustomRepository {
     entityGraph?.addAttributeNodes("abilityToWork", "reasonToNotGetWork", "workExperience", "skillsAndInterests", "qualificationsAndTraining", "inPrisonInterests")
     val properties = mutableMapOf<String, Any>()
 
-    properties["javax.persistence.fetchgraph"] = entityGraph!!
+    properties["jakarta.persistence.fetchgraph"] = entityGraph!!
     return entityManager?.find(CIAGProfile::class.java, offenderId, properties)
   }
 
