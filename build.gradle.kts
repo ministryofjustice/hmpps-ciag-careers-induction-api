@@ -1,36 +1,55 @@
 plugins {
-  id("uk.gov.justice.hmpps.gradle-spring-boot") version "5.4.1"
+  id("uk.gov.justice.hmpps.gradle-spring-boot") version "5.7.0"
   id("org.openapi.generator") version "7.0.1"
-  kotlin("plugin.spring") version "1.8.22"
-  kotlin("plugin.jpa") version "1.8.22"
-  kotlin("plugin.lombok") version "1.8.22"
+  kotlin("plugin.spring") version "1.9.10"
+  kotlin("plugin.jpa") version "1.9.10"
+  kotlin("plugin.lombok") version "1.9.10"
 }
-
+val springdocOpenapiVersion = "2.2.0"
 configurations {
-  implementation {
-    exclude(module = "commons-logging")
-    exclude(module = "log4j")
-    exclude(module = "c3p0")
-    exclude(module = "logback-classic")
-  }
-  testImplementation {
-    exclude(group = "org.junit.vintage")
-    exclude(module = "logback-classic")
+  testImplementation { exclude(group = "org.junit.vintage") }
+}
+
+val integrationTest = task<Test>("integrationTest") {
+  description = "Integration tests"
+  group = "verification"
+  shouldRunAfter("test")
+}
+
+tasks.named<Test>("integrationTest") {
+  useJUnitPlatform()
+  filter {
+    includeTestsMatching("*.Int.*")
   }
 }
 
-ext["springdoc.openapi.version"] = "2.2.0"
-sourceSets {
-  main {
-    java {
-      setSrcDirs(listOf("src/main"))
+tasks.named<Test>("test") {
+  filter {
+    excludeTestsMatching("*.Int.*")
+  }
+}
+
+tasks.named("check") {
+  setDependsOn(
+    dependsOn.filterNot {
+      it is TaskProvider<*> && it.name == "detekt"
+    }
+  )
+}
+
+tasks {
+  withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+    kotlinOptions {
+      jvmTarget = "19"
     }
   }
+  withType<JavaCompile> {
+    sourceCompatibility = "19"
+  }
 }
+
 dependencies {
   annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
-  annotationProcessor("org.projectlombok:lombok:1.18.30")
-  testAnnotationProcessor("org.projectlombok:lombok:1.18.30")
   implementation("org.springframework.boot:spring-boot-starter-validation")
   // Spring boot dependencies
   implementation("org.springframework.boot:spring-boot-starter-security")
@@ -51,10 +70,9 @@ dependencies {
   implementation("org.apache.commons:commons-text:1.11.0")
   implementation("com.oracle.database.jdbc:ojdbc10:19.21.0.0")
   implementation("org.hibernate.orm:hibernate-community-dialects")
-  implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:${property("springdoc.openapi.version")}")
+  implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:$springdocOpenapiVersion")
 
-  compileOnly("org.projectlombok:lombok:1.18.30")
-  testImplementation("jakarta.servlet:jakarta.servlet-api:6.0.0")
+  implementation("javax.servlet:javax.servlet-api:3.0.1")
 
   implementation("org.apache.commons:commons-collections4:4.0")
   implementation("uk.gov.justice.service.hmpps:hmpps-sqs-spring-boot-starter:2.0.1")
@@ -70,10 +88,12 @@ dependencies {
 
   implementation("io.arrow-kt:arrow-core:1.1.2")
 
+  // OpenAPI
+  implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0")
+
   implementation("com.google.code.gson:gson:2.9.0")
 
   // Test dependencies
-  testImplementation("com.github.tomakehurst:wiremock-standalone:2.27.2")
   testImplementation("org.springframework.security:spring-security-test")
   testImplementation("io.jsonwebtoken:jjwt:0.9.1")
   testImplementation("net.javacrumbs.json-unit:json-unit-assertj:2.35.0")
@@ -84,33 +104,9 @@ dependencies {
   testImplementation("com.h2database:h2")
   implementation(kotlin("stdlib"))
 }
-
-tasks {
-
-  withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-    kotlinOptions {
-      freeCompilerArgs = listOf("-Xjvm-default=all")
-      jvmTarget = "19"
-    }
-  }
-  withType<JavaCompile> {
-    sourceCompatibility = "19"
-  }
-}
-
 repositories {
   mavenCentral()
 }
-
-/*kotlin {
-  jvmToolchain {
-    this.languageVersion.set(JavaLanguageVersion.of("19"))
-  }
-}
-
-java {
-  toolchain.languageVersion.set(JavaLanguageVersion.of(19))
-}*/
 
 dependencyCheck {
   suppressionFiles.add("$rootDir/dependencyCheck/suppression.xml")
