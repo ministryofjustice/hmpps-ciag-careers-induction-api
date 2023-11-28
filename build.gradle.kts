@@ -4,7 +4,6 @@ plugins {
   kotlin("plugin.spring") version "1.8.22"
   kotlin("plugin.jpa") version "1.8.22"
   kotlin("plugin.lombok") version "1.8.22"
-  id("jacoco")
 }
 
 configurations {
@@ -87,23 +86,6 @@ dependencies {
 }
 
 tasks {
-//  test {
-//    useJUnitPlatform {
-//      exclude("**/*IntTest*")
-//    }
-//    sourceSets {
-//      test {
-//        java {
-//          setSrcDirs(listOf("src/test"))
-//        }
-//      }
-//    }
-//    dependencies {
-//      implementation(project())
-//    }
-//    minHeapSize = "128m"
-//    maxHeapSize = "2048m"
-//  }
 
   withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
     kotlinOptions {
@@ -122,12 +104,12 @@ repositories {
 
 /*kotlin {
   jvmToolchain {
-    this.languageVersion.set(JavaLanguageVersion.of("21"))
+    this.languageVersion.set(JavaLanguageVersion.of("19"))
   }
 }
 
 java {
-  toolchain.languageVersion.set(JavaLanguageVersion.of(21))
+  toolchain.languageVersion.set(JavaLanguageVersion.of(19))
 }*/
 
 dependencyCheck {
