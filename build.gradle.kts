@@ -9,7 +9,11 @@ val springdocOpenapiVersion = "2.2.0"
 configurations {
   testImplementation { exclude(group = "org.junit.vintage") }
 }
-
+configurations.all {
+  resolutionStrategy {
+    force("com.microsoft.azure:applicationinsights-core:3.4.17")
+  }
+}
 val integrationTest = task<Test>("integrationTest") {
   description = "Integration tests"
   group = "verification"
@@ -75,7 +79,9 @@ dependencies {
   implementation("javax.servlet:javax.servlet-api:3.0.1")
 
   implementation("org.apache.commons:commons-collections4:4.0")
-  implementation("uk.gov.justice.service.hmpps:hmpps-sqs-spring-boot-starter:2.0.1")
+  implementation("uk.gov.justice.service.hmpps:hmpps-sqs-spring-boot-starter:2.0.1") {
+    exclude(group = "com.microsoft.azure", module = "applicationinsights-core")
+  }
 
   // Enable kotlin reflect
   implementation("org.jetbrains.kotlin:kotlin-reflect:1.6.20")
