@@ -80,7 +80,7 @@ dependencies {
   // Enable kotlin reflect
   implementation("org.jetbrains.kotlin:kotlin-reflect:1.6.20")
 
-  implementation("io.opentelemetry.instrumentation:opentelemetry-instrumentation-annotations:1.29.0")
+  implementation("com.microsoft.azure:applicationinsights-core:3.4.17")
 
   // Database dependencies
   implementation("org.flywaydb:flyway-core")
