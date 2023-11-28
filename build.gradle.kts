@@ -1,10 +1,10 @@
 plugins {
-  id("uk.gov.justice.hmpps.gradle-spring-boot") version "5.9.0"
-  kotlin("plugin.spring") version "1.9.20"
-  kotlin("plugin.jpa") version "1.9.20"
-  kotlin("plugin.lombok") version "1.9.20"
+  id("uk.gov.justice.hmpps.gradle-spring-boot") version "5.4.1"
+  id("org.openapi.generator") version "7.0.1"
+  kotlin("plugin.spring") version "1.8.22"
+  kotlin("plugin.jpa") version "1.8.22"
+  kotlin("plugin.lombok") version "1.8.22"
   id("jacoco")
-  id("jvm-test-suite")
 }
 
 configurations {
@@ -87,40 +87,32 @@ dependencies {
 }
 
 tasks {
-  test {
-    useJUnitPlatform {
-      exclude("**/*IntTest*")
-    }
-    minHeapSize = "128m"
-    maxHeapSize = "2048m"
-  }
+//  test {
+//    useJUnitPlatform {
+//      exclude("**/*IntTest*")
+//    }
+//    sourceSets {
+//      test {
+//        java {
+//          setSrcDirs(listOf("src/test"))
+//        }
+//      }
+//    }
+//    dependencies {
+//      implementation(project())
+//    }
+//    minHeapSize = "128m"
+//    maxHeapSize = "2048m"
+//  }
 
   withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
     kotlinOptions {
       freeCompilerArgs = listOf("-Xjvm-default=all")
-      jvmTarget = "21"
+      jvmTarget = "19"
     }
   }
   withType<JavaCompile> {
-    sourceCompatibility = "21"
-  }
-}
-
-testing {
-  suites {
-    val test by getting(JvmTestSuite::class) {
-      useJUnitJupiter()
-      sourceSets {
-        test {
-          java {
-            setSrcDirs(listOf("src/test"))
-          }
-        }
-      }
-      dependencies {
-        implementation(project())
-      }
-    }
+    sourceCompatibility = "19"
   }
 }
 
