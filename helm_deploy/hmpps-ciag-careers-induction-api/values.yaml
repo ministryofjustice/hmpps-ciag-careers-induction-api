@@ -1,7 +1,7 @@
 generic-service:
   nameOverride: hmpps-ciag-careers-induction-api
-
-  replicaCount: 4
+  ## TODO RR-530 - temporary measure until the API is fully decommissioned
+  replicaCount: 0
 
   image:
     repository: quay.io/hmpps/hmpps-ciag-careers-induction-api
