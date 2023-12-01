@@ -2,7 +2,8 @@
 # Per environment values which override defaults in hmpps-ciag-careers-induction-api/values.yaml
 
 generic-service:
-  replicaCount: 2
+  ## TODO RR-530 - temporary measure until the API is fully decommissioned
+  replicaCount: 0
 
   ingress:
     host: ciag-induction-api-dev.hmpps.service.justice.gov.uk
